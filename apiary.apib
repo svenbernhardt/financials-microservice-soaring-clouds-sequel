@@ -1,0 +1,200 @@
+FORMAT: 1A
+HOST: http://private-0b1f3-financialsmicroservice.apiary-mock.com
+
+# Financials Microservice
+
+This is the documentation of the Financials Microservice for the Soaring the Cloud Sequel Showcase.
+        
+# Group Invoices Resources
+Invoices related resources.
+
+## Search and Create Invoices [/api/invoices{?customer_id,order_id}]
+
++ Parameters
+    
+    + customer_id (string, optional)
+     
+        Filter by customer_id
+    
+    + order_id (string, optional)
+        
+        Filter by order_id
+
+### Search invoices [GET]
+Search invoices using criterias like the Customer ID or Order ID
+
++ Request (text/plain)
+
+    + Headers
+        
+            api-key: asdasdsaasd-asdsa-asdas-asdasd-asdasdad
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (Invoice)
+    
+### Create invoice [POST]
+Create a new invoice
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+        
+            api-key: asdasdsaasd-asdsa-asdas-asdasd-asdasdad
+            
+    
++ Response 201 (application/json; charset=utf-8)
+
+    + Attributes (Response Metadata)
+
+## Read invoice [/api/invoices/{invoice_id}] 
+    
+### Get Invoice [GET]
+get a specific invoice by it's Invoice ID
+
++ Request (text/plain)
+
+    + Headers
+        
+            api-key: asdasdsaasd-asdsa-asdas-asdasd-asdasdad
+            
++ Response 200 (application/json, charset=utf-8)
+
+    + Attributes (Invoice)
+
+### Update invoice [PUT]
+Update a specific invoice (NOTE: not all fields are updateable)
+
++ Request (application/json, charset=utf-8)
+
+    + Headers
+        
+            api-key: asdasdsaasd-asdsa-asdas-asdasd-asdasdad
+    
+    + Attributes (Invoice)
+
++ Response 200 (application/json, charset=utf-8)
+
+    + Attributes (Response Metadata)
+
+# Group Payments Resources
+Payment related Resources
+
+## Search and create payments [/api/payments{?invoice_id}]
+
++ Parameters
+
+    + invoice_id (string, optional)
+    
+        Filter for invoice_id
+
+### Get payments information [GET]
+Get the relevant payment information for an invoice
+
++ Request (text/plain)
+    
+    + Headers
+        
+            api-key: asdasdsaasd-asdsa-asdas-asdasd-asdasdad
+            
++ Response 200 (application/json, charset=utf-8)
+
+    + Attributes (Payment)
+
+### Create payment [POST]
+Create a new payment 
+
++ Request (application/json; charset=utf-8)
+    
+    + Headers
+        
+            api-key: asdasdsaasd-asdsa-asdas-asdasd-asdasdad
+            
+    + Attributes (Payment)
+            
++ Response 201 (application/json, charset=utf-8)
+
+    + Attributes (Response Metadata)
+
+# Group Service Operations Resources
+Service health related resources
+
+## Health Check [/api/health]
+
+### Get service health state [GET]
+Get service health information
+
++ Response 200 (application/json)
+
+    + Attributes (Health Check Response)
+        
+# Data structures
+
+## Health Check Response
+- version: `0.1` (number, optional)
+- status (enum, required)
+  - `OK` (string) - Everything fine with the service
+  - `FAILED` (string) - Something is wrong with the service
+- uptime: `1234.1` (number) - The uptime of the service in minutes
+
+## Response Metadata
+- error: `true` (boolean, required)
+- processing_message: `Invoice created successfully!` (string, required)
+
+## Customer
+- customer_no: `CGN4711` (string, required)
+- first_name: `Sven` (string, required)
+- last_name: `Bernhardt` (string, required)
+- phone: `+49 211 5093733` (string, optional)
+- email: `sven@yourmail.com` (string, required)
+- _id: `12345678908754324567854345675432` (string, optional) - Technical database ID
+
+## Address (object)
+- type (enum, required)
+  - `BILLING` (string) - Billing address
+  - `DELIVERY` (string) - Delivery
+- street_number: `15` (string, required)
+- street: `Ludwig-Jahn-Strasse` (string, optional)
+- city: `Köln` (string, required)
+- postcode:  `50858` (string, required)
+- country:  `DE` (string, required)
+- _id: `12345678908754324567854345675432` (string, optional) - Technical database ID
+
+## Invoice Position (object)
+- position_id: `1` (number, required)
+- amount: `1` (number, required)
+- description: `Blue-Ray Box: Game of Thrones Season 7` (string, required)
+- product_number: `B073ZKVHFV` (string, required)
+- net_price: `20.98` (number, required)
+- vat: `19` (number, required)
+- gross_price: `24.97` (number, required)
+- currency (enum, optional)
+  - `EUR` (string) - Euros
+  - `GBP` (string) - British Pounds
+  - `USD` (string) - US Dollars
+- _id: `12345678908754324567854345675432` (string, optional) - Technical database ID
+
+## Invoice (object)
+- invoice_id: `invoice0815` (string, required) - System generated Invoice ID
+- order_id: `order4711` (string, required)
+- order_date: `2018-02-17T21:00:00.000Z` (string, optional)
+- customer (Customer, optional)
+- billing_address (Address, optional)
+- invoice_address (Address, optional)
+- invoice_positions (Invoice Position, optional)
+- _id: `12345678908754324567854345675432` (string, optional) - Technical database ID
+
+## Payment (object)
+- payment_id: `pay666` (string, optional)
+- invoice_id: `invoice0815` (string, required)
+- order_id: `order4711` (string, required)
+- payment_type (enum, required)
+  - `VISA` - Payment type Credit card VISA
+  - `Mastercard` - Payment type Credit card Mastercard
+  - `AMEX` - Payment type Credit card AMEX
+  - `PayPal` - Payment type Credit card PayPal
+  - `Invoice` - Payment type Credit card invoice
+- payment_state (enum, optional)
+  - `PENDING` - Payment still open
+  - `APPROVED` - Payment has successfully been processed
+- _id: `12345678908754324567854345675432` (string, optional) - Technical database ID
