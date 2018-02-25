@@ -8,7 +8,7 @@ This is the documentation of the Financials Microservice for the Soaring the Clo
 # Group Invoices Resources
 Invoices related resources.
 
-## Search and Create Invoices [/api/invoices{?customer_id,order_id}]
+## Search and Create Invoices [/api/financials/invoices{?customer_id,order_id}]
 
 + Parameters
     
@@ -47,7 +47,7 @@ Create a new invoice
 
     + Attributes (Response Metadata)
 
-## Read invoice [/api/invoices/{invoice_id}] 
+## Read invoice [/api/financials/invoices/{invoice_id}] 
     
 ### Get Invoice [GET]
 get a specific invoice by it's Invoice ID
@@ -80,7 +80,7 @@ Update a specific invoice (NOTE: not all fields are updateable)
 # Group Payments Resources
 Payment related Resources
 
-## Search and create payments [/api/payments{?invoice_id}]
+## Search and create payments [/api/financials/payments{?invoice_id}]
 
 + Parameters
 
@@ -119,7 +119,7 @@ Create a new payment
 # Group Service Operations Resources
 Service health related resources
 
-## Health Check [/api/health]
+## Health Check [/api/financials/health]
 
 ### Get service health state [GET]
 Get service health information
@@ -181,7 +181,7 @@ Get service health information
 - customer (Customer, optional)
 - billing_address (Address, optional)
 - invoice_address (Address, optional)
-- invoice_positions (Invoice Position, optional)
+- invoice_positions (array[Invoice Position], optional)
 - _id: `12345678908754324567854345675432` (string, optional) - Technical database ID
 
 ## Payment (object)
