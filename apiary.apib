@@ -48,7 +48,7 @@ Create a new invoice
 
     + Attributes (Response Metadata)
 
-## Read invoice [/api/financials/invoices/{invoice_id}] 
+## Manage invoices [/api/financials/invoices/{invoice_id}] 
     
 ### Get Invoice [GET]
 get a specific invoice by it's Invoice ID
@@ -64,7 +64,7 @@ get a specific invoice by it's Invoice ID
     + Attributes (Invoice)
 
 ### Update invoice [PUT]
-Update a specific invoice (NOTE: not all fields are updateable)
+Update a specific invoice
 
 + Request (application/json, charset=utf-8)
 
@@ -77,6 +77,19 @@ Update a specific invoice (NOTE: not all fields are updateable)
 + Response 200 (application/json, charset=utf-8)
 
     + Attributes (Response Metadata)
+
+### Delete invoice [DELETE]
+Deletes a specific invoice (NOTE: For internal use only! Use carefully!)
+
++ Request (application/json, charset=utf-8)
+
+    + Headers
+        
+            api-key: asdasdsaasd-asdsa-asdas-asdasd-asdasdad
+    
+    + Attributes (Invoice)
+
++ Response 204 (text/plain)
 
 # Group Payments Resources
 Payment related Resources
