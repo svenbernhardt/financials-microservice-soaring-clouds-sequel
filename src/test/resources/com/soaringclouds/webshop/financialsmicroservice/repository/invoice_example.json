@@ -1,0 +1,43 @@
+{
+  "invoice_id": "invoice0815",
+  "order_id": "order4711",
+  "order_date": "2018-02-17T21:00:00.000Z",
+  "customer": {
+    "customer_no": "CGN4711",
+    "first_name": "Sven",
+    "last_name": "Bernhardt",
+    "phone": "+49 211 5093733",
+    "email": "sven@yourmail.com",
+    "_id": "12345678908754324567854345675432"
+  },
+  "billing_address": {
+    "type": "DELIVERY",
+    "street_number": "15",
+    "street": "Ludwig-Jahn-Strasse",
+    "city": "Köln",
+    "postcode": "50858",
+    "country": "DE",
+    "_id": "12345678908754324567854345675432"
+  },
+  "invoice_address": {
+    "type": "BILLING",
+    "street_number": "15",
+    "street": "Ludwig-Jahn-Strasse",
+    "city": "Köln",
+    "postcode": "50858",
+    "country": "DE",
+    "_id": "12345678908754324567854345675432"
+  },
+  "invoice_positions": [ {
+    "position_id": 1,
+    "amount": 1,
+    "description": "Blue-Ray Box: Game of Thrones Season 7",
+    "product_number": "B073ZKVHFV",
+    "net_price": 20.98,
+    "vat": 19,
+    "gross_price": 24.97,
+    "currency": "EUR",
+    "_id": "12345678908754324567854345675432"
+  } ],
+  "_id": ""
+}

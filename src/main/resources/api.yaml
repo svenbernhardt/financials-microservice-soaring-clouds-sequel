@@ -1,0 +1,763 @@
+swagger: '2.0'
+info:
+  version: '1.0'
+  title: Financials Microservice
+  description: 'TODO: Add a description'
+host: private-0b1f3-financialsmicroservice.apiary-mock.com
+basePath: /
+schemes:
+- http
+consumes:
+- application/json
+produces:
+- application/json
+paths:
+  /api/financials/invoices:
+    get:
+      description: Search invoices using criterias like the Customer ID or Order ID
+      summary: Search invoices
+      tags:
+      - Invoices Resources
+      operationId: ApiFinancialsInvoicesGet
+      produces:
+      - application/json
+      parameters:
+      - name: customer_id
+        in: query
+        required: false
+        type: string
+        description: Filter by customer_id
+      - name: order_id
+        in: query
+        required: false
+        type: string
+        description: Filter by order_id
+      responses:
+        200:
+          description: ''
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Invoice'
+          examples:
+            application/json:
+            - invoice_id: invoice0815
+              order_id: order4711
+              order_date: 2018-02-17T21:00:00.0000000Z
+              shipping_costs: 6.9900000000000002
+              total_price: 31.960000000000001
+              customer:
+                customer_no: CGN4711
+                first_name: Sven
+                last_name: Bernhardt
+                phone: +49 211 5093733
+                email: sven@yourmail.com
+                _id: 12345678908754324567854345675432
+              billing_address:
+                type: BILLING
+                street_number: 15
+                street: Ludwig-Jahn-Strasse
+                city: Köln
+                postcode: 50858
+                country: DE
+                _id: 12345678908754324567854345675432
+              invoice_address:
+                type: BILLING
+                street_number: 15
+                street: Ludwig-Jahn-Strasse
+                city: Köln
+                postcode: 50858
+                country: DE
+                _id: 12345678908754324567854345675432
+              invoice_positions:
+              - position_id: 1
+                amount: 1
+                description: 'Blue-Ray Box: Game of Thrones Season 7'
+                product_number: B073ZKVHFV
+                net_price: 20.98
+                vat: 19
+                gross_price: 24.969999999999999
+                currency: EUR
+                _id: 12345678908754324567854345675432
+              _id: 12345678908754324567854345675432
+      x-unitTests:
+      - request:
+          method: GET
+          uri: /api/financials/invoices
+        expectedResponse:
+          x-allowExtraHeaders: true
+          x-bodyMatchMode: RAW
+          x-arrayOrderedMatching: false
+          x-arrayCheckCount: false
+          x-matchResponseSchema: true
+          headers:
+            Content-Type: application/json; charset=utf-8
+          body: '[  {    "invoice_id": "invoice0815",    "order_id": "order4711",    "order_date": "2018-02-17T21:00:00.000Z",    "shipping_costs": 6.99,    "total_price": 31.96,    "customer": {      "customer_no": "CGN4711",      "first_name": "Sven",      "last_name": "Bernhardt",      "phone": "+49 211 5093733",      "email": "sven@yourmail.com",      "_id": "12345678908754324567854345675432"    },    "billing_address": {      "type": "BILLING",      "street_number": "15",      "street": "Ludwig-Jahn-Strasse",      "city": "Köln",      "postcode": "50858",      "country": "DE",      "_id": "12345678908754324567854345675432"    },    "invoice_address": {      "type": "BILLING",      "street_number": "15",      "street": "Ludwig-Jahn-Strasse",      "city": "Köln",      "postcode": "50858",      "country": "DE",      "_id": "12345678908754324567854345675432"    },    "invoice_positions": [      {        "position_id": 1,        "amount": 1,        "description": "Blue-Ray Box: Game of Thrones Season 7",        "product_number": "B073ZKVHFV",        "net_price": 20.98,        "vat": 19,        "gross_price": 24.97,        "currency": "EUR",        "_id": "12345678908754324567854345675432"      }    ],    "_id": "12345678908754324567854345675432"  }]'
+        x-testShouldPass: true
+        x-testEnabled: true
+        x-testName: Search invoices1
+        x-testDescription: Search invoices using criterias like the Customer ID or Order ID
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    post:
+      description: Create a new invoice
+      summary: Add Create invoice
+      tags:
+      - Invoices Resources
+      operationId: ApiFinancialsInvoicesPost
+      produces:
+      - application/json
+      parameters:
+      - name: body
+        in: body
+        required: true
+        description: ''
+        schema:
+          $ref: '#/definitions/Invoice'
+      - name: customer_id
+        in: query
+        required: false
+        type: string
+        description: Filter by customer_id
+      - name: order_id
+        in: query
+        required: false
+        type: string
+        description: Filter by order_id
+      responses:
+        201:
+          description: ''
+          schema:
+            $ref: '#/definitions/ResponseMetadata'
+          examples:
+            application/json:
+              error: true
+              processing_message: Invoice created successfully!
+      x-unitTests:
+      - request:
+          method: POST
+          uri: /api/financials/invoices
+          headers:
+            Content-Type: application/json
+          body: '{  "invoice_id": "invoice0815",  "order_id": "order4711",  "order_date": "2018-02-17T21:00:00.000Z",  "shipping_costs": 6.99,  "total_price": 31.96,  "customer": {    "customer_no": "CGN4711",    "first_name": "Sven",    "last_name": "Bernhardt",    "phone": "+49 211 5093733",    "email": "sven@yourmail.com",    "_id": "12345678908754324567854345675432"  },  "billing_address": {    "type": "BILLING",    "street_number": "15",    "street": "Ludwig-Jahn-Strasse",    "city": "Köln",    "postcode": "50858",    "country": "DE",    "_id": "12345678908754324567854345675432"  },  "invoice_address": {    "type": "BILLING",    "street_number": "15",    "street": "Ludwig-Jahn-Strasse",    "city": "Köln",    "postcode": "50858",    "country": "DE",    "_id": "12345678908754324567854345675432"  },  "invoice_positions": [    {      "position_id": 1,      "amount": 1,      "description": "Blue-Ray Box: Game of Thrones Season 7",      "product_number": "B073ZKVHFV",      "net_price": 20.98,      "vat": 19,      "gross_price": 24.97,      "currency": "EUR",      "_id": "12345678908754324567854345675432"    }  ],  "_id": "12345678908754324567854345675432"}'
+        expectedResponse:
+          x-allowExtraHeaders: true
+          x-bodyMatchMode: RAW
+          x-arrayOrderedMatching: false
+          x-arrayCheckCount: false
+          x-matchResponseSchema: true
+          headers:
+            Content-Type: application/json; charset=utf-8
+          body: '{  "error": true,  "processing_message": "Invoice created successfully!"}'
+        x-testShouldPass: true
+        x-testEnabled: true
+        x-testName: Add Create invoice1
+        x-testDescription: Create a new invoice
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+  /api/financials/invoices/{invoice_id}:
+    get:
+      description: get a specific invoice by it's Invoice ID
+      summary: Get Invoice
+      tags:
+      - Invoices Resources
+      operationId: ApiFinancialsInvoicesByInvoiceIdGet
+      produces:
+      - application/json
+      parameters:
+      - name: invoice_id
+        in: path
+        required: true
+        type: string
+        description: ''
+      responses:
+        200:
+          description: ''
+          schema:
+            $ref: '#/definitions/Invoice'
+          examples: {}
+      x-unitTests:
+      - request:
+          method: GET
+          uri: /api/financials/invoices/{invoice_id}
+        expectedResponse:
+          x-allowExtraHeaders: true
+          x-bodyMatchMode: NONE
+          x-arrayOrderedMatching: false
+          x-arrayCheckCount: false
+          x-matchResponseSchema: true
+          headers:
+            Content-Type: application/json, charset=utf-8
+        x-testShouldPass: true
+        x-testEnabled: true
+        x-testName: Get Invoice1
+        x-testDescription: get a specific invoice by it's Invoice ID
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    put:
+      description: Update a specific invoice
+      summary: Update invoice
+      tags:
+      - Invoices Resources
+      operationId: ApiFinancialsInvoicesByInvoiceIdPut
+      produces:
+      - application/json
+      parameters:
+      - name: body
+        in: body
+        required: true
+        description: ''
+        schema:
+          $ref: '#/definitions/Invoice'
+      - name: invoice_id
+        in: path
+        required: true
+        type: string
+        description: ''
+      responses:
+        200:
+          description: ''
+          schema:
+            $ref: '#/definitions/ResponseMetadata'
+          examples: {}
+      x-unitTests: []
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    delete:
+      description: 'Deletes a specific invoice (NOTE: For internal use only! Use carefully!)'
+      summary: Delete invoice
+      tags:
+      - Invoices Resources
+      operationId: ApiFinancialsInvoicesByInvoiceIdDelete
+      produces:
+      - application/json
+      parameters:
+      - name: invoice_id
+        in: path
+        required: true
+        type: string
+        description: ''
+      responses:
+        204:
+          description: ''
+      x-unitTests:
+      - request:
+          method: DELETE
+          uri: /api/financials/invoices/{invoice_id}
+        expectedResponse:
+          x-allowExtraHeaders: true
+          x-bodyMatchMode: NONE
+          x-arrayOrderedMatching: false
+          x-arrayCheckCount: false
+          x-matchResponseSchema: true
+          headers:
+            Content-Type: text/plain
+        x-testShouldPass: true
+        x-testEnabled: true
+        x-testName: Delete invoice1
+        x-testDescription: 'Deletes a specific invoice (NOTE: For internal use only! Use carefully!)'
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+  /api/financials/payments:
+    get:
+      description: Get the relevant payment information for an invoice
+      summary: Get payments information
+      tags:
+      - Payments Resources
+      operationId: ApiFinancialsPaymentsGet
+      produces:
+      - application/json
+      parameters:
+      - name: invoice_id
+        in: query
+        required: false
+        type: string
+        description: Filter for invoice_id
+      responses:
+        200:
+          description: ''
+          schema:
+            $ref: '#/definitions/Payment'
+          examples: {}
+      x-unitTests:
+      - request:
+          method: GET
+          uri: /api/financials/payments
+        expectedResponse:
+          x-allowExtraHeaders: true
+          x-bodyMatchMode: NONE
+          x-arrayOrderedMatching: false
+          x-arrayCheckCount: false
+          x-matchResponseSchema: true
+          headers:
+            Content-Type: application/json, charset=utf-8
+        x-testShouldPass: true
+        x-testEnabled: true
+        x-testName: Get payments information1
+        x-testDescription: Get the relevant payment information for an invoice
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+    post:
+      description: Create a new payment
+      summary: Create payment
+      tags:
+      - Payments Resources
+      operationId: ApiFinancialsPaymentsPost
+      produces:
+      - application/json
+      parameters:
+      - name: body
+        in: body
+        required: true
+        description: ''
+        schema:
+          $ref: '#/definitions/Payment'
+      - name: invoice_id
+        in: query
+        required: false
+        type: string
+        description: Filter for invoice_id
+      responses:
+        201:
+          description: ''
+          schema:
+            $ref: '#/definitions/ResponseMetadata'
+          examples: {}
+      x-unitTests:
+      - request:
+          method: POST
+          uri: /api/financials/payments
+          headers:
+            Content-Type: application/json
+          body: '{  "payment_id": "pay666",  "invoice_id": "invoice0815",  "order_id": "order4711",  "payment_type": "VISA",  "payment_state": "PENDING",  "_id": "12345678908754324567854345675432"}'
+        expectedResponse:
+          x-allowExtraHeaders: true
+          x-bodyMatchMode: NONE
+          x-arrayOrderedMatching: false
+          x-arrayCheckCount: false
+          x-matchResponseSchema: true
+          headers:
+            Content-Type: application/json, charset=utf-8
+        x-testShouldPass: true
+        x-testEnabled: true
+        x-testName: Create payment1
+        x-testDescription: Create a new payment
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+  /api/financials/health:
+    get:
+      description: Get service health information
+      summary: Get service health state
+      tags:
+      - Service Operations Resources
+      operationId: ApiFinancialsHealthGet
+      produces:
+      - application/json
+      parameters: []
+      responses:
+        200:
+          description: ''
+          schema:
+            $ref: '#/definitions/HealthCheckResponse'
+          examples:
+            application/json:
+              version: 0.10000000000000001
+              status: OK
+              uptime: 1234.0999999999999
+      x-unitTests:
+      - request:
+          method: GET
+          uri: /api/financials/health
+        expectedResponse:
+          x-allowExtraHeaders: true
+          x-bodyMatchMode: RAW
+          x-arrayOrderedMatching: false
+          x-arrayCheckCount: false
+          x-matchResponseSchema: true
+          headers:
+            Content-Type: application/json
+          body: '{  "version": 0.1,  "status": "OK",  "uptime": 1234.1}'
+        x-testShouldPass: true
+        x-testEnabled: true
+        x-testName: Get service health state1
+        x-testDescription: Get service health information
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+definitions:
+  HealthCheckResponse:
+    title: Health Check Response
+    example:
+      version: 0.10000000000000001
+      status: OK
+      uptime: 1234.0999999999999
+    type: object
+    properties:
+      status:
+        $ref: '#/definitions/Status'
+      version:
+        description: ''
+        example: 0.10000000000000001
+        type: number
+        format: double
+      uptime:
+        description: The uptime of the service in minutes
+        example: 1234.0999999999999
+        type: number
+        format: double
+    required:
+    - status
+  Status:
+    title: status
+    example: OK
+    x-enum-elements:
+    - name: OK
+      description: ''
+    - name: FAILED
+      description: ''
+    type: string
+    enum:
+    - OK
+    - FAILED
+  ResponseMetadata:
+    title: Response Metadata
+    example:
+      error: true
+      processing_message: Invoice created successfully!
+    type: object
+    properties:
+      error:
+        description: ''
+        example: true
+        type: boolean
+      processing_message:
+        description: ''
+        example: Invoice created successfully!
+        type: string
+    required:
+    - error
+    - processing_message
+  Customer:
+    title: Customer
+    type: object
+    properties:
+      customer_no:
+        description: ''
+        example: CGN4711
+        type: string
+      first_name:
+        description: ''
+        example: Sven
+        type: string
+      last_name:
+        description: ''
+        example: Bernhardt
+        type: string
+      email:
+        description: ''
+        example: sven@yourmail.com
+        type: string
+      phone:
+        description: ''
+        example: +49 211 5093733
+        type: string
+      _id:
+        description: Technical database ID
+        example: 12345678908754324567854345675432
+        type: string
+    required:
+    - customer_no
+    - first_name
+    - last_name
+    - email
+  Address:
+    title: Address
+    type: object
+    properties:
+      type:
+        $ref: '#/definitions/Type'
+      street_number:
+        description: ''
+        example: 15
+        type: string
+      city:
+        description: ''
+        example: Köln
+        type: string
+      postcode:
+        description: ''
+        example: 50858
+        type: string
+      country:
+        description: ''
+        example: DE
+        type: string
+      street:
+        description: ''
+        example: Ludwig-Jahn-Strasse
+        type: string
+      _id:
+        description: Technical database ID
+        example: 12345678908754324567854345675432
+        type: string
+    required:
+    - type
+    - street_number
+    - city
+    - postcode
+    - country
+  Type:
+    title: type
+    example: BILLING
+    x-enum-elements:
+    - name: BILLING
+      description: ''
+    - name: DELIVERY
+      description: ''
+    type: string
+    enum:
+    - BILLING
+    - DELIVERY
+  InvoicePosition:
+    title: Invoice Position
+    type: object
+    properties:
+      position_id:
+        description: ''
+        example: 1
+        type: number
+        format: double
+      amount:
+        description: ''
+        example: 1
+        type: number
+        format: double
+      description:
+        description: ''
+        example: 'Blue-Ray Box: Game of Thrones Season 7'
+        type: string
+      product_number:
+        description: ''
+        example: B073ZKVHFV
+        type: string
+      net_price:
+        description: ''
+        example: 20.98
+        type: number
+        format: double
+      vat:
+        description: ''
+        example: 19
+        type: number
+        format: double
+      gross_price:
+        description: ''
+        example: 24.969999999999999
+        type: number
+        format: double
+      currency:
+        $ref: '#/definitions/Currency'
+      _id:
+        description: Technical database ID
+        example: 12345678908754324567854345675432
+        type: string
+    required:
+    - position_id
+    - amount
+    - description
+    - product_number
+    - net_price
+    - vat
+    - gross_price
+  Currency:
+    title: currency
+    example: EUR
+    x-enum-elements:
+    - name: EUR
+      description: ''
+    - name: GBP
+      description: ''
+    - name: USD
+      description: ''
+    type: string
+    enum:
+    - EUR
+    - GBP
+    - USD
+  Invoice:
+    title: Invoice
+    example:
+      invoice_id: invoice0815
+      order_id: order4711
+      order_date: 2018-02-17T21:00:00.0000000Z
+      shipping_costs: 6.9900000000000002
+      total_price: 31.960000000000001
+      customer:
+        customer_no: CGN4711
+        first_name: Sven
+        last_name: Bernhardt
+        phone: +49 211 5093733
+        email: sven@yourmail.com
+        _id: 12345678908754324567854345675432
+      billing_address:
+        type: BILLING
+        street_number: 15
+        street: Ludwig-Jahn-Strasse
+        city: Köln
+        postcode: 50858
+        country: DE
+        _id: 12345678908754324567854345675432
+      invoice_address:
+        type: BILLING
+        street_number: 15
+        street: Ludwig-Jahn-Strasse
+        city: Köln
+        postcode: 50858
+        country: DE
+        _id: 12345678908754324567854345675432
+      invoice_positions:
+      - position_id: 1
+        amount: 1
+        description: 'Blue-Ray Box: Game of Thrones Season 7'
+        product_number: B073ZKVHFV
+        net_price: 20.98
+        vat: 19
+        gross_price: 24.969999999999999
+        currency: EUR
+        _id: 12345678908754324567854345675432
+      _id: 12345678908754324567854345675432
+    type: object
+    properties:
+      invoice_id:
+        description: System generated Invoice ID
+        example: invoice0815
+        type: string
+      order_id:
+        description: ''
+        example: order4711
+        type: string
+      shipping_costs:
+        description: ''
+        example: 6.9900000000000002
+        type: number
+        format: double
+      total_price:
+        description: ''
+        example: 31.960000000000001
+        type: number
+        format: double
+      order_date:
+        description: ''
+        example: 2/17/2018 9:00:00 PM
+        type: string
+      customer:
+        $ref: '#/definitions/Customer'
+      billing_address:
+        $ref: '#/definitions/Address'
+      invoice_address:
+        $ref: '#/definitions/Address'
+      invoice_positions:
+        description: ''
+        type: array
+        items:
+          $ref: '#/definitions/InvoicePosition'
+      _id:
+        description: Technical database ID
+        example: 12345678908754324567854345675432
+        type: string
+    required:
+    - invoice_id
+    - order_id
+    - shipping_costs
+    - total_price
+  Payment:
+    title: Payment
+    example:
+      payment_id: pay666
+      invoice_id: invoice0815
+      order_id: order4711
+      payment_type: VISA
+      payment_state: PENDING
+      _id: 12345678908754324567854345675432
+    type: object
+    properties:
+      invoice_id:
+        description: ''
+        example: invoice0815
+        type: string
+      order_id:
+        description: ''
+        example: order4711
+        type: string
+      payment_type:
+        $ref: '#/definitions/PaymentType'
+      payment_id:
+        description: ''
+        example: pay666
+        type: string
+      payment_state:
+        $ref: '#/definitions/PaymentState'
+      _id:
+        description: Technical database ID
+        example: 12345678908754324567854345675432
+        type: string
+    required:
+    - invoice_id
+    - order_id
+    - payment_type
+  PaymentType:
+    title: payment_type
+    example: VISA
+    x-enum-elements:
+    - name: VISA
+      description: ''
+    - name: Mastercard
+      description: ''
+    - name: AMEX
+      description: ''
+    - name: PayPal
+      description: ''
+    - name: Invoice
+      description: ''
+    type: string
+    enum:
+    - VISA
+    - Mastercard
+    - AMEX
+    - PayPal
+    - Invoice
+  PaymentState:
+    title: payment_state
+    example: PENDING
+    x-enum-elements:
+    - name: PENDING
+      description: ''
+    - name: APPROVED
+      description: ''
+    type: string
+    enum:
+    - PENDING
+    - APPROVED

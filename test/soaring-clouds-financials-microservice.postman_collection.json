@@ -1,0 +1,189 @@
+{
+	"info": {
+		"name": "soaring-clouds-financials-microservice",
+		"_postman_id": "3fd00733-6648-ab84-3531-dd1ec552bbd9",
+		"description": "Postman Collection for Financial Microservice manual testing.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "findAllInvoicesForOder",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://127.0.0.1:7777/api/financials/invoices?order_id=order4712",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "7777",
+					"path": [
+						"api",
+						"financials",
+						"invoices"
+					],
+					"query": [
+						{
+							"key": "order_id",
+							"value": "order4712",
+							"equals": true
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "findAllInvoicesForCustomer",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://127.0.0.1:7777/api/financials/invoices?customerNo=CGN4711",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "7777",
+					"path": [
+						"api",
+						"financials",
+						"invoices"
+					],
+					"query": [
+						{
+							"key": "customerNo",
+							"value": "CGN4711",
+							"equals": true
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "createInvoice",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"invoice_id\": \"invoice0816\",\n  \"order_id\": \"order4712\",\n  \"order_date\": \"2018-02-17T21:00:00.000Z\",\n  \"customer\": {\n    \"customer_no\": \"CGN4711\",\n    \"first_name\": \"Sven\",\n    \"last_name\": \"Bernhardt\",\n    \"phone\": \"+49 211 5093733\",\n    \"email\": \"sven@yourmail.com\",\n    \"_id\": \"12345678908754324567854345675432\"\n  },\n  \"billing_address\": {\n    \"type\": \"DELIVERY\",\n    \"street_number\": \"15\",\n    \"street\": \"Ludwig-Jahn-Strasse\",\n    \"city\": \"Köln\",\n    \"postcode\": \"50858\",\n    \"country\": \"DE\",\n    \"_id\": \"12345678908754324567854345675432\"\n  },\n  \"invoice_address\": {\n    \"type\": \"BILLING\",\n    \"street_number\": \"15\",\n    \"street\": \"Ludwig-Jahn-Strasse\",\n    \"city\": \"Köln\",\n    \"postcode\": \"50858\",\n    \"country\": \"DE\",\n    \"_id\": \"12345678908754324567854345675432\"\n  },\n  \"invoice_positions\": [ {\n    \"position_id\": 1,\n    \"amount\": 1,\n    \"description\": \"Blue-Ray Box: Game of Thrones Season 7\",\n    \"product_number\": \"B073ZKVHFV\",\n    \"net_price\": 20.98,\n    \"vat\": 19,\n    \"gross_price\": 24.97,\n    \"currency\": \"EUR\",\n    \"_id\": \"12345678908754324567854345675432\"\n  } ]\n}"
+				},
+				"url": {
+					"raw": "http://localhost:7777/api/financials/invoices",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7777",
+					"path": [
+						"api",
+						"financials",
+						"invoices"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "updateInvoice",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"invoice_id\": \"invoice0816\",\n        \"order_id\": \"order4712\",\n        \"order_date\": \"2018-02-17T21:00:00.000Z\",\n        \"customer\": {\n            \"customer_no\": \"CGN4711\",\n            \"first_name\": \"Sven\",\n            \"last_name\": \"Bernhardt\",\n            \"email\": \"sven@yourmail.com\",\n            \"phone\": \"+49 211 5093733\",\n            \"_id\": \"12345678908754324567854345675432\"\n        },\n        \"billing_address\": {\n            \"type\": \"DELIVERY\",\n            \"street_number\": \"15\",\n            \"city\": \"Köln\",\n            \"postcode\": \"50858\",\n            \"country\": \"DE\",\n            \"street\": \"Ludwig-Jahn-Strasse\",\n            \"_id\": \"12345678908754324567854345675432\"\n        },\n        \"invoice_address\": {\n            \"type\": \"BILLING\",\n            \"street_number\": \"15\",\n            \"city\": \"Köln\",\n            \"postcode\": \"50858\",\n            \"country\": \"DE\",\n            \"street\": \"Ludwig-Jahn-Strasse\",\n            \"_id\": \"12345678908754324567854345675432\"\n        },\n        \"invoice_positions\": [\n            {\n                \"position_id\": 1,\n                \"amount\": 1,\n                \"description\": \"Blue-Ray Box: Game of Thrones Season 6\",\n                \"product_number\": \"B073ZKVBVB\",\n                \"net_price\": 20.98,\n                \"vat\": 19,\n                \"gross_price\": 24.97,\n                \"currency\": \"EUR\",\n                \"_id\": \"12345678908754324567854345675432\"\n            }\n        ],\n        \"_id\": \"5a95b5ccc9e77c0001085a2a\"\n    }"
+				},
+				"url": {
+					"raw": "http://localhost:7777/api/financials/invoices/invoice0816",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7777",
+					"path": [
+						"api",
+						"financials",
+						"invoices",
+						"invoice0816"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "getServiceHealth",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:7777/api/financials/health",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7777",
+					"path": [
+						"api",
+						"financials",
+						"health"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "deleteInvoice",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://127.0.0.1:7777/api/financials/invoices/invoice0815",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "7777",
+					"path": [
+						"api",
+						"financials",
+						"invoices",
+						"invoice0815"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

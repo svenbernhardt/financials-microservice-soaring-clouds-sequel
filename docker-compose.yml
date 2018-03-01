@@ -1,0 +1,14 @@
+financialmicroservice:
+  build: .
+  ports:
+    - "7777:8080"
+  links:
+    - mongodb
+
+mongodb:
+  image: mongo
+  ports:
+    - 27017:27017
+  volumes:
+    - ../mongo_data:/data/db
+    - ../mongo_config:/data/configdb
