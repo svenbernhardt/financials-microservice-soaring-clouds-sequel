@@ -92,13 +92,17 @@ Deletes a specific invoice (NOTE: For internal use only! Use carefully!)
 # Group Payments Resources
 Payment related Resources
 
-## Search and create payments [/api/financials/payments{?invoice_id}]
+## Search and create payments [/api/financials/payments{?invoice_id,customer_no}]
 
 + Parameters
 
     + invoice_id (string, optional)
     
         Filter for invoice_id
+    
+    + customer_no (string, optional)
+        
+        Filter for customer_no
 
 ### Get payments information [GET]
 Get the relevant payment information for an invoice
