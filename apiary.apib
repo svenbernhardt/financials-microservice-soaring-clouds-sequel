@@ -159,7 +159,6 @@ Get service health information
 - last_name: `Bernhardt` (string, required)
 - phone: `+49 211 5093733` (string, optional)
 - email: `sven@yourmail.com` (string, required)
-- _id: `12345678908754324567854345675432` (string, optional) - Technical database ID
 
 ## Address (object)
 - type (enum, required)
@@ -170,7 +169,6 @@ Get service health information
 - city: `Köln` (string, required)
 - postcode:  `50858` (string, required)
 - country:  `DE` (string, required)
-- _id: `12345678908754324567854345675432` (string, optional) - Technical database ID
 
 ## Invoice Position (object)
 - position_id: `1` (number, required)
@@ -184,7 +182,6 @@ Get service health information
   - `EUR` (string) - Euros
   - `GBP` (string) - British Pounds
   - `USD` (string) - US Dollars
-- _id: `12345678908754324567854345675432` (string, optional) - Technical database ID
 
 ## Invoice (object)
 - invoice_id: `invoice0815` (string, required) - System generated Invoice ID
@@ -202,6 +199,7 @@ Get service health information
 - payment_id: `pay666` (string, optional)
 - invoice_id: `invoice0815` (string, required)
 - order_id: `order4711` (string, required)
+- customer_no: `order4711` (string, required)
 - payment_type (enum, required)
   - `VISA` - Payment type Credit card VISA
   - `Mastercard` - Payment type Credit card Mastercard
