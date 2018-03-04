@@ -73,6 +73,33 @@
 			"response": []
 		},
 		{
+			"name": "getInvoiceByInvoiceId",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://192.168.59.3:7777/api/financials/invoices/invoice0818",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"59",
+						"3"
+					],
+					"port": "7777",
+					"path": [
+						"api",
+						"financials",
+						"invoices",
+						"invoice0818"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
 			"name": "createInvoice",
 			"request": {
 				"method": "POST",

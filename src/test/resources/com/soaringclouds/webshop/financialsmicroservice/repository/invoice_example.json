@@ -2,13 +2,15 @@
   "invoice_id": "invoice0815",
   "order_id": "order4711",
   "order_date": "2018-02-17T21:00:00.000Z",
+  "shipping_costs" : 6.99,
+  "total_price": 30.96,
+  "payment_status": "PENDING",
   "customer": {
     "customer_no": "CGN4711",
     "first_name": "Sven",
     "last_name": "Bernhardt",
     "phone": "+49 211 5093733",
-    "email": "sven@yourmail.com",
-    "_id": "12345678908754324567854345675432"
+    "email": "sven@yourmail.com"
   },
   "billing_address": {
     "type": "DELIVERY",
@@ -16,8 +18,7 @@
     "street": "Ludwig-Jahn-Strasse",
     "city": "Köln",
     "postcode": "50858",
-    "country": "DE",
-    "_id": "12345678908754324567854345675432"
+    "country": "DE"
   },
   "invoice_address": {
     "type": "BILLING",
@@ -25,8 +26,7 @@
     "street": "Ludwig-Jahn-Strasse",
     "city": "Köln",
     "postcode": "50858",
-    "country": "DE",
-    "_id": "12345678908754324567854345675432"
+    "country": "DE"
   },
   "invoice_positions": [ {
     "position_id": 1,
@@ -36,8 +36,6 @@
     "net_price": 20.98,
     "vat": 19,
     "gross_price": 24.97,
-    "currency": "EUR",
-    "_id": "12345678908754324567854345675432"
-  } ],
-  "_id": ""
+    "currency": "EUR"
+  } ]
 }

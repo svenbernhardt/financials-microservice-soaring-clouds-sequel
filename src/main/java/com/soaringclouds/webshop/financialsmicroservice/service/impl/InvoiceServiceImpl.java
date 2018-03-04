@@ -4,6 +4,8 @@ import com.google.common.base.Strings;
 import com.soaringclouds.webshop.financialsmicroservice.builder.CustomerBuilder;
 import com.soaringclouds.webshop.financialsmicroservice.builder.InvoiceBuilder;
 import com.soaringclouds.webshop.financialsmicroservice.gen.model.Invoice;
+import com.soaringclouds.webshop.financialsmicroservice.gen.model.Payment;
+import com.soaringclouds.webshop.financialsmicroservice.gen.model.PaymentStatus;
 import com.soaringclouds.webshop.financialsmicroservice.gen.model.ResponseMetadata;
 import com.soaringclouds.webshop.financialsmicroservice.repository.InvoiceRepository;
 import com.soaringclouds.webshop.financialsmicroservice.service.InvoiceService;
@@ -60,6 +62,14 @@ public class InvoiceServiceImpl implements InvoiceService {
 
 	return createResponseMetadata(String.format("Invoice successfully updated! Invoice-Id: [%s]",
 			savedUpdatedInvoice.getId()));
+    }
+
+    @Override
+    public void updateInvoiceWithPayment(Payment pPayment) {
+
+	final Invoice invoiceToBePaid = findInvoiceByInvoiceId(pPayment.getInvoiceId());
+	invoiceToBePaid.setPaymentStatus(PaymentStatus.RECEIVED);
+	updateInvoice(invoiceToBePaid);
     }
 
     @Override

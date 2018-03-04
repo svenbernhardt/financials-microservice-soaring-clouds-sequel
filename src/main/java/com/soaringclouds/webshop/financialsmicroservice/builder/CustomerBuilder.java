@@ -37,10 +37,5 @@ public final class CustomerBuilder {
 	return this;
     }
 
-    public CustomerBuilder withId(String id) {
-	customer.setId(id);
-	return this;
-    }
-
     public Customer build() { return customer; }
 }

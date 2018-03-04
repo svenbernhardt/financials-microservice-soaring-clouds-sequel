@@ -23,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.io.InputStreamReader;
 import java.util.List;
 
+import static com.soaringclouds.webshop.financialsmicroservice.TestUtilities.createInvoice;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -58,25 +59,6 @@ public class InvoiceRepositoryTest {
     public void tearDown() {
 
         mongoTemplate.dropCollection(Invoice.class);
-    }
-
-    private Invoice createInvoice() {
-
-	Invoice invoice = null;
-	String invoiceJsonString = null;
-	try {
-	    invoiceJsonString = CharStreams.toString(new InputStreamReader(
-			    Thread.currentThread().getContextClassLoader().getResourceAsStream(
-					    "com/soaringclouds/webshop/financialsmicroservice/repository"
-							    + "/invoice_example.json")));
-
-	    invoice = new ObjectMapper().readValue(invoiceJsonString, Invoice.class);
-	    invoice.setId(null);
-	} catch (Exception e) {
-	    throw new RuntimeException(e);
-	}
-
-	return invoice;
     }
 
     @Test
