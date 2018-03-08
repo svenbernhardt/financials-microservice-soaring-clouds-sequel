@@ -2,6 +2,7 @@ package com.soaringclouds.webshop.financialsmicroservice;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.io.CharStreams;
+import com.soaringclouds.avro.order.v1.Order;
 import com.soaringclouds.webshop.financialsmicroservice.gen.model.Invoice;
 import com.soaringclouds.webshop.financialsmicroservice.gen.model.Payment;
 
@@ -49,4 +50,24 @@ public class TestUtilities {
 
 	return payment;
     }
+
+    public static Order createOrder() {
+
+	Order order = null;
+	String orderJsonString = null;
+	try {
+	    orderJsonString = CharStreams.toString(new InputStreamReader(
+			    Thread.currentThread().getContextClassLoader().getResourceAsStream(
+					    "com/soaringclouds/webshop/financialsmicroservice/service"
+							    + "/order_example.json")));
+
+	    order = new ObjectMapper().readValue(orderJsonString, Order.class);
+	} catch (Exception e) {
+	    throw new RuntimeException(e);
+	}
+
+	return order;
+    }
+
+
 }

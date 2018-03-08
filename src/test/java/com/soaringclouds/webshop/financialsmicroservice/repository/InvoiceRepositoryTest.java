@@ -7,6 +7,7 @@ import com.soaringclouds.webshop.financialsmicroservice.builder.InvoiceBuilder;
 import com.soaringclouds.webshop.financialsmicroservice.gen.model.Invoice;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -16,6 +17,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Example;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
+import org.springframework.kafka.test.rule.KafkaEmbedded;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,6 +43,9 @@ public class InvoiceRepositoryTest {
     private static String CUSTOMER_NO = "CGN4711";
     private static String ORDER_ID = "order4711";
     private static String INVOICE_ID = "invoice0815";
+
+    @ClassRule public static KafkaEmbedded embeddedKafka = new KafkaEmbedded(1, true,
+		    "a516817-soaring-order-created");
 
     @Autowired private InvoiceRepository invoiceRepository;
 

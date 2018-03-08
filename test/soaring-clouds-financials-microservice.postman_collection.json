@@ -13,13 +13,13 @@
 				"header": [],
 				"body": {},
 				"url": {
-					"raw": "http://127.0.0.1:7777/api/financials/invoices?order_id=order4712",
+					"raw": "http://192.168.59.3:7777/api/financials/invoices?order_id=order4712",
 					"protocol": "http",
 					"host": [
-						"127",
-						"0",
-						"0",
-						"1"
+						"192",
+						"168",
+						"59",
+						"3"
 					],
 					"port": "7777",
 					"path": [
@@ -79,7 +79,7 @@
 				"header": [],
 				"body": {},
 				"url": {
-					"raw": "http://192.168.59.3:7777/api/financials/invoices/invoice0818",
+					"raw": "http://192.168.59.3:7777/api/financials/invoices/invoice0817",
 					"protocol": "http",
 					"host": [
 						"192",
@@ -92,7 +92,7 @@
 						"api",
 						"financials",
 						"invoices",
-						"invoice0818"
+						"invoice0817"
 					]
 				},
 				"description": ""
@@ -111,13 +111,16 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"invoice_id\": \"invoice0816\",\n  \"order_id\": \"order4712\",\n  \"order_date\": \"2018-02-17T21:00:00.000Z\",\n  \"customer\": {\n    \"customer_no\": \"CGN4711\",\n    \"first_name\": \"Sven\",\n    \"last_name\": \"Bernhardt\",\n    \"phone\": \"+49 211 5093733\",\n    \"email\": \"sven@yourmail.com\",\n    \"_id\": \"12345678908754324567854345675432\"\n  },\n  \"billing_address\": {\n    \"type\": \"DELIVERY\",\n    \"street_number\": \"15\",\n    \"street\": \"Ludwig-Jahn-Strasse\",\n    \"city\": \"Köln\",\n    \"postcode\": \"50858\",\n    \"country\": \"DE\",\n    \"_id\": \"12345678908754324567854345675432\"\n  },\n  \"invoice_address\": {\n    \"type\": \"BILLING\",\n    \"street_number\": \"15\",\n    \"street\": \"Ludwig-Jahn-Strasse\",\n    \"city\": \"Köln\",\n    \"postcode\": \"50858\",\n    \"country\": \"DE\",\n    \"_id\": \"12345678908754324567854345675432\"\n  },\n  \"invoice_positions\": [ {\n    \"position_id\": 1,\n    \"amount\": 1,\n    \"description\": \"Blue-Ray Box: Game of Thrones Season 7\",\n    \"product_number\": \"B073ZKVHFV\",\n    \"net_price\": 20.98,\n    \"vat\": 19,\n    \"gross_price\": 24.97,\n    \"currency\": \"EUR\",\n    \"_id\": \"12345678908754324567854345675432\"\n  } ]\n}"
+					"raw": "{\n  \"invoice_id\": \"invoice0818\",\n  \"order_id\": \"order4712\",\n  \"order_date\": \"2018-02-17T21:00:00.000Z\",\n  \"shipping_costs\": 6.99,\n  \"total_price\": 31.96,\n  \"customer\": {\n    \"customer_no\": \"CGN4711\",\n    \"first_name\": \"Sven\",\n    \"last_name\": \"Bernhardt\",\n    \"phone\": \"+49 211 5093733\",\n    \"email\": \"sven@yourmail.com\"\n  },\n  \"billing_address\": {\n    \"type\": \"DELIVERY\",\n    \"street_number\": \"15\",\n    \"street\": \"Ludwig-Jahn-Strasse\",\n    \"city\": \"Köln\",\n    \"postcode\": \"50858\",\n    \"country\": \"DE\"\n  },\n  \"invoice_address\": {\n    \"type\": \"BILLING\",\n    \"street_number\": \"15\",\n    \"street\": \"Ludwig-Jahn-Strasse\",\n    \"city\": \"Köln\",\n    \"postcode\": \"50858\",\n    \"country\": \"DE\"\n  },\n  \"invoice_positions\": [ {\n    \"position_id\": 1,\n    \"amount\": 1,\n    \"description\": \"Blu-Ray Box: Game of Thrones Season 7\",\n    \"product_number\": \"B073ZKVHFV\",\n    \"net_price\": 20.98,\n    \"vat\": 19,\n    \"gross_price\": 24.97,\n    \"currency\": \"EUR\"\n  } ]\n}"
 				},
 				"url": {
-					"raw": "http://localhost:7777/api/financials/invoices",
+					"raw": "http://127.0.0.1:7777/api/financials/invoices",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"127",
+						"0",
+						"0",
+						"1"
 					],
 					"port": "7777",
 					"path": [
@@ -142,7 +145,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n        \"invoice_id\": \"invoice0816\",\n        \"order_id\": \"order4712\",\n        \"order_date\": \"2018-02-17T21:00:00.000Z\",\n        \"customer\": {\n            \"customer_no\": \"CGN4711\",\n            \"first_name\": \"Sven\",\n            \"last_name\": \"Bernhardt\",\n            \"email\": \"sven@yourmail.com\",\n            \"phone\": \"+49 211 5093733\",\n            \"_id\": \"12345678908754324567854345675432\"\n        },\n        \"billing_address\": {\n            \"type\": \"DELIVERY\",\n            \"street_number\": \"15\",\n            \"city\": \"Köln\",\n            \"postcode\": \"50858\",\n            \"country\": \"DE\",\n            \"street\": \"Ludwig-Jahn-Strasse\",\n            \"_id\": \"12345678908754324567854345675432\"\n        },\n        \"invoice_address\": {\n            \"type\": \"BILLING\",\n            \"street_number\": \"15\",\n            \"city\": \"Köln\",\n            \"postcode\": \"50858\",\n            \"country\": \"DE\",\n            \"street\": \"Ludwig-Jahn-Strasse\",\n            \"_id\": \"12345678908754324567854345675432\"\n        },\n        \"invoice_positions\": [\n            {\n                \"position_id\": 1,\n                \"amount\": 1,\n                \"description\": \"Blue-Ray Box: Game of Thrones Season 6\",\n                \"product_number\": \"B073ZKVBVB\",\n                \"net_price\": 20.98,\n                \"vat\": 19,\n                \"gross_price\": 24.97,\n                \"currency\": \"EUR\",\n                \"_id\": \"12345678908754324567854345675432\"\n            }\n        ],\n        \"_id\": \"5a95b5ccc9e77c0001085a2a\"\n    }"
+					"raw": "{\n        \"invoice_id\": \"invoice0818\",\n        \"order_id\": \"order4712\",\n        \"shipping_costs\": 6.99,\n        \"total_price\": 31.96,\n        \"order_date\": \"2018-02-17T21:00:00.000Z\",\n        \"payment_status\": \"OPEN\",\n        \"customer\": {\n            \"customer_no\": \"CGN4711\",\n            \"first_name\": \"Sven\",\n            \"last_name\": \"Bernhardt\",\n            \"email\": \"sven@yourmail.com\",\n            \"phone\": \"+49 211 5093733\"\n        },\n        \"billing_address\": {\n            \"type\": \"DELIVERY\",\n            \"street_number\": \"15\",\n            \"city\": \"Köln\",\n            \"postcode\": \"50858\",\n            \"country\": \"DE\",\n            \"street\": \"Ludwig-Jahn-Strasse\"\n        },\n        \"invoice_address\": {\n            \"type\": \"BILLING\",\n            \"street_number\": \"15\",\n            \"city\": \"Köln\",\n            \"postcode\": \"50858\",\n            \"country\": \"DE\",\n            \"street\": \"Ludwig-Jahn-Strasse\"\n        },\n        \"invoice_positions\": [\n            {\n                \"position_id\": 1,\n                \"amount\": 1,\n                \"description\": \"Blu-Ray Box: Game of Thrones Season 7\",\n                \"product_number\": \"B073ZKVHFV\",\n                \"net_price\": 20.98,\n                \"vat\": 19,\n                \"gross_price\": 24.97,\n                \"currency\": \"EUR\"\n            }\n        ],\n        \"_id\": \"5a9da667c9e77c0001791822\"\n    }\n"
 				},
 				"url": {
 					"raw": "http://localhost:7777/api/financials/invoices/invoice0816",
@@ -163,16 +166,46 @@
 			"response": []
 		},
 		{
+			"name": "deleteInvoice",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://127.0.0.1:7777/api/financials/invoices/invoice0817",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "7777",
+					"path": [
+						"api",
+						"financials",
+						"invoices",
+						"invoice0817"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
 			"name": "getServiceHealth",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"body": {},
 				"url": {
-					"raw": "http://localhost:7777/api/financials/health",
+					"raw": "http://192.168.59.3:7777/api/financials/health",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"192",
+						"168",
+						"59",
+						"3"
 					],
 					"port": "7777",
 					"path": [
@@ -186,13 +219,21 @@
 			"response": []
 		},
 		{
-			"name": "deleteInvoice",
+			"name": "createPayment",
 			"request": {
-				"method": "DELETE",
-				"header": [],
-				"body": {},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"payment_id\": \"payment666\",\n  \"invoice_id\": \"invoice0818\",\n  \"order_id\": \"order4712\",\n  \"customer_no\": \"CGN4711\",\n  \"payment_type\": \"VISA\"\n}"
+				},
 				"url": {
-					"raw": "http://127.0.0.1:7777/api/financials/invoices/invoice0815",
+					"raw": "http://127.0.0.1:7777/api/financials/payments",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -204,8 +245,73 @@
 					"path": [
 						"api",
 						"financials",
-						"invoices",
-						"invoice0815"
+						"payments"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "getPaymentByInvoiceId",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://127.0.0.1:7777/api/financials/payments?invoice_id=invoice0818",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "7777",
+					"path": [
+						"api",
+						"financials",
+						"payments"
+					],
+					"query": [
+						{
+							"key": "invoice_id",
+							"value": "invoice0818",
+							"equals": true
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "getPaymentsByCustomerNo",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://127.0.0.1:7777/api/financials/payments?customer_no=CGN4711",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "7777",
+					"path": [
+						"api",
+						"financials",
+						"payments"
+					],
+					"query": [
+						{
+							"key": "customer_no",
+							"value": "CGN4711",
+							"equals": true
+						}
 					]
 				},
 				"description": ""

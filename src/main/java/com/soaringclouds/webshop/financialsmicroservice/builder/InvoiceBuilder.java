@@ -1,14 +1,11 @@
 package com.soaringclouds.webshop.financialsmicroservice.builder;
 
-import com.soaringclouds.webshop.financialsmicroservice.gen.model.Address;
-import com.soaringclouds.webshop.financialsmicroservice.gen.model.Customer;
-import com.soaringclouds.webshop.financialsmicroservice.gen.model.Invoice;
-import com.soaringclouds.webshop.financialsmicroservice.gen.model.InvoicePosition;
+import com.soaringclouds.webshop.financialsmicroservice.gen.model.*;
 
 import java.util.List;
 
 /**
- * Created by svb on 25.02.18.
+ * Created by svb on 07.03.18.
  */
 public final class InvoiceBuilder {
     private Invoice invoice;
@@ -27,8 +24,23 @@ public final class InvoiceBuilder {
 	return this;
     }
 
+    public InvoiceBuilder withShippingCosts(Double shippingCosts) {
+	invoice.setShippingCosts(shippingCosts);
+	return this;
+    }
+
+    public InvoiceBuilder withTotalPrice(Double totalPrice) {
+	invoice.setTotalPrice(totalPrice);
+	return this;
+    }
+
     public InvoiceBuilder withOrderDate(String orderDate) {
 	invoice.setOrderDate(orderDate);
+	return this;
+    }
+
+    public InvoiceBuilder withPaymentStatus(PaymentStatus paymentStatus) {
+	invoice.setPaymentStatus(paymentStatus);
 	return this;
     }
 
@@ -37,13 +49,8 @@ public final class InvoiceBuilder {
 	return this;
     }
 
-    public InvoiceBuilder withBillingAddress(Address billingAddress) {
-	invoice.setBillingAddress(billingAddress);
-	return this;
-    }
-
-    public InvoiceBuilder withInvoiceAddress(Address invoiceAddress) {
-	invoice.setInvoiceAddress(invoiceAddress);
+    public InvoiceBuilder withAddresses(List<Address> addresses) {
+	invoice.setAddresses(addresses);
 	return this;
     }
 

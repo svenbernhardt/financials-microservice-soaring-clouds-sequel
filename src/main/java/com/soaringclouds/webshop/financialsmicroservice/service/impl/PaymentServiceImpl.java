@@ -2,6 +2,7 @@ package com.soaringclouds.webshop.financialsmicroservice.service.impl;
 
 import com.google.common.base.Strings;
 import com.soaringclouds.webshop.financialsmicroservice.builder.PaymentBuilder;
+import com.soaringclouds.webshop.financialsmicroservice.event.PaymentStatusEventProducer;
 import com.soaringclouds.webshop.financialsmicroservice.gen.model.Invoice;
 import com.soaringclouds.webshop.financialsmicroservice.gen.model.Payment;
 import com.soaringclouds.webshop.financialsmicroservice.gen.model.PaymentStatus;
@@ -30,17 +31,33 @@ public class PaymentServiceImpl implements PaymentService {
     @Autowired
     private InvoiceService invoiceService;
 
+    @Autowired
+    private PaymentStatusEventProducer paymentStatusEventProducer;
+
     @Override
     public ResponseMetadata savePaymentAndUpdateInvoice(Payment pPayment) {
 
-	paymentRepository.save(pPayment);
+	LOGGER.debug(String.format("Updating invoice with payment...."));
+	final boolean wasAlreadyPaid = invoiceService.updateInvoiceWithPayment(pPayment);
 
-	invoiceService.updateInvoiceWithPayment(pPayment);
+        LOGGER.debug(String.format("Saving payment...."));
+	paymentRepository.save(pPayment);
 
 	final ResponseMetadata responseMetadata = new ResponseMetadata();
 	responseMetadata.setError(false);
-	responseMetadata.setProcessingMessage(
-			String.format("Payment has been created successfully! ID: [%s]", pPayment.getId()));
+
+	if(!wasAlreadyPaid) {
+
+	    paymentStatusEventProducer.producePaymentStatusReceived(pPayment);
+	    LOGGER.debug(String.format("Payment event produced...."));
+
+	    responseMetadata.setProcessingMessage(
+			    String.format("Payment has been created successfully! ID: [%s]", pPayment.getId()));
+	}
+	else {
+	    responseMetadata.setProcessingMessage(
+			    String.format("Payment was already done before! ID: [%s]", pPayment.getId()));
+	}
 
 	return responseMetadata;
     }
@@ -51,13 +68,13 @@ public class PaymentServiceImpl implements PaymentService {
         final PaymentBuilder paymentBuilder = PaymentBuilder.aPayment();
 
         if(!Strings.isNullOrEmpty(pInvoiceId)) {
-            LOGGER.info(String.format("Adding invoice id to criteria [%s]", pInvoiceId));
+            LOGGER.debug(String.format("Adding invoice id to criteria [%s]", pInvoiceId));
 
             paymentBuilder.withInvoiceId(pInvoiceId);
 	}
 
 	if(!Strings.isNullOrEmpty(pCustomerNo)) {
-	    LOGGER.info(String.format("Adding customer No to criteria [%s]", pCustomerNo));
+	    LOGGER.debug(String.format("Adding customer No to criteria [%s]", pCustomerNo));
 
             paymentBuilder.withCustomerNo(pCustomerNo);
 	}

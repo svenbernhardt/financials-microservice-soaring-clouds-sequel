@@ -10,6 +10,8 @@
         </encoder>
     </appender>
 
+    <logger name="com.soaringclouds.webshop" level="debug" />
+
     <root level="info">
         <appender-ref ref="STDOUT"/>
     </root>

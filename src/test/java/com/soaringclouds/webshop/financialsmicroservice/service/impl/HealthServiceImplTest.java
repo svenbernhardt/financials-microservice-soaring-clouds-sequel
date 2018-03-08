@@ -2,10 +2,12 @@ package com.soaringclouds.webshop.financialsmicroservice.service.impl;
 
 import com.soaringclouds.webshop.financialsmicroservice.gen.model.HealthCheckResponse;
 import com.soaringclouds.webshop.financialsmicroservice.service.HealthService;
+import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.kafka.test.rule.KafkaEmbedded;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,6 +26,8 @@ public class HealthServiceImplTest {
     @Autowired
     private HealthService healthService;
 
+    @ClassRule public static KafkaEmbedded embeddedKafka = new KafkaEmbedded(1, true,
+                    "a516817-soaring-order-created");
     @Test
     public void whenQueryToServiceHealthThenReturnHealthInformation() throws InterruptedException {
 

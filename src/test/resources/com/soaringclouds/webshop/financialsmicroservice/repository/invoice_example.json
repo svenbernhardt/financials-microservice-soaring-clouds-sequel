@@ -2,7 +2,7 @@
   "invoice_id": "invoice0815",
   "order_id": "order4711",
   "order_date": "2018-02-17T21:00:00.000Z",
-  "shipping_costs" : 6.99,
+  "shipping_costs": 6.99,
   "total_price": 30.96,
   "payment_status": "PENDING",
   "customer": {
@@ -12,30 +12,34 @@
     "phone": "+49 211 5093733",
     "email": "sven@yourmail.com"
   },
-  "billing_address": {
-    "type": "DELIVERY",
-    "street_number": "15",
-    "street": "Ludwig-Jahn-Strasse",
-    "city": "Köln",
-    "postcode": "50858",
-    "country": "DE"
-  },
-  "invoice_address": {
-    "type": "BILLING",
-    "street_number": "15",
-    "street": "Ludwig-Jahn-Strasse",
-    "city": "Köln",
-    "postcode": "50858",
-    "country": "DE"
-  },
-  "invoice_positions": [ {
-    "position_id": 1,
-    "amount": 1,
-    "description": "Blue-Ray Box: Game of Thrones Season 7",
-    "product_number": "B073ZKVHFV",
-    "net_price": 20.98,
-    "vat": 19,
-    "gross_price": 24.97,
-    "currency": "EUR"
-  } ]
+  "addresses": [
+    {
+      "type": "DELIVERY",
+      "street_number": "15",
+      "street": "Ludwig-Jahn-Strasse",
+      "city": "Köln",
+      "postcode": "50858",
+      "country": "DE"
+    },
+    {
+      "type": "BILLING",
+      "street_number": "15",
+      "street": "Ludwig-Jahn-Strasse",
+      "city": "Köln",
+      "postcode": "50858",
+      "country": "DE"
+    }
+  ],
+  "invoice_positions": [
+    {
+      "position_id": 1,
+      "amount": 1,
+      "description": "Blue-Ray Box: Game of Thrones Season 7",
+      "product_number": "B073ZKVHFV",
+      "net_price": 20.98,
+      "vat": 19,
+      "gross_price": 24.97,
+      "currency": "EUR"
+    }
+  ]
 }

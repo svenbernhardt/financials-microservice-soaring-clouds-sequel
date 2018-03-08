@@ -1,8 +1,10 @@
 package com.soaringclouds.webshop.financialsmicroservice.service;
 
+import com.soaringclouds.avro.order.v1.Order;
 import com.soaringclouds.webshop.financialsmicroservice.gen.model.Invoice;
 import com.soaringclouds.webshop.financialsmicroservice.gen.model.Payment;
 import com.soaringclouds.webshop.financialsmicroservice.gen.model.ResponseMetadata;
+import com.soaringclouds.webshop.financialsmicroservice.model.ShippingEvent;
 
 import java.util.List;
 
@@ -17,9 +19,13 @@ public interface InvoiceService {
 
     ResponseMetadata createInvoice(Invoice pInvoice);
 
+    void createInvoice(Order pOrder);
+
     ResponseMetadata updateInvoice(Invoice pUpdatedInvoice);
 
-    void updateInvoiceWithPayment(Payment pPayment);
+    boolean updateInvoiceWithPayment(Payment pPayment);
+
+    void updateInvoiceWithShippingInformation(ShippingEvent pShippingEvent);
 
     void deleteInvoice(String pInvoiceId);
 }
