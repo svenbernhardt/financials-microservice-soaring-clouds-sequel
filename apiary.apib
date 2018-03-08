@@ -132,6 +132,23 @@ Create a new payment
 
     + Attributes (Response Metadata)
 
+# Group Customer Account Resources
+Customer account related Resources
+
+## Search customer account information [/api/financials/customers/{customer_id}/account]
+
+### Get customer account info [GET]
+
++ Request (text/plain)
+    
+    + Headers
+        
+            api-key: asdasdsaasd-asdsa-asdas-asdasd-asdasdad
+            
++ Response 200 (application/json, charset=utf-8)
+
+    + Attributes (CustomerAccount)
+
 # Group Service Operations Resources
 Service health related resources
 
@@ -182,17 +199,21 @@ Get service health information
 - net_price: `20.98` (number, required)
 - vat: `19` (number, required)
 - gross_price: `24.97` (number, required)
-- currency (enum, optional)
-  - `EUR` (string) - Euros
-  - `GBP` (string) - British Pounds
-  - `USD` (string) - US Dollars
 
 ## Invoice (object)
 - invoice_id: `invoice0815` (string, required) - System generated Invoice ID
 - order_id: `order4711` (string, required)
 - order_date: `2018-02-17T21:00:00.000Z` (string, optional)
 - shipping_costs: `6.99` (number, required)
-- total_price: `31.96` (number, required) 
+- total_price: `31.96` (number, required)
+- currency (enum, optional)
+  - `EUR` (string) - Euros
+  - `GBP` (string) - British Pounds
+  - `USD` (string) - US Dollars
+- invoice_status (enum, optional)
+  - `OPEN` (string) - Inovice unpaid
+  - `PAID` (string) - Invoice paid
+  - `CANCEL` (string) - Invoice canceled
 - payment_status (enum, optional)
   - `PENDING` (string) - Payment still opem
   - `RECEIVED` (string) - Payment received
@@ -205,7 +226,7 @@ Get service health information
 - payment_id: `pay666` (string, optional)
 - invoice_id: `invoice0815` (string, required)
 - order_id: `order4711` (string, required)
-- customer_no: `order4711` (string, required)
+- customer_no: `CGN4711` (string, required)
 - payment_type (enum, required)
   - `VISA` - Payment type Credit card VISA
   - `Mastercard` - Payment type Credit card Mastercard
@@ -216,3 +237,12 @@ Get service health information
   - `PENDING` - Payment still open
   - `APPROVED` - Payment has successfully been processed
 - _id: `12345678908754324567854345675432` (string, optional) - Technical database ID
+
+## CustomerAccount (object)
+- customer_no: `CGN4711` (string, required)
+- frist_name: `Sven` (string, required)
+- last_name: `Bernhardt` (string, required)
+- balance: `-69.99` (number, required)
+- customer_status (enum, required)
+  - `FROZEN` (string) - Customers account balance is too high
+  - `NORMAL` (string) - Customers account balance is ok
