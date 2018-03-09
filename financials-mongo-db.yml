@@ -1,0 +1,39 @@
+# Deployment
+
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    run: financials-mongo-db
+  name: financials-mongo-db
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        run: financials-mongo-db
+    spec:
+      containers:
+      - image: mongo
+        name: financials-mongo-db
+        ports:
+        - name: financials-mongo-db
+          containerPort: 27017
+          hostPort: 27017
+      restartPolicy: Always
+
+# Service
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    run: financials-mongo-db
+  name: financials-mongo-db
+spec:
+  clusterIP: None
+  ports:
+  - name: "27017"
+    port: 27017
+    targetPort: 27017
+  selector:
+    run: financials-mongo-db

@@ -1,0 +1,44 @@
+# Deployment
+
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    run: financials-ms
+  name: financials-ms
+spec:
+  replicas: 1
+  selector: 
+    matchLabels:
+      run: financials-ms-exposed
+  template:
+    metadata:
+      labels:
+        run: financials-ms-exposed 
+    spec:
+      containers:
+      - args:
+        - java
+        - -jar
+        - financials.jar
+        image: sbernhardtoc/financials-ms-1.0.0.0
+        name: financials-ms
+        ports:
+        - containerPort: 8080
+        resources: {}
+      restartPolicy: Always
+
+# Service
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    run: financials-ms
+  name: financials-ms
+spec:
+  ports:
+  - name: "7777"
+    port: 7777
+    targetPort: 8080
+  selector:
+    run: financials-ms-exposed

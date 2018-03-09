@@ -5,13 +5,21 @@ build:
     - script:
         name: Maven install
         code: mvn -f financials-ms/pom.xml install
+    - script:
+        name: Create TLS key and cert
+        code: openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout tls.key -out tls.crt -subj "/CN=nginxsvc/O=nginxsvc"
 
 push-to-releases:
   steps:
     # Push to public docker repo Container Registry (CR)
     - internal/docker-push:
+        #username: $USERNAME
+        #password: $PASSWORD
         tag: $WERCKER_GIT_BRANCH-$WERCKER_GIT_COMMIT
         cmd: java -jar  /pipeline/source/target/financials-ms-1.0.0.0.jar
+        #ports: "7777"
+        #repository: sbernhardtoc/financials-ms
+        #registry: https://registry.hub.docker.com
 
 # for now we will delete and recreate the namespace, however, at some point that may be a little much for just a redeployment of the Pod! 
 deploy-to-oke:
@@ -62,7 +70,7 @@ deploy-to-oke:
         server: $KUBERNETES_MASTER
         token: $KUBERNETES_TOKEN
         insecure-skip-tls-verify: true
-        command: create -f $WERCKER_ROOT/kubernetes-deployment.yml --namespace=$KUBERNETES_NAMESPACE
+        command: create -f $WERCKER_ROOT/financials-ms.yml --namespace=$KUBERNETES_NAMESPACE
 
     - script:
         name: "Visualise Ingress config"
