@@ -31,7 +31,7 @@ deploy-to-oke:
     
     - script:
         name: "Visualise Kubernetes config"
-        code: cat kubernetes-deployment.yml
+        code: cat financials-ms.yml
     
     - kubectl:
         name: delete namespace
@@ -93,7 +93,7 @@ redeploy-to-oke:
     
     - script:
         name: "Visualise Kubernetes config"
-        code: cat kubernetes-deployment.yml
+        code: cat financials-ms.yml .yml
     
         
     - kubectl:
@@ -101,4 +101,4 @@ redeploy-to-oke:
         server: $KUBERNETES_MASTER
         token: $KUBERNETES_TOKEN
         insecure-skip-tls-verify: true
-        command: apply -f $WERCKER_ROOT/kubernetes-deployment.yml --namespace=$KUBERNETES_NAMESPACE
+        command: apply -f $WERCKER_ROOT/financials-ms.yml --namespace=$KUBERNETES_NAMESPACE
