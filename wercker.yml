@@ -1,0 +1,96 @@
+box: combient/java-mvn
+build:
+  steps:
+    # Build Spring Boot Sample application
+    - script:
+        name: Maven install
+        code: mvn install
+
+push-to-releases:
+  steps:
+    # Push to public docker repo Container Registry (CR)
+    - internal/docker-push:
+        tag: $WERCKER_GIT_BRANCH-$WERCKER_GIT_COMMIT
+        cmd: java -jar  /pipeline/source/target/financials-ms-1.0.0.0.jar
+
+# for now we will delete and recreate the namespace, however, at some point that may be a little much for just a redeployment of the Pod! 
+deploy-to-oke:
+  box:
+        id: alpine
+        cmd: /bin/sh
+  steps:
+    - bash-template
+    
+    - script:
+        name: "Visualise Kubernetes config"
+        code: cat kubernetes-deployment.yml
+    
+    - kubectl:
+        name: delete namespace
+        server: $KUBERNETES_MASTER
+        token: $KUBERNETES_TOKEN
+        insecure-skip-tls-verify: true
+        command: delete namespace $KUBERNETES_NAMESPACE --ignore-not-found=true
+        
+    - script:
+        name: wait to delete namespace
+        code: sleep 30
+        
+    - kubectl:
+        name: create namespace    
+        server: $KUBERNETES_MASTER
+        token: $KUBERNETES_TOKEN
+        insecure-skip-tls-verify: true
+        command: create namespace $KUBERNETES_NAMESPACE
+        
+    - kubectl:
+        name: create OCR secret
+        server: $KUBERNETES_MASTER
+        token: $KUBERNETES_TOKEN
+        insecure-skip-tls-verify: true
+        command: create secret docker-registry wrelease --docker-server=wcr.io --docker-username=$WERCKER_APPLICATION_OWNER_NAME --docker-password=$KUBERNETES_TOKEN --docker-email=${WERCKER_APPLICATION_OWNER_NAME}@mail.com --namespace=$KUBERNETES_NAMESPACE
+
+    - kubectl:
+        name: create TLS secret
+        server: $KUBERNETES_MASTER
+        token: $KUBERNETES_TOKEN
+        insecure-skip-tls-verify: true
+        command: create secret tls tls-secret --key $WERCKER_ROOT/tls.key --cert $WERCKER_ROOT/tls.crt --namespace=$KUBERNETES_NAMESPACE
+        
+    - kubectl:
+        name: create 
+        server: $KUBERNETES_MASTER
+        token: $KUBERNETES_TOKEN
+        insecure-skip-tls-verify: true
+        command: create -f $WERCKER_ROOT/kubernetes-deployment.yml --namespace=$KUBERNETES_NAMESPACE
+
+    - script:
+        name: "Visualise Ingress config"
+        code: cat ingress.yml
+
+    - kubectl:
+        name: create Ingress configuration
+        server: $KUBERNETES_MASTER
+        token: $KUBERNETES_TOKEN
+        insecure-skip-tls-verify: true
+        command: create -f $WERCKER_ROOT/ingress.yml --namespace=$KUBERNETES_NAMESPACE
+
+# redeployment after the code has changed; no changes in kubernetes configuration 
+redeploy-to-oke:
+  box:
+        id: alpine
+        cmd: /bin/sh
+  steps:
+    - bash-template
+    
+    - script:
+        name: "Visualise Kubernetes config"
+        code: cat kubernetes-deployment.yml
+    
+        
+    - kubectl:
+        name: create deployment
+        server: $KUBERNETES_MASTER
+        token: $KUBERNETES_TOKEN
+        insecure-skip-tls-verify: true
+        command: apply -f $WERCKER_ROOT/kubernetes-deployment.yml --namespace=$KUBERNETES_NAMESPACE
