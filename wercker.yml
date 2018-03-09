@@ -10,8 +10,13 @@ push-to-releases:
   steps:
     # Push to public docker repo Container Registry (CR)
     - internal/docker-push:
+        username: $USERNAME
+        password: $PASSWORD
         tag: $WERCKER_GIT_BRANCH-$WERCKER_GIT_COMMIT
         cmd: java -jar  /pipeline/source/target/financials-ms-1.0.0.0.jar
+        ports: "7777"
+        repository: sbernhardtoc/financials-ms
+        registry: https://registry.hub.docker.com
 
 # for now we will delete and recreate the namespace, however, at some point that may be a little much for just a redeployment of the Pod! 
 deploy-to-oke:
