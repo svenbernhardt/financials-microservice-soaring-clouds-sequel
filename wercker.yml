@@ -4,7 +4,7 @@ build:
     # Build Spring Boot Sample application
     - script:
         name: Maven install
-        code: mvn install
+        code: mvn -f financials-ms/pom.xml install
 
 push-to-releases:
   steps:
