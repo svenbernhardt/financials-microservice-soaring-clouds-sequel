@@ -17,15 +17,20 @@ spec:
         run: financials-ms-exposed 
     spec:
       containers:
-      - args:
-        - java
-        - -jar
-        - financials.jar
-        image: sbernhardtoc/financials-ms-1.0.0.0
-        name: financials-ms
+      #- args:
+      #  - java
+      #  - -jar
+      #  - financials.jar
+      #  image: sbernhardtoc/financials-ms-1.0.0.0
+      image: wcr.io/$WERCKER_APPLICATION_OWNER_NAME/$WERCKER_APPLICATION_NAME:$WERCKER_GIT_BRANCH-$WERCKER_GIT_COMMIT
+        imagePullPolicy: Always
+        name: financials-ms-exposed
         ports:
         - containerPort: 8080
-        resources: {}
+          protocol: TCP
+        name: financials-ms
+      imagePullSecrets:
+      - name: wrelease  
       restartPolicy: Always
 
 # Service
@@ -42,3 +47,4 @@ spec:
     targetPort: 8080
   selector:
     run: financials-ms-exposed
+  type: ClusterIP
