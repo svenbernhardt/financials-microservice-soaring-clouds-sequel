@@ -59,7 +59,7 @@ public class TestUtilities {
 	    orderJsonString = CharStreams.toString(new InputStreamReader(
 			    Thread.currentThread().getContextClassLoader().getResourceAsStream(
 					    "com/soaringclouds/webshop/financialsmicroservice/service"
-							    + "/order_example.json")));
+							    + "/order_created_event_example.json")));
 
 	    order = new ObjectMapper().readValue(orderJsonString, Order.class);
 	} catch (Exception e) {

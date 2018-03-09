@@ -24,7 +24,7 @@ public class OrderCreatedEventConsumer {
 	final Order order = consumerRecord.value();
 
 	LOGGER.debug("received payload='{}'", order.toString());
-	
+
 	invoiceService.createInvoice(order);
     }
 }

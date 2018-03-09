@@ -4,6 +4,8 @@
   "order_date": "2018-02-17T21:00:00.000Z",
   "shipping_costs": 6.99,
   "total_price": 30.96,
+  "currency": "EUR",
+  "invoice_status": "OPEN",
   "payment_status": "PENDING",
   "customer": {
     "customer_no": "CGN4711",
@@ -38,8 +40,7 @@
       "product_number": "B073ZKVHFV",
       "net_price": 20.98,
       "vat": 19,
-      "gross_price": 24.97,
-      "currency": "EUR"
+      "gross_price": 24.97
     }
   ]
 }

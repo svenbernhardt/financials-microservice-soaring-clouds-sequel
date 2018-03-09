@@ -28,4 +28,6 @@ public interface InvoiceService {
     void updateInvoiceWithShippingInformation(ShippingEvent pShippingEvent);
 
     void deleteInvoice(String pInvoiceId);
+
+    void cancelInvoiceByOrderId(String pOrderId);
 }

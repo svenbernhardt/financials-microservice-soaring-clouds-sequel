@@ -5,7 +5,7 @@ import com.soaringclouds.webshop.financialsmicroservice.gen.model.*;
 import java.util.List;
 
 /**
- * Created by svb on 07.03.18.
+ * Created by svb on 08.03.18.
  */
 public final class InvoiceBuilder {
     private Invoice invoice;
@@ -36,6 +36,16 @@ public final class InvoiceBuilder {
 
     public InvoiceBuilder withOrderDate(String orderDate) {
 	invoice.setOrderDate(orderDate);
+	return this;
+    }
+
+    public InvoiceBuilder withCurrency(Currency currency) {
+	invoice.setCurrency(currency);
+	return this;
+    }
+
+    public InvoiceBuilder withInvoiceStatus(InvoiceStatus invoiceStatus) {
+	invoice.setInvoiceStatus(invoiceStatus);
 	return this;
     }
 

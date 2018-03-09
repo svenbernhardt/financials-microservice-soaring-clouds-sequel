@@ -1,12 +1,11 @@
 package com.soaringclouds.webshop.financialsmicroservice.endpoint;
 
+import com.soaringclouds.webshop.financialsmicroservice.gen.api.CustomerAccountResourcesApi;
 import com.soaringclouds.webshop.financialsmicroservice.gen.api.InvoicesResourcesApi;
 import com.soaringclouds.webshop.financialsmicroservice.gen.api.PaymentsResourcesApi;
 import com.soaringclouds.webshop.financialsmicroservice.gen.api.ServiceOperationsResourcesApi;
-import com.soaringclouds.webshop.financialsmicroservice.gen.model.HealthCheckResponse;
-import com.soaringclouds.webshop.financialsmicroservice.gen.model.Invoice;
-import com.soaringclouds.webshop.financialsmicroservice.gen.model.Payment;
-import com.soaringclouds.webshop.financialsmicroservice.gen.model.ResponseMetadata;
+import com.soaringclouds.webshop.financialsmicroservice.gen.model.*;
+import com.soaringclouds.webshop.financialsmicroservice.service.CustomerAccountService;
 import com.soaringclouds.webshop.financialsmicroservice.service.HealthService;
 import com.soaringclouds.webshop.financialsmicroservice.service.InvoiceService;
 import com.soaringclouds.webshop.financialsmicroservice.service.PaymentService;
@@ -18,13 +17,15 @@ import java.util.List;
  * Created by svb on 23.02.18.
  */
 public class FinancialsMicroserviceEndpoint implements InvoicesResourcesApi, ServiceOperationsResourcesApi,
-		PaymentsResourcesApi {
+		PaymentsResourcesApi, CustomerAccountResourcesApi {
 
     @Autowired private InvoiceService invoiceService;
 
     @Autowired private HealthService healthService;
 
     @Autowired private PaymentService paymentService;
+
+    @Autowired private CustomerAccountService customerAccountService;
 
     @Override
     public void apiFinancialsInvoicesByInvoiceIdDelete(String invoiceId) {
@@ -70,5 +71,10 @@ public class FinancialsMicroserviceEndpoint implements InvoicesResourcesApi, Ser
     @Override
     public ResponseMetadata apiFinancialsPaymentsPost(Payment body, String invoiceId, String customerNo) {
 	return paymentService.savePaymentAndUpdateInvoice(body);
+    }
+
+    @Override
+    public CustomerAccount apiFinancialsCustomersAccountByCustomerIdGet(String customerId) {
+	return customerAccountService.getCustomerAccount(customerId);
     }
 }

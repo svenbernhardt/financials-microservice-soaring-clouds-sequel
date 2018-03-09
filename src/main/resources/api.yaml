@@ -46,6 +46,8 @@ paths:
               order_date: 2018-02-17T21:00:00.0000000Z
               shipping_costs: 6.9900000000000002
               total_price: 31.960000000000001
+              currency: EUR
+              invoice_status: OPEN
               payment_status: PENDING
               customer:
                 customer_no: CGN4711
@@ -68,7 +70,6 @@ paths:
                 net_price: 20.98
                 vat: 19
                 gross_price: 24.969999999999999
-                currency: EUR
               _id: 12345678908754324567854345675432
       x-unitTests:
       - request:
@@ -82,7 +83,7 @@ paths:
           x-matchResponseSchema: true
           headers:
             Content-Type: application/json; charset=utf-8
-          body: '[  {    "invoice_id": "invoice0815",    "order_id": "order4711",    "order_date": "2018-02-17T21:00:00.000Z",    "shipping_costs": 6.99,    "total_price": 31.96,    "payment_status": "PENDING",    "customer": {      "customer_no": "CGN4711",      "first_name": "Sven",      "last_name": "Bernhardt",      "phone": "+49 211 5093733",      "email": "sven@yourmail.com"    },    "addresses": [      {        "type": "BILLING",        "street_number": "15",        "street": "Ludwig-Jahn-Strasse",        "city": "Köln",        "postcode": "50858",        "country": "DE"      }    ],    "invoice_positions": [      {        "position_id": 1,        "amount": 1,        "description": "Blue-Ray Box: Game of Thrones Season 7",        "product_number": "B073ZKVHFV",        "net_price": 20.98,        "vat": 19,        "gross_price": 24.97,        "currency": "EUR"      }    ],    "_id": "12345678908754324567854345675432"  }]'
+          body: '[  {    "invoice_id": "invoice0815",    "order_id": "order4711",    "order_date": "2018-02-17T21:00:00.000Z",    "shipping_costs": 6.99,    "total_price": 31.96,    "currency": "EUR",    "invoice_status": "OPEN",    "payment_status": "PENDING",    "customer": {      "customer_no": "CGN4711",      "first_name": "Sven",      "last_name": "Bernhardt",      "phone": "+49 211 5093733",      "email": "sven@yourmail.com"    },    "addresses": [      {        "type": "BILLING",        "street_number": "15",        "street": "Ludwig-Jahn-Strasse",        "city": "Köln",        "postcode": "50858",        "country": "DE"      }    ],    "invoice_positions": [      {        "position_id": 1,        "amount": 1,        "description": "Blue-Ray Box: Game of Thrones Season 7",        "product_number": "B073ZKVHFV",        "net_price": 20.98,        "vat": 19,        "gross_price": 24.97      }    ],    "_id": "12345678908754324567854345675432"  }]'
         x-testShouldPass: true
         x-testEnabled: true
         x-testName: Search invoices1
@@ -132,7 +133,7 @@ paths:
           uri: /api/financials/invoices
           headers:
             Content-Type: application/json
-          body: '{  "invoice_id": "invoice0815",  "order_id": "order4711",  "order_date": "2018-02-17T21:00:00.000Z",  "shipping_costs": 6.99,  "total_price": 31.96,  "payment_status": "PENDING",  "customer": {    "customer_no": "CGN4711",    "first_name": "Sven",    "last_name": "Bernhardt",    "phone": "+49 211 5093733",    "email": "sven@yourmail.com"  },  "addresses": [    {      "type": "BILLING",      "street_number": "15",      "street": "Ludwig-Jahn-Strasse",      "city": "Köln",      "postcode": "50858",      "country": "DE"    }  ],  "invoice_positions": [    {      "position_id": 1,      "amount": 1,      "description": "Blue-Ray Box: Game of Thrones Season 7",      "product_number": "B073ZKVHFV",      "net_price": 20.98,      "vat": 19,      "gross_price": 24.97,      "currency": "EUR"    }  ],  "_id": "12345678908754324567854345675432"}'
+          body: '{  "invoice_id": "invoice0815",  "order_id": "order4711",  "order_date": "2018-02-17T21:00:00.000Z",  "shipping_costs": 6.99,  "total_price": 31.96,  "currency": "EUR",  "invoice_status": "OPEN",  "payment_status": "PENDING",  "customer": {    "customer_no": "CGN4711",    "first_name": "Sven",    "last_name": "Bernhardt",    "phone": "+49 211 5093733",    "email": "sven@yourmail.com"  },  "addresses": [    {      "type": "BILLING",      "street_number": "15",      "street": "Ludwig-Jahn-Strasse",      "city": "Köln",      "postcode": "50858",      "country": "DE"    }  ],  "invoice_positions": [    {      "position_id": 1,      "amount": 1,      "description": "Blue-Ray Box: Game of Thrones Season 7",      "product_number": "B073ZKVHFV",      "net_price": 20.98,      "vat": 19,      "gross_price": 24.97    }  ],  "_id": "12345678908754324567854345675432"}'
         expectedResponse:
           x-allowExtraHeaders: true
           x-bodyMatchMode: RAW
@@ -349,7 +350,7 @@ paths:
           uri: /api/financials/payments
           headers:
             Content-Type: application/json
-          body: '{  "payment_id": "pay666",  "invoice_id": "invoice0815",  "order_id": "order4711",  "customer_no": "order4711",  "payment_type": "VISA",  "payment_state": "PENDING",  "_id": "12345678908754324567854345675432"}'
+          body: '{  "payment_id": "pay666",  "invoice_id": "invoice0815",  "order_id": "order4711",  "customer_no": "CGN4711",  "payment_type": "VISA",  "payment_state": "PENDING",  "_id": "12345678908754324567854345675432"}'
         expectedResponse:
           x-allowExtraHeaders: true
           x-bodyMatchMode: NONE
@@ -362,6 +363,48 @@ paths:
         x-testEnabled: true
         x-testName: Create payment1
         x-testDescription: Create a new payment
+      x-operation-settings:
+        CollectParameters: false
+        AllowDynamicQueryParameters: false
+        AllowDynamicFormParameters: false
+        IsMultiContentStreaming: false
+  /api/financials/customers/{customer_id}/account:
+    get:
+      description: ''
+      summary: Get customer account info
+      tags:
+      - Customer Account Resources
+      operationId: ApiFinancialsCustomersAccountByCustomerIdGet
+      produces:
+      - application/json
+      parameters:
+      - name: customer_id
+        in: path
+        required: true
+        type: string
+        description: ''
+      responses:
+        200:
+          description: ''
+          schema:
+            $ref: '#/definitions/CustomerAccount'
+          examples: {}
+      x-unitTests:
+      - request:
+          method: GET
+          uri: /api/financials/customers/{customer_id}/account
+        expectedResponse:
+          x-allowExtraHeaders: true
+          x-bodyMatchMode: NONE
+          x-arrayOrderedMatching: false
+          x-arrayCheckCount: false
+          x-matchResponseSchema: true
+          headers:
+            Content-Type: application/json, charset=utf-8
+        x-testShouldPass: true
+        x-testEnabled: true
+        x-testName: Get customer account info1
+        x-testDescription: Testcase for testing endpoint Get customer account info
       x-operation-settings:
         CollectParameters: false
         AllowDynamicQueryParameters: false
@@ -572,8 +615,6 @@ definitions:
         example: 24.969999999999999
         type: number
         format: double
-      currency:
-        $ref: '#/definitions/Currency'
     required:
     - position_id
     - amount
@@ -582,21 +623,6 @@ definitions:
     - net_price
     - vat
     - gross_price
-  Currency:
-    title: currency
-    example: EUR
-    x-enum-elements:
-    - name: EUR
-      description: ''
-    - name: GBP
-      description: ''
-    - name: USD
-      description: ''
-    type: string
-    enum:
-    - EUR
-    - GBP
-    - USD
   Invoice:
     title: Invoice
     example:
@@ -605,6 +631,8 @@ definitions:
       order_date: 2018-02-17T21:00:00.0000000Z
       shipping_costs: 6.9900000000000002
       total_price: 31.960000000000001
+      currency: EUR
+      invoice_status: OPEN
       payment_status: PENDING
       customer:
         customer_no: CGN4711
@@ -627,7 +655,6 @@ definitions:
         net_price: 20.98
         vat: 19
         gross_price: 24.969999999999999
-        currency: EUR
       _id: 12345678908754324567854345675432
     type: object
     properties:
@@ -653,6 +680,10 @@ definitions:
         description: ''
         example: 2/17/2018 9:00:00 PM
         type: string
+      currency:
+        $ref: '#/definitions/Currency'
+      invoice_status:
+        $ref: '#/definitions/InvoiceStatus'
       payment_status:
         $ref: '#/definitions/PaymentStatus'
       customer:
@@ -676,6 +707,36 @@ definitions:
     - order_id
     - shipping_costs
     - total_price
+  Currency:
+    title: currency
+    example: EUR
+    x-enum-elements:
+    - name: EUR
+      description: ''
+    - name: GBP
+      description: ''
+    - name: USD
+      description: ''
+    type: string
+    enum:
+    - EUR
+    - GBP
+    - USD
+  InvoiceStatus:
+    title: invoice_status
+    example: OPEN
+    x-enum-elements:
+    - name: OPEN
+      description: ''
+    - name: PAID
+      description: ''
+    - name: CANCEL
+      description: ''
+    type: string
+    enum:
+    - OPEN
+    - PAID
+    - CANCEL
   PaymentStatus:
     title: payment_status
     example: PENDING
@@ -694,7 +755,7 @@ definitions:
       payment_id: pay666
       invoice_id: invoice0815
       order_id: order4711
-      customer_no: order4711
+      customer_no: CGN4711
       payment_type: VISA
       payment_state: PENDING
       _id: 12345678908754324567854345675432
@@ -710,7 +771,7 @@ definitions:
         type: string
       customer_no:
         description: ''
-        example: order4711
+        example: CGN4711
         type: string
       payment_type:
         $ref: '#/definitions/PaymentType'
@@ -762,3 +823,48 @@ definitions:
     enum:
     - PENDING
     - APPROVED
+  CustomerAccount:
+    title: CustomerAccount
+    type: object
+    properties:
+      customer_no:
+        description: ''
+        example: CGN4711
+        type: string
+      first_name:
+        description: ''
+        example: Sven
+        type: string
+      last_name:
+        description: ''
+        example: Bernhardt
+        type: string
+      balance:
+        description: ''
+        example: -69.989999999999995
+        type: number
+        format: double
+      customer_status:
+        $ref: '#/definitions/CustomerStatus'
+      _id:
+        description: Technical database IDdd
+        example: 12345678908754324567854345675432
+        type: string
+    required:
+    - customer_no
+    - frist_name
+    - last_name
+    - balance
+    - customer_status
+  CustomerStatus:
+    title: customer_status
+    example: FROZEN
+    x-enum-elements:
+    - name: FROZEN
+      description: ''
+    - name: NORMAL
+      description: ''
+    type: string
+    enum:
+    - FROZEN
+    - NORMAL

@@ -24,7 +24,9 @@ public class Order2InvoiceConverter {
 	invoice.withOrderId(pOrder.getOrderId().toString()).withInvoiceId(createInvoiceId())
 			.withOrderDate(pOrder.getCreatedAt().toString())
 			.withPaymentStatus(PaymentStatus.PENDING)
-			.withTotalPrice(round(pOrder.getTotalPrice(), 2)).withShippingCosts(null);
+			.withTotalPrice(round(pOrder.getTotalPrice(), 2))
+			.withCurrency(Currency.valueOf(pOrder.getCurrency().name()))
+			.withInvoiceStatus(InvoiceStatus.OPEN).withShippingCosts(null);
 
 	invoice.withAddresses(pOrder.getAddresses().stream().map(pAddress -> {
 

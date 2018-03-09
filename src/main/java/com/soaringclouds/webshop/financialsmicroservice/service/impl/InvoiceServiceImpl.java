@@ -6,13 +6,10 @@ import com.soaringclouds.webshop.financialsmicroservice.builder.CustomerBuilder;
 import com.soaringclouds.webshop.financialsmicroservice.builder.InvoiceBuilder;
 import com.soaringclouds.webshop.financialsmicroservice.converter.Order2InvoiceConverter;
 import com.soaringclouds.webshop.financialsmicroservice.exception.InvoiceNotFoundException;
-import com.soaringclouds.webshop.financialsmicroservice.gen.model.Invoice;
-import com.soaringclouds.webshop.financialsmicroservice.gen.model.Payment;
-import com.soaringclouds.webshop.financialsmicroservice.gen.model.PaymentStatus;
-import com.soaringclouds.webshop.financialsmicroservice.gen.model.ResponseMetadata;
+import com.soaringclouds.webshop.financialsmicroservice.gen.model.*;
 import com.soaringclouds.webshop.financialsmicroservice.model.ShippingEvent;
 import com.soaringclouds.webshop.financialsmicroservice.repository.InvoiceRepository;
-import com.soaringclouds.webshop.financialsmicroservice.service.CustomerService;
+import com.soaringclouds.webshop.financialsmicroservice.service.CustomerAccountService;
 import com.soaringclouds.webshop.financialsmicroservice.service.InvoiceService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,9 +29,9 @@ public class InvoiceServiceImpl implements InvoiceService {
 
     @Autowired private InvoiceRepository invoiceRepository;
 
-    @Autowired private CustomerService customerService;
-
     @Autowired private Order2InvoiceConverter order2InvoiceConverter;
+
+    @Autowired private CustomerAccountService customerAccountService;
 
     @Override
     public List<Invoice> findInvoiceByCriteria(String pOrderId, String pCustomerNo) {
@@ -69,13 +66,13 @@ public class InvoiceServiceImpl implements InvoiceService {
     @Override
     public ResponseMetadata createInvoice(Invoice pInvoice) {
 
-	final boolean isCustomerBalanceOk = customerService.checkCustomerBalanceUnderThreshold(
-			findInvoiceByCriteria(null, pInvoice.getCustomer().getCustomerNo()));
+	final CustomerAccount customerAccount = customerAccountService
+			.createOrUpdateCustomerAccount(pInvoice);
 
 	final Invoice insertedInvoice = invoiceRepository.insert(pInvoice);
 	ResponseMetadata responseMetadata;
 
-	if (isCustomerBalanceOk) {
+	if (customerAccount.getCustomerStatus() == CustomerStatus.NORMAL) {
 
 	    responseMetadata = createResponseMetadata(
 			    String.format("Invoice successfully created! Invoice-Id: [%s]",
@@ -124,17 +121,8 @@ public class InvoiceServiceImpl implements InvoiceService {
     @Override
     public void updateInvoiceWithShippingInformation(ShippingEvent pShippingEvent) {
 
-	final List<Invoice> invoices = findInvoiceByCriteria(pShippingEvent.getPayload()
-					.getOrderIdentifier(),
-			null);
-
-	if (invoices == null || invoices.size() != 1) {
-
-	    throw new InvoiceNotFoundException(String.format("No unique invoice found for Order ID [%s]",
-			    pShippingEvent.getPayload().getOrderIdentifier()));
-	}
-
-	final Invoice invoiceToUpdate = invoices.get(0);
+	final Invoice invoiceToUpdate = findInvoiceByOrderId(
+			pShippingEvent.getPayload().getOrderIdentifier());
 
 	final Double shippingCosts = new Double(pShippingEvent.getPayload().getShippingCosts());
 
@@ -152,6 +140,19 @@ public class InvoiceServiceImpl implements InvoiceService {
 	invoiceRepository.delete(invoice);
     }
 
+    @Override
+    public void cancelInvoiceByOrderId(String pOrderId) {
+
+	final Invoice invoice = findInvoiceByOrderId(pOrderId);
+
+	invoice.setInvoiceStatus(InvoiceStatus.CANCEL);
+	final ResponseMetadata responseMetadata = updateInvoice(invoice);
+
+	LOGGER.debug(String
+			.format("Invoice has been marked as canceled sucessfully! [%s]", responseMetadata));
+
+    }
+
     private ResponseMetadata createResponseMetadata(String pResponseMessage) {
 
 	final ResponseMetadata responseMetadata = new ResponseMetadata();
@@ -159,5 +160,18 @@ public class InvoiceServiceImpl implements InvoiceService {
 	responseMetadata.error(false);
 
 	return responseMetadata;
+    }
+
+    private Invoice findInvoiceByOrderId(String pOrderId) {
+
+	final List<Invoice> invoices = findInvoiceByCriteria(pOrderId, null);
+
+	if (invoices == null || invoices.size() != 1) {
+
+	    throw new InvoiceNotFoundException(
+			    String.format("No unique invoice found for Order ID [%s]", pOrderId));
+	}
+
+	return invoices.get(0);
     }
 }
