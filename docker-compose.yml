@@ -1,11 +1,17 @@
-financialmicroservice:
-  build: .
-  ports:
-    - "7777:8080"
-  links:
-    - mongodb
+version: '2'
+services:
+  financials-ms:
+    image: sbernhardtoc/financials-ms-1.0.0.0
+    build: ./financials-ms
+    depends_on:
+      - financials-mongo-db
+    ports:
+      - "7777:8080"
+    command: java -jar financials.jar
+    links:
+      - financials-mongo-db
 
-mongodb:
-  image: mongo
-  ports:
-    - 27017:27017
+  financials-mongo-db:
+    image: mongo
+    ports:
+      - 27017:27017

@@ -1,0 +1,97 @@
+{
+  "type" : "record",
+  "namespace" : "com.soaringclouds.avro.shoppingCartItem.v1",
+  "name" : "ShoppingCartItem",
+  "description" : "the representation of a product added to the Shopping Cart",
+  "fields" : [
+    { "type" : "string",
+      "name" : "sessionId"
+    },
+    { "type" : "string",
+      "name" : "customerId",
+      "doc" : "the unique identifier of the a Customer"
+    },
+    { "type" : "int",
+      "name" : "quantity"
+    },
+    { "type" : "double",
+      "name" : "priceInCurrency"
+    },
+    { "name" : "currency",
+      "doc" : "the currency used",
+      "type" : { 
+      		"type" : "enum",
+      		"doc" : "Valid currencies",
+      		"name" : "CurrencyEnum",
+      		"symbols" : ["USD", "GBP", "EUR"]
+      		}
+    },
+    { "name" : "product",
+      "type" : {
+      	  	"type" : "record", 
+      		"name" : "Product", 
+      		"fields" : [
+			    { "type" : "string",
+      			"name" : "productId"
+    			},
+    			{ "type" : ["string", "null"],
+      			"name" : "productCode",
+      			"default" : ""
+    			},
+    			{ "type" : ["string", "null"], 
+    			  "name" : "productName",
+    			  "default" : ""
+    			},
+    			{ "type" : ["string", "null"], 
+    			  "name" : "description",
+    			  "default" : ""
+    			},
+    			{ "type" : ["string", "null"], 
+    			  "name" : "imageUrl",
+    			  "default" : ""
+    			},    
+    			{ "type" : ["double","null"], 
+    			  "name" : "price"
+    			},    
+    			{ "type" : ["int","null"], 
+    			  "name" : "size" 
+    			},
+    			{ "type" : ["double","null"], 
+     			 "name" : "weight" 
+    			},
+    			{ "name" : "categories",
+    			  "type" : {
+     		      "type" : "array",
+    		      "items" : "string"  
+    				}
+    			},    
+    			{ "name" : "tags",
+    			  "type" : {
+     		      "type" : "array",
+    		      "items" : "string"  
+    				}
+    			}, 
+    			{ "name" : "dimension",
+      			  "type" : {
+      	  				"type" : "record", 
+      					"name" : "Dimension", 
+      					"fields" : [
+                  			{ "type" : ["string", "null"], 
+                    		"name" : "unit"},
+                  			{ "type" : ["double","null"],  
+                    			"name" : "length"},
+                  			{ "type" : ["double","null"], 
+                    			"name" : "height"},
+                  			{ "type" : ["double", "null"], 
+                    			"name" : "width" }
+              				]
+        			}
+    			},
+    			{ "type" : ["string", "null"],
+      			  "name" : "color" 
+    			}
+			]
+        }
+    }    			
+  ]
+}
