@@ -70,6 +70,13 @@ deploy-to-oke:
         server: $KUBERNETES_MASTER
         token: $KUBERNETES_TOKEN
         insecure-skip-tls-verify: true
+        command: create -f $WERCKER_ROOT/financials-mongo-db.yml --namespace=$KUBERNETES_NAMESPACE
+
+    - kubectl:
+        name: create 
+        server: $KUBERNETES_MASTER
+        token: $KUBERNETES_TOKEN
+        insecure-skip-tls-verify: true
         command: create -f $WERCKER_ROOT/financials-ms.yml --namespace=$KUBERNETES_NAMESPACE
 
     - script:

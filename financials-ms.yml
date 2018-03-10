@@ -22,7 +22,7 @@ spec:
       #  - -jar
       #  - financials.jar
       #  image: sbernhardtoc/financials-ms-1.0.0.0
-      image: wcr.io/$WERCKER_APPLICATION_OWNER_NAME/$WERCKER_APPLICATION_NAME:$WERCKER_GIT_BRANCH-$WERCKER_GIT_COMMIT
+      - image: wcr.io/$WERCKER_APPLICATION_OWNER_NAME/$WERCKER_APPLICATION_NAME:$WERCKER_GIT_BRANCH-$WERCKER_GIT_COMMIT
         imagePullPolicy: Always
         name: financials-ms-exposed
         ports:
