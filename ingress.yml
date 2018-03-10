@@ -14,5 +14,5 @@ spec:
       paths:
       - path: /$KUBERNETES_NAMESPACE/app/
         backend:
-          serviceName: financials-ms-svc
+          serviceName: financials-ms
           servicePort: 7777

@@ -28,7 +28,6 @@ spec:
         ports:
         - containerPort: 8080
           protocol: TCP
-        name: financials-ms
       imagePullSecrets:
       - name: wrelease  
       restartPolicy: Always
@@ -37,9 +36,8 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: financials-ms-svc
   labels:
-    run: financials-ms-svc
+    run: financials-ms
 spec:
   selector:
     run: financials-ms
