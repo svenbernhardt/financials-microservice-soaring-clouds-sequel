@@ -16,8 +16,10 @@ push-to-releases:
         #username: $USERNAME
         #password: $PASSWORD
         tag: $WERCKER_GIT_BRANCH-$WERCKER_GIT_COMMIT
-        cmd: java -jar  /pipeline/source/target/financials-ms-1.0.0.0.jar
-        #ports: "7777"
+        #cmd: java -jar  /pipeline/source/target/financials-ms-1.0.0.0.jar
+        ports: "7777"
+        volumes: "/tmp"
+        entrypoint: java -Djava.security.egd=file:/dev/./urandom -jar /pipeline/source/target/financials-ms-1.0.0.0.jar
         #repository: sbernhardtoc/financials-ms
         #registry: https://registry.hub.docker.com
 
