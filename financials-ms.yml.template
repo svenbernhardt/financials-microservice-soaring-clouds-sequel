@@ -36,6 +36,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
+  name: financials-ms
   labels:
     run: financials-ms
 spec:
