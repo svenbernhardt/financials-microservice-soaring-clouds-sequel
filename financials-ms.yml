@@ -3,18 +3,18 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
+  name: financials-ms
   labels:
     run: financials-ms
-  name: financials-ms
 spec:
   replicas: 1
   selector: 
     matchLabels:
-      run: financials-ms-exposed
+      run: financials-ms
   template:
     metadata:
       labels:
-        run: financials-ms-exposed 
+        run: financials-ms 
     spec:
       containers:
       #- args:
@@ -24,7 +24,7 @@ spec:
       #  image: sbernhardtoc/financials-ms-1.0.0.0
       - image: wcr.io/$WERCKER_APPLICATION_OWNER_NAME/$WERCKER_APPLICATION_NAME:$WERCKER_GIT_BRANCH-$WERCKER_GIT_COMMIT
         imagePullPolicy: Always
-        name: financials-ms-exposed
+        name: financials-ms
         ports:
         - containerPort: 8080
           protocol: TCP
@@ -37,14 +37,13 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
+  name: financials-ms-svc
   labels:
-    run: financials-ms
-  name: financials-ms
+    run: financials-ms-svc
 spec:
-  ports:
-  - name: "7777"
-    port: 7777
-    targetPort: 8080
   selector:
-    run: financials-ms-exposed
+    run: financials-ms
+  ports:
+  - port: 7777
+    targetPort: 8080
   type: ClusterIP

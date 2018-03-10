@@ -27,12 +27,12 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    run: financials-mongo-db
-  name: financials-mongo-db
+    run: financials-mongo-db-svc
+  name: financials-mongo-db-svc
 spec:
   clusterIP: None
   ports:
-  - name: "27017"
+  - name: financials-mongo-db
     port: 27017
     targetPort: 27017
   selector:
