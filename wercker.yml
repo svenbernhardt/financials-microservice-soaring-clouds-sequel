@@ -6,10 +6,6 @@ build:
         name: Maven install
         code: mvn -f financials-ms/pom.xml install -DskipTests
     - script:
-        name: copy package to output
-        code: |
-          cp $WERCKER SOURCE/financials-ms/target/financials-microservice-1.0.0.0.jar $WERCKER_OUTPUT_DIR/financials-ms/financials-ms.jar
-    - script:
         name: Create TLS key and cert
         code: openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout tls.key -out tls.crt -subj "/CN=nginxsvc/O=nginxsvc"
 
@@ -18,7 +14,7 @@ push-to-releases:
     # Push to public docker repo Container Registry (CR)
     - script:
       code: |
-        mv $WERCKER_OUTPUT_DIR/financials-ms/financials-ms.jar /financials-ms.jar
+        mv $WERCKER SOURCE/financials-ms/target/financials-microservice-1.0.0.0.jar /financials-ms.jar
         touch /financials-ms.jar
     - internal/docker-push:
         #username: $USERNAME
