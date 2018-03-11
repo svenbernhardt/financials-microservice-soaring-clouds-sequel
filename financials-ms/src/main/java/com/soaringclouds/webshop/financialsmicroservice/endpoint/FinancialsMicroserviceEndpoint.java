@@ -1,23 +1,19 @@
 package com.soaringclouds.webshop.financialsmicroservice.endpoint;
 
-import com.soaringclouds.webshop.financialsmicroservice.gen.api.CustomerAccountResourcesApi;
-import com.soaringclouds.webshop.financialsmicroservice.gen.api.InvoicesResourcesApi;
-import com.soaringclouds.webshop.financialsmicroservice.gen.api.PaymentsResourcesApi;
-import com.soaringclouds.webshop.financialsmicroservice.gen.api.ServiceOperationsResourcesApi;
 import com.soaringclouds.webshop.financialsmicroservice.gen.model.*;
 import com.soaringclouds.webshop.financialsmicroservice.service.CustomerAccountService;
 import com.soaringclouds.webshop.financialsmicroservice.service.HealthService;
 import com.soaringclouds.webshop.financialsmicroservice.service.InvoiceService;
 import com.soaringclouds.webshop.financialsmicroservice.service.PaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import javax.ws.rs.QueryParam;
 import java.util.List;
 
-/**
- * Created by svb on 23.02.18.
- */
-public class FinancialsMicroserviceEndpoint implements InvoicesResourcesApi, ServiceOperationsResourcesApi,
-		PaymentsResourcesApi, CustomerAccountResourcesApi {
+@RestController
+public class FinancialsMicroserviceEndpoint {
 
     @Autowired private InvoiceService invoiceService;
 
@@ -27,54 +23,66 @@ public class FinancialsMicroserviceEndpoint implements InvoicesResourcesApi, Ser
 
     @Autowired private CustomerAccountService customerAccountService;
 
-    @Override
-    public void apiFinancialsInvoicesByInvoiceIdDelete(String invoiceId) {
+    @RequestMapping(value = "/api/financials/invoices/{invoice_id}", method = RequestMethod.DELETE)
+    public void apiFinancialsInvoicesByInvoiceIdDelete(@PathVariable(value = "invoice_id") String invoiceId) {
 
 	invoiceService.deleteInvoice(invoiceId);
     }
 
-    @Override
-    public Invoice apiFinancialsInvoicesByInvoiceIdGet(String invoiceId) {
+    @RequestMapping(value = "/api/financials/invoices/{invoice_id}", method = RequestMethod.GET)
+    public Invoice apiFinancialsInvoicesByInvoiceIdGet(@PathVariable(value = "invoice_id") String invoiceId) {
 
 	return invoiceService.findInvoiceByInvoiceId(invoiceId);
     }
 
-    @Override
-    public ResponseMetadata apiFinancialsInvoicesByInvoiceIdPut(Invoice body, String invoiceId) {
+    @RequestMapping(value = "/api/financials/invoices/{invoice_id}", method = RequestMethod.PUT, consumes =
+		    "application/json")
+    public ResponseMetadata apiFinancialsInvoicesByInvoiceIdPut(@RequestBody @Valid Invoice body,
+		    @PathVariable(value = "invoice_id") String invoiceId) {
 
 	return invoiceService.updateInvoice(body);
     }
 
-    @Override
-    public List<Invoice> apiFinancialsInvoicesGet(String customerId, String orderId) {
+    @RequestMapping(value = "/api/financials/invoices", method = RequestMethod.GET)
+    public List<Invoice> apiFinancialsInvoicesGet(@QueryParam(value = "customer_id") String customerId,
+		    @QueryParam(value = "order_id") String orderId) {
 
 	return invoiceService.findInvoiceByCriteria(orderId, customerId);
     }
 
-    @Override
-    public ResponseMetadata apiFinancialsInvoicesPost(Invoice body, String customerId, String orderId) {
+    @RequestMapping(value = "/api/financials/invoices", method = RequestMethod.POST, consumes =
+		    "application/json")
+    public ResponseMetadata apiFinancialsInvoicesPost(@RequestBody @Valid Invoice body,
+		    @QueryParam(value = "customer_id") String customerId,
+		    @QueryParam(value = "order_id") String orderId) {
 
 	return invoiceService.createInvoice(body);
     }
 
-    @Override
+    @RequestMapping(value = "/api/financials/health", method = RequestMethod.GET)
     public HealthCheckResponse apiFinancialsHealthGet() {
 
 	return healthService.getServiceHealth();
     }
 
-    @Override
-    public List<Payment> apiFinancialsPaymentsGet(String invoiceId, String customerNo) {
+    @RequestMapping(value = "/api/financials/payments", method = RequestMethod.GET)
+    public List<Payment> apiFinancialsPaymentsGet(@QueryParam(value = "invoice_id") String invoiceId,
+		    @QueryParam(value = "customer_id") String customerNo) {
 	return paymentService.findPaymentByCriteria(invoiceId, customerNo);
     }
 
-    @Override
-    public ResponseMetadata apiFinancialsPaymentsPost(Payment body, String invoiceId, String customerNo) {
+    @RequestMapping(value = "/api/financials/payments", method = RequestMethod.POST, consumes =
+		    "application/json")
+    public ResponseMetadata apiFinancialsPaymentsPost(@RequestBody @Valid Payment body,
+		    @QueryParam(value = "invoice_id") String invoiceId,
+		    @QueryParam(value = "customer_id") String customerNo) {
 	return paymentService.savePaymentAndUpdateInvoice(body);
     }
 
-    @Override
-    public CustomerAccount apiFinancialsCustomersAccountByCustomerIdGet(String customerId) {
+    @RequestMapping(value = "/api/financials/customers/{customer_id}/account", method = RequestMethod.GET,
+		    consumes = "application/json")
+    public CustomerAccount apiFinancialsCustomersAccountByCustomerIdGet(
+		    @PathVariable(value = "customer_id") String customerId) {
 	return customerAccountService.getCustomerAccount(customerId);
     }
 }

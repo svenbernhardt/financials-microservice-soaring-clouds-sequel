@@ -4,7 +4,11 @@ build:
     # Build Spring Boot Sample application
     - script:
         name: Maven install
-        code: mvn -f financials-ms/pom.xml install
+        code: mvn -f financials-ms/pom.xml package
+    - script:
+        name: copy package to output
+        code: |
+          cp ./target/*.jar $WERCKER_OUTPUT_DIR/financials-ms.jar
     - script:
         name: Create TLS key and cert
         code: openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout tls.key -out tls.crt -subj "/CN=nginxsvc/O=nginxsvc"
@@ -12,6 +16,10 @@ build:
 push-to-releases:
   steps:
     # Push to public docker repo Container Registry (CR)
+    - script:
+      code: |
+        mv $WERCKER_SOURCE_DIR/financials-ms.jar /financials-ms.jar
+        touch /financials-ms.jar
     - internal/docker-push:
         #username: $USERNAME
         #password: $PASSWORD
@@ -19,9 +27,12 @@ push-to-releases:
         #cmd: java -jar  /pipeline/source/target/financials-ms-1.0.0.0.jar
         ports: "7777"
         volumes: "/tmp"
-        entrypoint: java -Djava.security.egd=file:/dev/./urandom -jar /pipeline/source/target/financials-ms-1.0.0.0.jar
+        entrypoint: java -Djava.security.egd=file:/dev/./urandom -jar financials-ms.jar
         #repository: sbernhardtoc/financials-ms
         #registry: https://registry.hub.docker.com
+    - script:
+      code: |
+        touch $WERCKER_OUTPUT_DIR/deploy-me
 
 # for now we will delete and recreate the namespace, however, at some point that may be a little much for just a redeployment of the Pod! 
 deploy-to-oke:
