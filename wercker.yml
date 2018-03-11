@@ -8,9 +8,7 @@ build:
     - script:
         name: copy package to output
         code: |
-          echo 'WERCKER SOURCE: ' + $WERCKER_SOURCE_DIR
-          echo 'WERCKER ROOT: ' + $WERCKER_ROOT_DIR
-          cp pipeline/source/target/financials-microservice-1.0.0.0.jar $WERCKER_OUTPUT_DIR/financials-ms.jar
+          cp $WERCKER SOURCE/financials-ms/target/financials-microservice-1.0.0.0.jar $WERCKER_OUTPUT_DIR/financials-ms.jar
     - script:
         name: Create TLS key and cert
         code: openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout tls.key -out tls.crt -subj "/CN=nginxsvc/O=nginxsvc"
