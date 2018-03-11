@@ -1,4 +1,4 @@
-box: combient/java-mvn
+box: maven:latest
 build:
   steps:
     # Build Spring Boot Sample application
