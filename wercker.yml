@@ -10,6 +10,10 @@ build:
         code: openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout tls.key -out tls.crt -subj "/CN=nginxsvc/O=nginxsvc"
 
 push-to-releases:
+  box:
+    id: openjdk
+    tag: 8-jre-alpine
+    cmd: /bin/sh # see: http://devcenter.wercker.com/docs/faq/alpine-faq  
   steps:
     # Push to public docker repo Container Registry (CR)
     - script:
