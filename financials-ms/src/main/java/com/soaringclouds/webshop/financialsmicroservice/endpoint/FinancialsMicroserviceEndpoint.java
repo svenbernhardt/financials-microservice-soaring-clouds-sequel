@@ -79,8 +79,7 @@ public class FinancialsMicroserviceEndpoint {
 	return paymentService.savePaymentAndUpdateInvoice(body);
     }
 
-    @RequestMapping(value = "/api/financials/customers/{customer_id}/account", method = RequestMethod.GET,
-		    consumes = "application/json")
+    @RequestMapping(value = "/api/financials/customers/{customer_id}/account", method = RequestMethod.GET)
     public CustomerAccount apiFinancialsCustomersAccountByCustomerIdGet(
 		    @PathVariable(value = "customer_id") String customerId) {
 	return customerAccountService.getCustomerAccount(customerId);
