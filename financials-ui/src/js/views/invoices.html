@@ -7,13 +7,13 @@ and open the template in the editor.
 <div id="customerAccountContainer" class="oj-flex">
     <div id="customerAccountPanelContent" class="oj-panel oj-flex-item oj-panel-shadow-sm oj-sm-margin-2x demo-panel-customizations" style="width: 1px; min-width: 50%;">
         <h3>Customer account for 
-            <strong data-bind="text: ca.first_name"></strong>
-            <strong data-bind="text: ca.last_name"></strong>(Customer-No:
-            <span data-bind="text: ca.customer_no"></span>)
+            <strong data-bind="text: username"></strong>
+            (Customer-No:
+            <span data-bind="text: customerIdentifier"></span>)
             <br />
             <br />Account balance:
-            <span data-bind="text: ca.balance"></span>
-            <span data-bind="text: ca.currency"></span>
+            <span data-bind="text: customerAccountBalance"></span>
+            <span data-bind="text: customerAccountCurrency"></span>
         </h3>
     </div>
 </div>

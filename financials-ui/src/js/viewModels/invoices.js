@@ -12,12 +12,33 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojknockout', 'ojs/ojknockout', 
     /**
      * The view model for the main content view template
      */
-    function invoicesContentViewModel() {
+    var invoicesContentViewModel = function () {
 
         var self = this;
 
-        self.serviceUrl = "http://localhost:7777/api/financials";
-        //self.serviceUrl = "http://129.150.114.134:7777/api/financials";
+        self.serviceUrl = "http://129.150.114.134:7777/api/financials";
+
+        self.username = ko.observable("");
+        self.customerIdentifier = ko.observable("");
+        self.customerAccountBalance = ko.observable("");
+        self.customerAccountCurrency = ko.observable("EUR");
+
+        var rootViewModel = ko.dataFor(document.getElementById('globalBody'));
+
+        function updateModelFromGlobalContext(globalContext) {
+            var customer = globalContext.customer;
+            if (customer) {
+                self.username(customer.title + " " + customer.firstName + " " + customer.lastName);
+                self.customerIdentifier(customer.customerIdentifier);
+            }
+        }
+
+        rootViewModel.registerGlobalContextListener(
+                function (globalContext) {
+                    console.log("financials - global context listener - receiving global context " + JSON.stringify(globalContext));
+                    updateModelFromGlobalContext(globalContext);
+                }
+        );
 
         self.customerAccount = new oj.Model();
 
@@ -31,7 +52,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojknockout', 'ojs/ojknockout', 
             model: model
         });
 
-        var customerAccountModel = function () {
+        self.customerAccountModel = function () {
 
             var Customer = oj.Model.extend({
                 url: self.serviceUrl + "/customers/CGN4712/account",
@@ -49,19 +70,26 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojknockout', 'ojs/ojknockout', 
             return new Customer();
         };
 
-        self.customerAccount = new customerAccountModel().fetch({
+        var bla = self.customerAccountModel().fetch({
             success: function (model, response, options) {
                 console.log('Model for CustomerAccount loaded!' + response['first_name']);
-
+                
+                if(!self.customerIdentifier().value) {
+                    self.customerIdentifier(response['customer_no']);
+                }
+                
+                if(!self.username().value) {
+                    self.username(response['first_name'] + " " + response['last_name']);
+                }
+                
+                self.customerAccountBalance(response['balance']);
             }
         });
-        
-        self.ca = ko.observable(self.customerAccount);
 
         self.collection = collection;
         self.dataSource = ko.observableArray(collection);
         self.dataSource(new oj.CollectionTableDataSource(collection));
-    }
-
+    };
+    
     return invoicesContentViewModel;
 });
