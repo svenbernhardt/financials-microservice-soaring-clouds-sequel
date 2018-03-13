@@ -1,0 +1,52 @@
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+
+<div id="customerAccountContainer" class="oj-flex">
+    <div id="customerAccountPanelContent" class="oj-panel oj-flex-item oj-panel-shadow-sm oj-sm-margin-2x demo-panel-customizations" style="width: 1px; min-width: 50%;">
+        <h3>Customer account for 
+            <strong data-bind="text: ca.first_name"></strong>
+            <strong data-bind="text: ca.last_name"></strong>(Customer-No:
+            <span data-bind="text: ca.customer_no"></span>)
+            <br />
+            <br />Account balance:
+            <span data-bind="text: ca.balance"></span>
+            <span data-bind="text: ca.currency"></span>
+        </h3>
+    </div>
+</div>
+<div id="invoicesOverview" class="demo-padding demo-container oj-flex">
+    <div id="invoicesOverviewContent" class="oj-flex-item" style="width: 1px; min-width: 100%;">
+        <oj-list-view id="listview" aria-label="list using collection" style="width:100%;height:300px;overflow-x:hidden" data="[[dataSource]]" item.renderer="[[oj.KnockoutTemplateUtils.getRenderer('invoice_template')]]" selection-mode="single" scroll-policy="loadMoreOnScroll" scroll-policy-options.fetch-size="15"></oj-list-view>
+        <script type="text/html" id="invoice_template">
+            <li data-bind="attr: {id: invoice_id}">
+                <div class="oj-flex" style="flex-wrap: nowrap">
+                    <div class="oj-lg-2 oj-md-2 oj-sm-12" style="max-width:90px;padding-bottom:5px">
+                        <img data-bind="attr: {src: 'css/images/invoice_75.png'}"></img>
+                    </div>
+                    <div class="oj-web-applayout-content oj-flex-item">
+                        <div>
+                            <strong data-bind="text: 'Invoice: ' + invoice_id"></strong>
+                        </div>
+                        <div class="demo-metadata" style="padding-top:10px">
+                            <strong data-bind="text: 'Order details: '"></strong>
+                            <div class="demo-metadata">
+                                <span style="word-wrap: break-word" data-bind="text: 'Order: ' + order_id"></span>
+                                <span style="word-wrap: break-word" data-bind="text: 'ordered at: ' + order_date"></span>
+                            </div>
+                            <div>
+                                <span data-bind="text: 'Total price: ' + total_price + ' ' + currency"></span>
+                            </div>
+                        </div>
+                        <div class="demo-metadata" style="padding-top:10px">
+                            <span data-bind="text: 'Payment status: '" ></span>
+                            <strong data-bind="text: payment_status"></strong>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            </script>
+        </div>
+    </div>
