@@ -1,10 +1,8 @@
 package com.soaringclouds.webshop.financialsmicroservice.service.impl;
 
-import com.soaringclouds.webshop.financialsmicroservice.gen.model.Invoice;
-import com.soaringclouds.webshop.financialsmicroservice.gen.model.Payment;
-import com.soaringclouds.webshop.financialsmicroservice.gen.model.PaymentStatus;
-import com.soaringclouds.webshop.financialsmicroservice.gen.model.ResponseMetadata;
+import com.soaringclouds.webshop.financialsmicroservice.gen.model.*;
 import com.soaringclouds.webshop.financialsmicroservice.repository.PaymentRepository;
+import com.soaringclouds.webshop.financialsmicroservice.service.CustomerAccountService;
 import com.soaringclouds.webshop.financialsmicroservice.service.InvoiceService;
 import com.soaringclouds.webshop.financialsmicroservice.service.PaymentService;
 import org.junit.*;
@@ -49,10 +47,14 @@ public class PaymentServiceImplTest {
 
     @Autowired private InvoiceService invoiceService;
 
+    @Autowired private CustomerAccountService customerAccountService;
+
     @Autowired private MongoTemplate mongoTemplate;
 
     @ClassRule public static KafkaEmbedded embeddedKafka = new KafkaEmbedded(1, true,
 		    "a516817-soaring-payment-status");
+
+    private CustomerAccount customerAccountBeforePayment;
 
     @Before
     public void setUp() {
@@ -60,6 +62,8 @@ public class PaymentServiceImplTest {
 	invoiceService.createInvoice(createInvoice());
 
 	newPayment = createPayment();
+
+	customerAccountBeforePayment = customerAccountService.getCustomerAccount(newPayment.getCustomerNo());
     }
 
     @After
@@ -71,7 +75,7 @@ public class PaymentServiceImplTest {
 
     @Test
     @Ignore
-    public void whenPaymentIsReceivedThenUpdateInvoiceStatus() {
+    public void whenPaymentIsReceivedThenUpdateInvoiceAndCustomerAccount() {
 
 	final ResponseMetadata response = paymentService.savePaymentAndUpdateInvoice(newPayment);
 
@@ -81,6 +85,12 @@ public class PaymentServiceImplTest {
 	final Invoice paidInvoice = invoiceService.findInvoiceByInvoiceId(newPayment.getInvoiceId());
 
 	assertThat(paidInvoice.getPaymentStatus(), equalTo(PaymentStatus.RECEIVED));
+	assertThat(paidInvoice.getInvoiceStatus(), equalTo(InvoiceStatus.PAID));
+
+	final CustomerAccount customerAccount = customerAccountService
+			.getCustomerAccount(newPayment.getCustomerNo());
+
+	assertThat(customerAccount.getBalance(), equalTo(customerAccountBeforePayment.getBalance()-paidInvoice.getTotalPrice()));
     }
 
     @Test

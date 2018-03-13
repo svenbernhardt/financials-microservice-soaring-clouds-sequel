@@ -16,10 +16,11 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojknockout', 'ojs/ojknockout', 
 
         var self = this;
 
+        //self.serviceUrl = "http://localhost:7777/api/financials";
         self.serviceUrl = "http://129.150.114.134:7777/api/financials";
 
         self.username = ko.observable("");
-        self.customerIdentifier = ko.observable("");
+        self.customerIdentifier = ko.observable("CGN4723");
         self.customerAccountBalance = ko.observable("");
         self.customerAccountCurrency = ko.observable("EUR");
 
@@ -47,15 +48,15 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojknockout', 'ojs/ojknockout', 
         });
 
         var collection = new oj.Collection(null, {
-            url: self.serviceUrl + "/invoices",
+            url: self.serviceUrl + "/invoices?customer_id=" + self.customerIdentifier(),
             fetchSize: 15,
             model: model
         });
-
+        
         self.customerAccountModel = function () {
 
             var Customer = oj.Model.extend({
-                url: self.serviceUrl + "/customers/CGN4712/account",
+                url: self.serviceUrl + "/customers/"  + self.customerIdentifier() + "/account",
                 parse: function (request) {
                     return {
                         customer_no: request.customer_no,

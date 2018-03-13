@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import javax.ws.rs.QueryParam;
 import java.util.List;
 
 @RestController
@@ -44,8 +43,8 @@ public class FinancialsMicroserviceEndpoint {
     }
 
     @RequestMapping(value = "/api/financials/invoices", method = RequestMethod.GET)
-    public List<Invoice> apiFinancialsInvoicesGet(@QueryParam(value = "customer_id") String customerId,
-		    @QueryParam(value = "order_id") String orderId) {
+    public List<Invoice> apiFinancialsInvoicesGet(@RequestParam(value = "customer_id", required = false) String customerId,
+		    @RequestParam(value = "order_id", required = false) String orderId) {
 
 	return invoiceService.findInvoiceByCriteria(orderId, customerId);
     }
@@ -53,8 +52,8 @@ public class FinancialsMicroserviceEndpoint {
     @RequestMapping(value = "/api/financials/invoices", method = RequestMethod.POST, consumes =
 		    "application/json")
     public ResponseMetadata apiFinancialsInvoicesPost(@RequestBody @Valid Invoice body,
-		    @QueryParam(value = "customer_id") String customerId,
-		    @QueryParam(value = "order_id") String orderId) {
+		    @RequestParam(value = "customer_id", required = false) String customerId,
+		    @RequestParam(value = "order_id", required = false) String orderId) {
 
 	return invoiceService.createInvoice(body);
     }
@@ -66,16 +65,16 @@ public class FinancialsMicroserviceEndpoint {
     }
 
     @RequestMapping(value = "/api/financials/payments", method = RequestMethod.GET)
-    public List<Payment> apiFinancialsPaymentsGet(@QueryParam(value = "invoice_id") String invoiceId,
-		    @QueryParam(value = "customer_id") String customerNo) {
+    public List<Payment> apiFinancialsPaymentsGet(@RequestParam(value = "invoice_id", required = false) String invoiceId,
+		    @RequestParam(value = "customer_id", required = false) String customerNo) {
 	return paymentService.findPaymentByCriteria(invoiceId, customerNo);
     }
 
     @RequestMapping(value = "/api/financials/payments", method = RequestMethod.POST, consumes =
 		    "application/json")
     public ResponseMetadata apiFinancialsPaymentsPost(@RequestBody @Valid Payment body,
-		    @QueryParam(value = "invoice_id") String invoiceId,
-		    @QueryParam(value = "customer_id") String customerNo) {
+		    @RequestParam(value = "invoice_id", required = false) String invoiceId,
+		    @RequestParam(value = "customer_id", required = false) String customerNo) {
 	return paymentService.savePaymentAndUpdateInvoice(body);
     }
 

@@ -108,7 +108,9 @@ public class InvoiceServiceImpl implements InvoiceService {
 	final Invoice invoiceToBePaid = findInvoiceByInvoiceId(pPayment.getInvoiceId());
 
 	if (invoiceToBePaid.getPaymentStatus() != PaymentStatus.RECEIVED) {
+
 	    invoiceToBePaid.setPaymentStatus(PaymentStatus.RECEIVED);
+	    invoiceToBePaid.setInvoiceStatus(InvoiceStatus.PAID);
 	    updateInvoice(invoiceToBePaid);
 	} else {
 	    LOGGER.warn(String.format("Invoice [%s] is already paid!", invoiceToBePaid.getInvoiceId()));

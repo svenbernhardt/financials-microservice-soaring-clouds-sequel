@@ -3,11 +3,11 @@ package com.soaringclouds.webshop.financialsmicroservice.service.impl;
 import com.google.common.base.Strings;
 import com.soaringclouds.webshop.financialsmicroservice.builder.PaymentBuilder;
 import com.soaringclouds.webshop.financialsmicroservice.event.PaymentStatusEventProducer;
-import com.soaringclouds.webshop.financialsmicroservice.gen.model.Invoice;
+import com.soaringclouds.webshop.financialsmicroservice.gen.model.CustomerAccount;
 import com.soaringclouds.webshop.financialsmicroservice.gen.model.Payment;
-import com.soaringclouds.webshop.financialsmicroservice.gen.model.PaymentStatus;
 import com.soaringclouds.webshop.financialsmicroservice.gen.model.ResponseMetadata;
 import com.soaringclouds.webshop.financialsmicroservice.repository.PaymentRepository;
+import com.soaringclouds.webshop.financialsmicroservice.service.CustomerAccountService;
 import com.soaringclouds.webshop.financialsmicroservice.service.InvoiceService;
 import com.soaringclouds.webshop.financialsmicroservice.service.PaymentService;
 import org.slf4j.Logger;
@@ -28,11 +28,11 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Autowired private PaymentRepository paymentRepository;
 
-    @Autowired
-    private InvoiceService invoiceService;
+    @Autowired private InvoiceService invoiceService;
 
-    @Autowired
-    private PaymentStatusEventProducer paymentStatusEventProducer;
+    @Autowired private CustomerAccountService customerAccountService;
+
+    @Autowired private PaymentStatusEventProducer paymentStatusEventProducer;
 
     @Override
     public ResponseMetadata savePaymentAndUpdateInvoice(Payment pPayment) {
@@ -40,21 +40,28 @@ public class PaymentServiceImpl implements PaymentService {
 	LOGGER.debug(String.format("Updating invoice with payment...."));
 	final boolean wasAlreadyPaid = invoiceService.updateInvoiceWithPayment(pPayment);
 
-        LOGGER.debug(String.format("Saving payment...."));
+	LOGGER.debug(String.format("Saving payment...."));
 	paymentRepository.save(pPayment);
 
 	final ResponseMetadata responseMetadata = new ResponseMetadata();
 	responseMetadata.setError(false);
 
-	if(!wasAlreadyPaid) {
+	if (!wasAlreadyPaid) {
+
+	    LOGGER.debug(String.format("Updating Customer account: ..."));
+	    final CustomerAccount customerAccount = customerAccountService
+			    .createOrUpdateCustomerAccount(
+					    invoiceService.findInvoiceByInvoiceId(pPayment.getInvoiceId()));
+
+	    LOGGER.debug(String.format("Updated Customer account: [%s]", customerAccount));
 
 	    paymentStatusEventProducer.producePaymentStatusReceived(pPayment);
 	    LOGGER.debug(String.format("Payment event produced...."));
 
 	    responseMetadata.setProcessingMessage(
-			    String.format("Payment has been created successfully! ID: [%s]", pPayment.getId()));
-	}
-	else {
+			    String.format("Payment has been created successfully! ID: [%s]",
+					    pPayment.getId()));
+	} else {
 	    responseMetadata.setProcessingMessage(
 			    String.format("Payment was already done before! ID: [%s]", pPayment.getId()));
 	}
@@ -65,18 +72,18 @@ public class PaymentServiceImpl implements PaymentService {
     @Override
     public List<Payment> findPaymentByCriteria(String pInvoiceId, String pCustomerNo) {
 
-        final PaymentBuilder paymentBuilder = PaymentBuilder.aPayment();
+	final PaymentBuilder paymentBuilder = PaymentBuilder.aPayment();
 
-        if(!Strings.isNullOrEmpty(pInvoiceId)) {
-            LOGGER.debug(String.format("Adding invoice id to criteria [%s]", pInvoiceId));
+	if (!Strings.isNullOrEmpty(pInvoiceId)) {
+	    LOGGER.debug(String.format("Adding invoice id to criteria [%s]", pInvoiceId));
 
-            paymentBuilder.withInvoiceId(pInvoiceId);
+	    paymentBuilder.withInvoiceId(pInvoiceId);
 	}
 
-	if(!Strings.isNullOrEmpty(pCustomerNo)) {
+	if (!Strings.isNullOrEmpty(pCustomerNo)) {
 	    LOGGER.debug(String.format("Adding customer No to criteria [%s]", pCustomerNo));
 
-            paymentBuilder.withCustomerNo(pCustomerNo);
+	    paymentBuilder.withCustomerNo(pCustomerNo);
 	}
 
 	return paymentRepository.findAll(Example.of(paymentBuilder.build()));
