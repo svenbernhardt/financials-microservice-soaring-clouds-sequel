@@ -16,8 +16,8 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojvalidation', 'ojs/ojknockout'
 
         var self = this;
 
-        self.serviceUrl = "http://localhost:7777/api/financials";
-        //self.serviceUrl = "http://129.150.114.134:7777/api/financials";
+        //self.serviceUrl = "http://localhost:7777/api/financials";
+        self.serviceUrl = "http://129.156.113.125:7790/api/financials";
         //self.serviceUrl = "http://oc-144-21-82-92.compute.oraclecloud.com:8111/api/financials";
 
         const customerId = "CGN4711";
