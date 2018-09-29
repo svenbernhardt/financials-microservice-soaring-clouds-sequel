@@ -22,3 +22,8 @@ nbbuild/
 dist/
 nbdist/
 .nb-gradle/
+
+### Oracle JET ###
+web/
+themes/
+node_modules/

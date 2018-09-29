@@ -123,8 +123,16 @@ public class InvoiceServiceImpl implements InvoiceService {
     @Override
     public void updateInvoiceWithShippingInformation(ShippingEvent pShippingEvent) {
 
+        // FIXME: Think of a different method for synchronizing ShippingEvents and Orders (Caching?)
+	// FIXME: Don't throw InvoiceNotFoundException!
 	final Invoice invoiceToUpdate = findInvoiceByOrderId(
 			pShippingEvent.getPayload().getOrderIdentifier());
+
+	if(invoiceToUpdate.getShippingCosts() != null) {
+
+	    LOGGER.debug(String.format("Shipping costs already set for invoice [%s]!", invoiceToUpdate.getInvoiceId()));
+	    return;
+	}
 
 	final Double shippingCosts = new Double(pShippingEvent.getPayload().getShippingCosts());
 

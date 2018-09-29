@@ -9,13 +9,17 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojknockout', 'ojs/ojrouter'],
                 // Media queries for repsonsive layouts
                 var smQuery = oj.ResponsiveUtils.getFrameworkQuery(oj.ResponsiveUtils.FRAMEWORK_QUERY_KEY.SM_ONLY);
                 self.smScreen = oj.ResponsiveKnockoutUtils.createMediaQueryObservable(smQuery);
-                
+
                 self.appName = ko.observable("Financials area");
 
                 self.globalContextListeners = [];
                 self.registerGlobalContextListener = function (listener) {
-                    console.log("New global context listener is registered");
+                    console.log("Financials - New global context listener is registered");
                     self.globalContextListeners.push(listener);
+                    if (self.globalContext){
+                        console.log('Financials - GLobalContext already available! Sending it to the Listener directly...');
+                        listener(self.globalContext);
+                    }
                 };
 
                 self.callParent = function (message) {
@@ -25,14 +29,16 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojknockout', 'ojs/ojrouter'],
                 };
 
                 self.init = function () {
+
                     window.addEventListener("message", function (event) {
-                        console.log("Received message from embedding application " + event);
-                        console.log("Payload =  " + JSON.stringify(event.data));
+                        console.log("Financials - Received message from embedding application " + event);
+                        console.log("Financials - Payload =  " + JSON.stringify(event.data));
                         if (event.data.eventType === "globalContext") {
                             self.globalContext = event.data.payload.globalContext;
                             //inform listeners of new global context
-                            console.log("Inform all listeners about the globalContext");
+                            console.log("Financials - Inform all listeners about the globalContext");
                             self.globalContextListeners.forEach(function (listener) {
+                                console.log("Financials - Send globalContext to all listeners... " + listener);
                                 listener(self.globalContext);
                             });
                         }

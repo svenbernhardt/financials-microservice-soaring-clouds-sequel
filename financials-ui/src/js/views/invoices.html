@@ -19,7 +19,7 @@ and open the template in the editor.
 </div>
 <div id="invoicesOverview" class="demo-padding demo-container oj-flex">
     <div id="invoicesOverviewContent" class="oj-flex-item" style="width: 1px; min-width: 100%;">
-        <oj-list-view id="listview" aria-label="list using collection" style="width:100%;height:300px;overflow-x:hidden" data="[[dataSource]]" item.renderer="[[oj.KnockoutTemplateUtils.getRenderer('invoice_template')]]" selection-mode="single" scroll-policy="loadMoreOnScroll" scroll-policy-options.fetch-size="15"></oj-list-view>
+        <oj-list-view id="listview" aria-label="list using collection" style="width:100%;height:600px;overflow-x:hidden" data="[[dataSource]]" item.renderer="[[oj.KnockoutTemplateUtils.getRenderer('invoice_template')]]" selection-mode="single" scroll-policy="loadMoreOnScroll" scroll-policy-options.fetch-size="15"></oj-list-view>
         <script type="text/html" id="invoice_template">
             <li data-bind="attr: {id: invoice_id}">
                 <div class="oj-flex" style="flex-wrap: nowrap">

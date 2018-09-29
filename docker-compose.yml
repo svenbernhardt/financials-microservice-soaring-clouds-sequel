@@ -1,7 +1,7 @@
 version: '2'
 services:
   financials-ui:
-    image: sbernhardtoc/financials-ui-1.0.0.0
+    image: sbernhardtoc/financials-ms-ui-1.0.0.0
     build: ./financials-ui
     ports:
       - "8088:80"

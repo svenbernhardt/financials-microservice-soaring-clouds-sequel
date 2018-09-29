@@ -36,14 +36,16 @@ public class ShippingNewsEventConsumer {
 	    throw new RuntimeException(e);
 	}
 
-	if (shippingEvent.getPayload().getShippingStatus().equals(SHIPPING_STATUS_NEW)) {
+	invoiceService.updateInvoiceWithShippingInformation(shippingEvent);
 
-	    invoiceService.updateInvoiceWithShippingInformation(shippingEvent);
+	/*if (shippingEvent.getPayload().getShippingStatus().equals(SHIPPING_STATUS_NEW)) {
+
+
 	} else {
 
 	    LOGGER.warn(String.format("Received ShippingEvent with status [%s]",
 			    shippingEvent.getPayload().getShippingStatus()));
-	}
+	}*/
 
 	LOGGER.debug("received payload='{}'", shippingNewsJsonMessage);
     }
