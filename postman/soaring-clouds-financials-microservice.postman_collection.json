@@ -1,7 +1,7 @@
 {
 	"info": {
-		"name": "soaring-clouds-financials-microservice",
 		"_postman_id": "3fd00733-6648-ab84-3531-dd1ec552bbd9",
+		"name": "soaring-clouds-financials-microservice",
 		"description": "Postman Collection for Financial Microservice manual testing.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -13,29 +13,23 @@
 				"header": [],
 				"body": {},
 				"url": {
-					"raw": "http://192.168.59.3:7777/api/financials/invoices?order_id=order4712",
-					"protocol": "http",
+					"raw": "{{protocol}}://{{host}}:{{port}}/{{base-url}}/invoices?order_id=order4712",
+					"protocol": "{{protocol}}",
 					"host": [
-						"192",
-						"168",
-						"59",
-						"3"
+						"{{host}}"
 					],
-					"port": "7777",
+					"port": "{{port}}",
 					"path": [
-						"api",
-						"financials",
+						"{{base-url}}",
 						"invoices"
 					],
 					"query": [
 						{
 							"key": "order_id",
-							"value": "order4712",
-							"equals": true
+							"value": "order4712"
 						}
 					]
-				},
-				"description": ""
+				}
 			},
 			"response": []
 		},
@@ -46,29 +40,23 @@
 				"header": [],
 				"body": {},
 				"url": {
-					"raw": "http://127.0.0.1:7777/api/financials/invoices?customerNo=CGN4711",
-					"protocol": "http",
+					"raw": "{{protocol}}://{{host}}:{{port}}/{{base-url}}/invoices?customerNo=CGN4711",
+					"protocol": "{{protocol}}",
 					"host": [
-						"127",
-						"0",
-						"0",
-						"1"
+						"{{host}}"
 					],
-					"port": "7777",
+					"port": "{{port}}",
 					"path": [
-						"api",
-						"financials",
+						"{{base-url}}",
 						"invoices"
 					],
 					"query": [
 						{
 							"key": "customerNo",
-							"value": "CGN4711",
-							"equals": true
+							"value": "CGN4711"
 						}
 					]
-				},
-				"description": ""
+				}
 			},
 			"response": []
 		},
@@ -79,23 +67,18 @@
 				"header": [],
 				"body": {},
 				"url": {
-					"raw": "http://192.168.59.3:7777/api/financials/invoices/invoice0817",
-					"protocol": "http",
+					"raw": "{{protocol}}://{{host}}:{{port}}/{{base-url}}/invoices/invoice0817",
+					"protocol": "{{protocol}}",
 					"host": [
-						"192",
-						"168",
-						"59",
-						"3"
+						"{{host}}"
 					],
-					"port": "7777",
+					"port": "{{port}}",
 					"path": [
-						"api",
-						"financials",
+						"{{base-url}}",
 						"invoices",
 						"invoice0817"
 					]
-				},
-				"description": ""
+				}
 			},
 			"response": []
 		},
@@ -111,25 +94,20 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"invoice_id\": \"invoice0818\",\n  \"order_id\": \"order4712\",\n  \"order_date\": \"2018-02-17T21:00:00.000Z\",\n  \"shipping_costs\": 6.99,\n  \"total_price\": 31.96,\n  \"customer\": {\n    \"customer_no\": \"CGN4711\",\n    \"first_name\": \"Sven\",\n    \"last_name\": \"Bernhardt\",\n    \"phone\": \"+49 211 5093733\",\n    \"email\": \"sven@yourmail.com\"\n  },\n  \"billing_address\": {\n    \"type\": \"DELIVERY\",\n    \"street_number\": \"15\",\n    \"street\": \"Ludwig-Jahn-Strasse\",\n    \"city\": \"Köln\",\n    \"postcode\": \"50858\",\n    \"country\": \"DE\"\n  },\n  \"invoice_address\": {\n    \"type\": \"BILLING\",\n    \"street_number\": \"15\",\n    \"street\": \"Ludwig-Jahn-Strasse\",\n    \"city\": \"Köln\",\n    \"postcode\": \"50858\",\n    \"country\": \"DE\"\n  },\n  \"invoice_positions\": [ {\n    \"position_id\": 1,\n    \"amount\": 1,\n    \"description\": \"Blu-Ray Box: Game of Thrones Season 7\",\n    \"product_number\": \"B073ZKVHFV\",\n    \"net_price\": 20.98,\n    \"vat\": 19,\n    \"gross_price\": 24.97,\n    \"currency\": \"EUR\"\n  } ]\n}"
+					"raw": "{\n  \"invoice_id\": \"invoice0801\",\n  \"order_id\": \"order0801\",\n  \"order_date\": \"2018-09-29T21:00:00.000Z\",\n  \"shipping_costs\": 6.99,\n  \"total_price\": 31.96,\n  \"currency\": \"EUR\",\n  \"invoice_status\": \"OPEN\",\n  \"payment_status\": \"PENDING\",\n  \"customer\": {\n    \"customer_no\": \"CGN4711\",\n    \"first_name\": \"Sven\",\n    \"last_name\": \"Bernhardt\",\n    \"phone\": \"+49 211 5093733\",\n    \"email\": \"sven@yourmail.com\"\n  },\n  \"addresses\": [\n   {\n    \"type\": \"DELIVERY\",\n    \"street_number\": \"15\",\n    \"street\": \"Ludwig-Jahn-Strasse\",\n    \"city\": \"Köln\",\n    \"postcode\": \"50858\",\n    \"country\": \"DE\"\n  },\n   {\n    \"type\": \"BILLING\",\n    \"street_number\": \"15\",\n    \"street\": \"Ludwig-Jahn-Strasse\",\n    \"city\": \"Köln\",\n    \"postcode\": \"50858\",\n    \"country\": \"DE\"\n  }],\n  \"invoice_positions\": [ {\n    \"position_id\": 1,\n    \"amount\": 1,\n    \"description\": \"Blu-Ray Box: Game of Thrones Season 7\",\n    \"product_number\": \"B073ZKVHFV\",\n    \"net_price\": 20.98,\n    \"vat\": 19,\n    \"gross_price\": 24.97,\n    \"currency\": \"EUR\"\n  } ]\n}"
 				},
 				"url": {
-					"raw": "http://127.0.0.1:7777/api/financials/invoices",
-					"protocol": "http",
+					"raw": "{{protocol}}://{{host}}:{{port}}/{{base-url}}/invoices",
+					"protocol": "{{protocol}}",
 					"host": [
-						"127",
-						"0",
-						"0",
-						"1"
+						"{{host}}"
 					],
-					"port": "7777",
+					"port": "{{port}}",
 					"path": [
-						"api",
-						"financials",
+						"{{base-url}}",
 						"invoices"
 					]
-				},
-				"description": ""
+				}
 			},
 			"response": []
 		},
@@ -148,47 +126,40 @@
 					"raw": "{\n        \"invoice_id\": \"invoice0818\",\n        \"order_id\": \"order4712\",\n        \"shipping_costs\": 6.99,\n        \"total_price\": 31.96,\n        \"order_date\": \"2018-02-17T21:00:00.000Z\",\n        \"payment_status\": \"OPEN\",\n        \"customer\": {\n            \"customer_no\": \"CGN4711\",\n            \"first_name\": \"Sven\",\n            \"last_name\": \"Bernhardt\",\n            \"email\": \"sven@yourmail.com\",\n            \"phone\": \"+49 211 5093733\"\n        },\n        \"billing_address\": {\n            \"type\": \"DELIVERY\",\n            \"street_number\": \"15\",\n            \"city\": \"Köln\",\n            \"postcode\": \"50858\",\n            \"country\": \"DE\",\n            \"street\": \"Ludwig-Jahn-Strasse\"\n        },\n        \"invoice_address\": {\n            \"type\": \"BILLING\",\n            \"street_number\": \"15\",\n            \"city\": \"Köln\",\n            \"postcode\": \"50858\",\n            \"country\": \"DE\",\n            \"street\": \"Ludwig-Jahn-Strasse\"\n        },\n        \"invoice_positions\": [\n            {\n                \"position_id\": 1,\n                \"amount\": 1,\n                \"description\": \"Blu-Ray Box: Game of Thrones Season 7\",\n                \"product_number\": \"B073ZKVHFV\",\n                \"net_price\": 20.98,\n                \"vat\": 19,\n                \"gross_price\": 24.97,\n                \"currency\": \"EUR\"\n            }\n        ],\n        \"_id\": \"5a9da667c9e77c0001791822\"\n    }\n"
 				},
 				"url": {
-					"raw": "http://localhost:7777/api/financials/invoices/invoice0816",
-					"protocol": "http",
+					"raw": "{{protocol}}://{{host}}:{{port}}/{{base-url}}/invoices/invoice0816",
+					"protocol": "{{protocol}}",
 					"host": [
-						"localhost"
+						"{{host}}"
 					],
-					"port": "7777",
+					"port": "{{port}}",
 					"path": [
-						"api",
-						"financials",
+						"{{base-url}}",
 						"invoices",
 						"invoice0816"
 					]
-				},
-				"description": ""
+				}
 			},
 			"response": []
 		},
 		{
 			"name": "deleteInvoice",
 			"request": {
-				"method": "DELETE",
+				"method": "GET",
 				"header": [],
 				"body": {},
 				"url": {
-					"raw": "http://127.0.0.1:7777/api/financials/invoices/invoice0817",
-					"protocol": "http",
+					"raw": "{{protocol}}://{{host}}:{{port}}/{{base-url}}/invoices/invoice0816",
+					"protocol": "{{protocol}}",
 					"host": [
-						"127",
-						"0",
-						"0",
-						"1"
+						"{{host}}"
 					],
-					"port": "7777",
+					"port": "{{port}}",
 					"path": [
-						"api",
-						"financials",
+						"{{base-url}}",
 						"invoices",
-						"invoice0817"
+						"invoice0816"
 					]
-				},
-				"description": ""
+				}
 			},
 			"response": []
 		},
@@ -196,25 +167,25 @@
 			"name": "getServiceHealth",
 			"request": {
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "api-key",
+						"value": "67d0706a-9d52-4ed0-9812-3c01928d1074"
+					}
+				],
 				"body": {},
 				"url": {
-					"raw": "http://192.168.59.3:7777/api/financials/health",
-					"protocol": "http",
+					"raw": "{{protocol}}://{{host}}:{{port}}/{{base-url}}/health",
+					"protocol": "{{protocol}}",
 					"host": [
-						"192",
-						"168",
-						"59",
-						"3"
+						"{{host}}"
 					],
-					"port": "7777",
+					"port": "{{port}}",
 					"path": [
-						"api",
-						"financials",
+						"{{base-url}}",
 						"health"
 					]
-				},
-				"description": ""
+				}
 			},
 			"response": []
 		},
@@ -230,25 +201,20 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"payment_id\": \"payment666\",\n  \"invoice_id\": \"invoice0818\",\n  \"order_id\": \"order4712\",\n  \"customer_no\": \"CGN4711\",\n  \"payment_type\": \"VISA\"\n}"
+					"raw": "{\n  \"payment_id\": \"payment0801\",\n  \"invoice_id\": \"invoice0801\",\n  \"order_id\": \"order0801\",\n  \"customer_no\": \"CGN4711\",\n  \"payment_type\": \"VISA\"\n}"
 				},
 				"url": {
-					"raw": "http://127.0.0.1:7777/api/financials/payments",
-					"protocol": "http",
+					"raw": "{{protocol}}://{{host}}:{{port}}/{{base-url}}/payments",
+					"protocol": "{{protocol}}",
 					"host": [
-						"127",
-						"0",
-						"0",
-						"1"
+						"{{host}}"
 					],
-					"port": "7777",
+					"port": "{{port}}",
 					"path": [
-						"api",
-						"financials",
+						"{{base-url}}",
 						"payments"
 					]
-				},
-				"description": ""
+				}
 			},
 			"response": []
 		},
@@ -259,29 +225,23 @@
 				"header": [],
 				"body": {},
 				"url": {
-					"raw": "http://127.0.0.1:7777/api/financials/payments?invoice_id=invoice0818",
-					"protocol": "http",
+					"raw": "{{protocol}}://{{host}}:{{port}}/{{base-url}}/payments?invoice_id=invoice0818",
+					"protocol": "{{protocol}}",
 					"host": [
-						"127",
-						"0",
-						"0",
-						"1"
+						"{{host}}"
 					],
-					"port": "7777",
+					"port": "{{port}}",
 					"path": [
-						"api",
-						"financials",
+						"{{base-url}}",
 						"payments"
 					],
 					"query": [
 						{
 							"key": "invoice_id",
-							"value": "invoice0818",
-							"equals": true
+							"value": "invoice0818"
 						}
 					]
-				},
-				"description": ""
+				}
 			},
 			"response": []
 		},
@@ -292,29 +252,46 @@
 				"header": [],
 				"body": {},
 				"url": {
-					"raw": "http://127.0.0.1:7777/api/financials/payments?customer_no=CGN4711",
-					"protocol": "http",
+					"raw": "{{protocol}}://{{host}}:{{port}}/{{base-url}}/payments?customer_no=CGN4711",
+					"protocol": "{{protocol}}",
 					"host": [
-						"127",
-						"0",
-						"0",
-						"1"
+						"{{host}}"
 					],
-					"port": "7777",
+					"port": "{{port}}",
 					"path": [
-						"api",
-						"financials",
+						"{{base-url}}",
 						"payments"
 					],
 					"query": [
 						{
 							"key": "customer_no",
-							"value": "CGN4711",
-							"equals": true
+							"value": "CGN4711"
 						}
 					]
-				},
-				"description": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getCustomerAccount",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "{{protocol}}://{{host}}:{{port}}/{{base-url}}/customers/CGN4711/account",
+					"protocol": "{{protocol}}",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"{{base-url}}",
+						"customers",
+						"CGN4711",
+						"account"
+					]
+				}
 			},
 			"response": []
 		}

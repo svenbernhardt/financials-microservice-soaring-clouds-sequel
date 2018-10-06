@@ -13,15 +13,21 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojvalidation', 'ojs/ojknockout'
      * The view model for the main content view template
      */
     var invoicesContentViewModel = function () {
+        
+        const customerId = "CGN4711";
+        const username = "Mr. John Doe";
+        const apiKey = "67d0706a-9d52-4ed0-9812-3c01928d1074"; 
+        const serviceUrl = "http://oc-129-156-113-240.compute.oraclecloud.com:8011/financials-api/v1"
 
         var self = this;
 
-        //self.serviceUrl = "http://localhost:7777/api/financials";
-        self.serviceUrl = "http://129.156.113.125:7790/api/financials";
-        //self.serviceUrl = "http://oc-144-21-82-92.compute.oraclecloud.com:8111/api/financials";
-
-        const customerId = "CGN4711";
-        const username = "Mr. John Doe" 
+        self.getHeaders = function() {
+            return {
+              'headers': {
+                'api-key': apiKey
+              }
+            };
+        }
 
         self.username = ko.observable("");
         self.customerIdentifier = ko.observable("");
@@ -74,15 +80,16 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojvalidation', 'ojs/ojknockout'
         });
 
         var collection = new oj.Collection(null, {
-            url: self.serviceUrl + "/invoices?customer_id=" + self.customerIdentifier(),
+            url: serviceUrl + "/invoices?customer_id=" + self.customerIdentifier(),
             fetchSize: 15,
-            model: model
+            model: model,
+            customURL: self.getHeaders
         });
 
         self.customerAccountModel = function () {
 
             var Customer = oj.Model.extend({
-                url: self.serviceUrl + "/customers/"  + self.customerIdentifier() + "/account",
+                url: serviceUrl + "/customers/"  + self.customerIdentifier() + "/account",
                 parse: function (request) {
                     return {
                         customer_no: request.customer_no,
@@ -92,7 +99,8 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojvalidation', 'ojs/ojknockout'
                         currency: 'EUR'
                     };
                 },
-                idAttribute: '_id'
+                idAttribute: '_id',
+                customURL: self.getHeaders
             });
             return new Customer();
         };
