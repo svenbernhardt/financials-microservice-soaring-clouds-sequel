@@ -148,6 +148,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 	final Invoice invoice = findInvoiceByInvoiceId(pInvoiceId);
 
 	invoiceRepository.delete(invoice);
+	customerAccountService.updateCustomerAccount(invoice);
     }
 
     @Override

@@ -21,14 +21,13 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     @Bean
     public WebMvcConfigurer corsConfigurer() {
 
-        LOGGER.debug("################ Enabling CORS support!");
-	return new WebMvcConfigurerAdapter() {
+        return new WebMvcConfigurerAdapter() {
 	    @Override
 	    public void addCorsMappings(CorsRegistry registry) {
 		registry.addMapping("/**")
 				.allowedOrigins("*")
 				.allowedMethods("PUT", "POST", "GET", "OPTIONS", "DELETE", "HEAD")
-				.allowedHeaders("origin", "content-type", "accept", "authorization");
+				.allowedHeaders("origin", "content-type", "accept", "authorization", "api-key");
 	    }
 	};
     }

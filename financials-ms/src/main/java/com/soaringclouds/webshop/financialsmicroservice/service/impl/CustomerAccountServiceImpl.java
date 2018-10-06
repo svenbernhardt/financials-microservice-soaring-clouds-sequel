@@ -50,7 +50,6 @@ public class CustomerAccountServiceImpl implements CustomerAccountService {
 	return customerAccount;
     }
 
-
     @Override
     public CustomerAccount getCustomerAccount(String pCustomerNo) {
 
@@ -58,8 +57,6 @@ public class CustomerAccountServiceImpl implements CustomerAccountService {
     }
 
     CustomerAccount updateCustomerAccount(Invoice pInvoice, CustomerAccount pCustomerAccount) {
-
-	handleCustomerAccountStatus(pCustomerAccount);
 
 	final Double currentCustomerAccountBalance = pCustomerAccount.getBalance();
 
@@ -71,6 +68,8 @@ public class CustomerAccountServiceImpl implements CustomerAccountService {
 			    Precision.round(currentCustomerAccountBalance + pInvoice.getTotalPrice(), 2));
 	}
 
+	handleCustomerAccountStatus(pCustomerAccount);
+
 	pCustomerAccount = customerAccountRepository.save(pCustomerAccount);
 
 	LOGGER.debug(String.format("Updated customer account for customer [%s %s, Customer-No: %s]. " +
@@ -78,7 +77,14 @@ public class CustomerAccountServiceImpl implements CustomerAccountService {
 					+ "balance: [%s], was [%s]", pCustomerAccount.getFirstName(),
 			pCustomerAccount.getLastName(), pCustomerAccount.getCustomerNo(),
 			pCustomerAccount.getBalance(), currentCustomerAccountBalance));
+
 	return pCustomerAccount;
+    }
+
+    @Override
+    public CustomerAccount updateCustomerAccount(Invoice pInvoice) {
+
+	return updateCustomerAccount(pInvoice, getCustomerAccount(pInvoice.getCustomer().getCustomerNo()));
     }
 
     CustomerAccount createNewCustomerAccount(Invoice pInvoice, CustomerAccount pCustomerAccountExample) {
@@ -99,10 +105,10 @@ public class CustomerAccountServiceImpl implements CustomerAccountService {
 
     void handleCustomerAccountStatus(CustomerAccount pCustomerAccount) {
 
-	if (pCustomerAccount.getCustomerStatus() != CustomerStatus.FROZEN) {
+	boolean customerBalanceUnderThreshold =
+			customerStatusFrozenThreshold <= pCustomerAccount.getBalance();
 
-	    boolean customerBalanceUnderThreshold =
-			    customerStatusFrozenThreshold < pCustomerAccount.getBalance();
+	if (pCustomerAccount.getCustomerStatus() != CustomerStatus.FROZEN) {
 
 	    if (!customerBalanceUnderThreshold) {
 
@@ -112,6 +118,17 @@ public class CustomerAccountServiceImpl implements CustomerAccountService {
 				+ "balance: " + "[%s]", customerNo, pCustomerAccount.getBalance()));
 		pCustomerAccount.setCustomerStatus(CustomerStatus.FROZEN);
 		customerStatusEventProducer.produceCustomerStatusFrozen(customerNo);
+	    }
+	}
+	else {
+
+	    if(customerBalanceUnderThreshold) {
+		final String customerNo = pCustomerAccount.getCustomerNo();
+
+		LOGGER.debug(String.format("Customer [%s] frozen because of unbalanced account! Current "
+				+ "balance: " + "[%s]", customerNo, pCustomerAccount.getBalance()));
+		pCustomerAccount.setCustomerStatus(CustomerStatus.NORMAL);
+		customerStatusEventProducer.produceCustomerStatusUnFrozen(customerNo);
 	    }
 	}
     }

@@ -11,4 +11,6 @@ public interface CustomerAccountService {
     CustomerAccount createOrUpdateCustomerAccount(Invoice pInvoice);
 
     CustomerAccount getCustomerAccount(String pCustomerNo);
+
+    CustomerAccount updateCustomerAccount(Invoice pInvoice);
 }
