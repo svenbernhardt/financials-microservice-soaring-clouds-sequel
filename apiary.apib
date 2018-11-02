@@ -29,14 +29,14 @@ Search invoices using criterias like the Customer ID or Order ID
 
             api-key: asdasdsaasd-asdsa-asdas-asdasd-asdasdad
 
-+ Response 200 (application/json; charset=utf-8)
++ Response 200 (application/json;charset=UTF-8)
 
     + Attributes (array[Invoice])
 
-### Add Create invoice [POST]
+### Create invoice [POST]
 Create a new invoice
 
-+ Request (application/json; charset=utf-8)
++ Request (application/json;charset=UTF-8)
 
     + Headers
 
@@ -44,11 +44,17 @@ Create a new invoice
 
     + Attributes (Invoice)
 
-+ Response 201 (application/json; charset=utf-8)
++ Response 201 (application/json;charset=UTF-8)
 
     + Attributes (Response Metadata)
 
 ## Manage invoices [/api/financials/invoices/{invoice_id}]
+
++ Parameters
+    
+    + invoice_id: `I2134354535` (string, required)
+    
+        invoice_id of invoice to manage
 
 ### Get Invoice [GET]
 get a specific invoice by it's Invoice ID
@@ -59,14 +65,14 @@ get a specific invoice by it's Invoice ID
 
             api-key: asdasdsaasd-asdsa-asdas-asdasd-asdasdad
 
-+ Response 200 (application/json, charset=utf-8)
++ Response 200 (application/json;charset=UTF-8)
 
     + Attributes (Invoice)
 
 ### Update invoice [PUT]
 Update a specific invoice
 
-+ Request (application/json, charset=utf-8)
++ Request (application/json;charset=UTF-8)
 
     + Headers
 
@@ -74,20 +80,20 @@ Update a specific invoice
 
     + Attributes (Invoice)
 
-+ Response 200 (application/json, charset=utf-8)
++ Response 200 (application/json;charset=UTF-8)
 
     + Attributes (Response Metadata)
 
 ### Delete invoice [DELETE]
 Deletes a specific invoice (NOTE: For internal use only! Use carefully!)
 
-+ Request (application/json, charset=utf-8)
++ Request (application/json;charset=UTF-8)
 
     + Headers
 
             api-key: asdasdsaasd-asdsa-asdas-asdasd-asdasdad
 
-+ Response 204 (text/plain)
++ Response 204
 
 # Group Payments Resources
 Payment related Resources
@@ -113,14 +119,14 @@ Get the relevant payment information for an invoice
 
             api-key: asdasdsaasd-asdsa-asdas-asdasd-asdasdad
 
-+ Response 200 (application/json, charset=utf-8)
++ Response 200 (application/json;charset=UTF-8)
 
     + Attributes (array[Payment])
 
 ### Create payment [POST]
 Create a new payment
 
-+ Request (application/json; charset=utf-8)
++ Request (application/json;charset=UTF-8)
 
     + Headers
 
@@ -128,7 +134,7 @@ Create a new payment
 
     + Attributes (Payment)
 
-+ Response 201 (application/json, charset=utf-8)
++ Response 201 (application/json;charset=UTF-8)
 
     + Attributes (Response Metadata)
 
@@ -136,6 +142,12 @@ Create a new payment
 Customer account related Resources
 
 ## Search customer account information [/api/financials/customers/{customer_id}/account]
+
++ Parameters
+    
+    + customer_id: `CGN4711` (string, required)
+    
+        customer_id of customer to manage account for
 
 ### Get customer account info [GET]
 
@@ -145,7 +157,7 @@ Customer account related Resources
 
             api-key: asdasdsaasd-asdsa-asdas-asdasd-asdasdad
 
-+ Response 200 (application/json, charset=utf-8)
++ Response 200 (application/json;charset=UTF-8)
 
     + Attributes (CustomerAccount)
 
@@ -157,7 +169,7 @@ Service health related resources
 ### Get service health state [GET]
 Get service health information
 
-+ Response 200 (application/json)
++ Response 200 (application/json;charset=UTF-8)
 
     + Attributes (Health Check Response)
 
@@ -201,30 +213,30 @@ Get service health information
 - gross_price: `24.97` (number, required)
 
 ## Invoice (object)
-- invoice_id: `invoice0815` (string, required) - System generated Invoice ID
+- invoice_id: `I2134354535` (string, required) - System generated Invoice ID
 - order_id: `order4711` (string, required)
 - order_date: `2018-02-17T21:00:00.000Z` (string, optional)
 - shipping_costs: `6.99` (number, required)
 - total_price: `31.96` (number, required)
-- currency (enum, optional)
+- currency (enum, required)
   - `EUR` (string) - Euros
   - `GBP` (string) - British Pounds
   - `USD` (string) - US Dollars
-- invoice_status (enum, optional)
+- invoice_status (enum, required)
   - `OPEN` (string) - Inovice unpaid
   - `PAID` (string) - Invoice paid
   - `CANCEL` (string) - Invoice canceled
-- payment_status (enum, optional)
+- payment_status (enum, required)
   - `PENDING` (string) - Payment still opem
   - `RECEIVED` (string) - Payment received
 - customer (Customer, optional)
 - addresses (array[Address], optional)
 - invoice_positions (array[Invoice Position], optional)
-- _id: `12345678908754324567854345675432` (string, optional) - Technical database ID
+- _id: `12345678908754324567854345675433` (string, optional) - Technical database ID
 
 ## Payment (object)
 - payment_id: `pay666` (string, optional)
-- invoice_id: `invoice0815` (string, required)
+- invoice_id: `I2134354535` (string, required)
 - order_id: `order4711` (string, required)
 - customer_no: `CGN4711` (string, required)
 - payment_type (enum, required)
@@ -233,21 +245,21 @@ Get service health information
   - `AMEX` - Payment type Credit card AMEX
   - `PayPal` - Payment type Credit card PayPal
   - `Invoice` - Payment type Credit card invoice
-- payment_state (enum, optional)
+- payment_state (enum, required)
   - `PENDING` - Payment still open
   - `APPROVED` - Payment has successfully been processed
-- _id: `12345678908754324567854345675432` (string, optional) - Technical database ID
+- _id: `12345678908754324567854345675433` (string, optional) - Technical database ID
 
 ## CustomerAccount (object)
 - customer_no: `CGN4711` (string, required)
 - first_name: `Sven` (string, required)
 - last_name: `Bernhardt` (string, required)
 - balance: `-69.99` (number, required)
-- currency (enum, optional)
+- currency (enum, required)
   - `EUR` (string) - Euros
   - `GBP` (string) - British Pounds
   - `USD` (string) - US Dollars
 - customer_status (enum, required)
   - `FROZEN` (string) - Customers account balance is too high
   - `NORMAL` (string) - Customers account balance is ok
-- _id: `12345678908754324567854345675432` (string, optional) - Technical database IDdd
+- _id: `12345678908754324567854345675433` (string, optional) - Technical database ID
