@@ -43,7 +43,7 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <inputSpec>${project.basedir}/../api.yaml</inputSpec>
+                            <inputSpec>${project.basedir}/../apiary.yml</inputSpec>
                             <language>jaxrs-cxf</language>
                             <configOptions>
                                 <sourceFolder>${project.basedir}/src/gen/java</sourceFolder>

@@ -1,0 +1,36 @@
+reporter: apiary
+custom:
+  apiaryApiKey: 3ef4b23acdc2eac4975fd6e5822bdd75
+  apiaryApiName: financialsmicroservice
+dry-run: null
+hookfiles: null
+language: java
+sandbox: false
+server: docker-compose up -d
+server-wait: 10
+init: false
+names: false
+only: []
+output: []
+header: []
+sorted: true
+user: null
+inline-errors: false
+details: false
+method: []
+color: true
+level: info
+timestamp: false
+silent: false
+path: []
+hooks-worker-timeout: 1000
+hooks-worker-connect-timeout: 1500
+hooks-worker-connect-retry: 500
+hooks-worker-after-connect-wait: 100
+hooks-worker-term-timeout: 1000
+hooks-worker-term-retry: 500
+hooks-worker-handler-host: 127.0.0.1
+hooks-worker-handler-port: 61321
+config: ./dredd.yml
+blueprint: ./apiary.apib
+endpoint: 'http://localhost:7777'

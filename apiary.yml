@@ -1,0 +1,756 @@
+swagger: '2.0'
+info:
+  version: '1.0'
+  title: Financials Microservice
+  description: This is the documentation of the Financials Microservice for the Soaring the Cloud Sequel Showcase.
+  contact: {}
+host: private-0b1f3-financialsmicroservice.apiary-mock.com
+basePath: /
+schemes:
+- http
+consumes:
+- application/json
+produces:
+- application/json
+paths:
+  /api/financials/invoices:
+    get:
+      description: Search invoices using criterias like the Customer ID or Order ID
+      summary: Searchinvoices
+      tags:
+      - InvoicesResources
+      operationId: ApiFinancialsInvoicesGet
+      produces:
+      - application/json
+      parameters:
+      - name: Content-Type
+        in: header
+        required: true
+        type: string
+        description: ''
+      - name: api-key
+        in: header
+        required: true
+        type: string
+        description: ''
+      - name: customer_id
+        in: query
+        required: false
+        type: string
+        description: Filter by customer_id
+      - name: order_id
+        in: query
+        required: false
+        type: string
+        description: Filter by order_id
+      responses:
+        200:
+          description: ''
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Invoice'
+          examples:
+            application/json:
+            - invoice_id: I2134354535
+              order_id: order4711
+              order_date: 2018-02-17T21:00:00.0000000Z
+              shipping_costs: 6.9900000000000002
+              total_price: 31.960000000000001
+              currency: EUR
+              invoice_status: OPEN
+              payment_status: PENDING
+              customer:
+                customer_no: CGN4711
+                first_name: Sven
+                last_name: Bernhardt
+                phone: +49 211 5093733
+                email: sven@yourmail.com
+              addresses:
+              - type: BILLING
+                street_number: 15
+                street: Ludwig-Jahn-Strasse
+                city: Köln
+                postcode: 50858
+                country: DE
+              invoice_positions:
+              - position_id: 1
+                amount: 1
+                description: 'Blue-Ray Box: Game of Thrones Season 7'
+                product_number: B073ZKVHFV
+                net_price: 20.98
+                vat: 19
+                gross_price: 24.969999999999999
+              _id: 12345678908754324567854345675433
+    post:
+      description: Create a new invoice
+      summary: Createinvoice
+      tags:
+      - InvoicesResources
+      operationId: ApiFinancialsInvoicesPost
+      produces:
+      - application/json
+      parameters:
+      - name: Content-Type
+        in: header
+        required: true
+        type: string
+        description: ''
+      - name: api-key
+        in: header
+        required: true
+        type: string
+        description: ''
+      - name: body
+        in: body
+        required: true
+        description: ''
+        schema:
+          $ref: '#/definitions/Invoice'
+      - name: customer_id
+        in: query
+        required: false
+        type: string
+        description: Filter by customer_id
+      - name: order_id
+        in: query
+        required: false
+        type: string
+        description: Filter by order_id
+      responses:
+        201:
+          description: ''
+          schema:
+            $ref: '#/definitions/ResponseMetadata'
+          examples:
+            application/json:
+              error: true
+              processing_message: Invoice created successfully!
+  /api/financials/invoices/{invoice_id}:
+    get:
+      description: get a specific invoice by it's Invoice ID
+      summary: GetInvoice
+      tags:
+      - InvoicesResources
+      operationId: ApiFinancialsInvoicesByInvoiceIdGet
+      produces:
+      - application/json
+      parameters:
+      - name: invoice_id
+        in: path
+        required: true
+        type: string
+        description: invoice_id of invoice to manage
+      - name: Content-Type
+        in: header
+        required: true
+        type: string
+        description: ''
+      - name: api-key
+        in: header
+        required: true
+        type: string
+        description: ''
+      responses:
+        200:
+          description: ''
+          schema:
+            $ref: '#/definitions/Invoice'
+          examples:
+            application/json:
+              invoice_id: I2134354535
+              order_id: order4711
+              order_date: 2018-02-17T21:00:00.0000000Z
+              shipping_costs: 6.9900000000000002
+              total_price: 31.960000000000001
+              currency: EUR
+              invoice_status: OPEN
+              payment_status: PENDING
+              customer:
+                customer_no: CGN4711
+                first_name: Sven
+                last_name: Bernhardt
+                phone: +49 211 5093733
+                email: sven@yourmail.com
+              addresses:
+              - type: BILLING
+                street_number: 15
+                street: Ludwig-Jahn-Strasse
+                city: Köln
+                postcode: 50858
+                country: DE
+              invoice_positions:
+              - position_id: 1
+                amount: 1
+                description: 'Blue-Ray Box: Game of Thrones Season 7'
+                product_number: B073ZKVHFV
+                net_price: 20.98
+                vat: 19
+                gross_price: 24.969999999999999
+              _id: 12345678908754324567854345675433
+    put:
+      description: Update a specific invoice
+      summary: Updateinvoice
+      tags:
+      - InvoicesResources
+      operationId: ApiFinancialsInvoicesByInvoiceIdPut
+      produces:
+      - application/json
+      parameters:
+      - name: invoice_id
+        in: path
+        required: true
+        type: string
+        description: invoice_id of invoice to manage
+      - name: Content-Type
+        in: header
+        required: true
+        type: string
+        description: ''
+      - name: api-key
+        in: header
+        required: true
+        type: string
+        description: ''
+      - name: body
+        in: body
+        required: true
+        description: ''
+        schema:
+          $ref: '#/definitions/Invoice'
+      responses:
+        200:
+          description: ''
+          schema:
+            $ref: '#/definitions/ResponseMetadata'
+          examples:
+            application/json:
+              error: true
+              processing_message: Invoice created successfully!
+    delete:
+      description: 'Deletes a specific invoice (NOTE: FOR INTERNAL USE ONLY! Use carefully!)'
+      summary: Deleteinvoice
+      tags:
+      - InvoicesResources
+      operationId: ApiFinancialsInvoicesByInvoiceIdDelete
+      produces:
+      - application/json
+      parameters:
+      - name: invoice_id
+        in: path
+        required: true
+        type: string
+        description: invoice_id of invoice to manage
+      - name: Content-Type
+        in: header
+        required: true
+        type: string
+        description: ''
+      - name: api-key
+        in: header
+        required: true
+        type: string
+        description: ''
+      responses:
+        204:
+          description: ''
+  /api/financials/payments:
+    get:
+      description: Get the relevant payment information for an invoice
+      summary: Getpaymentsinformation
+      tags:
+      - PaymentsResources
+      operationId: ApiFinancialsPaymentsGet
+      produces:
+      - application/json
+      parameters:
+      - name: Content-Type
+        in: header
+        required: true
+        type: string
+        description: ''
+      - name: api-key
+        in: header
+        required: true
+        type: string
+        description: ''
+      - name: invoice_id
+        in: query
+        required: false
+        type: string
+        description: Filter for invoice_id
+      - name: customer_no
+        in: query
+        required: false
+        type: string
+        description: Filter for customer_no
+      responses:
+        200:
+          description: ''
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Payment'
+          examples:
+            application/json:
+            - payment_id: pay666
+              invoice_id: I2134354535
+              order_id: order4711
+              customer_no: CGN4711
+              payment_type: VISA
+              payment_state: PENDING
+              _id: 12345678908754324567854345675433
+    post:
+      description: Create a new payment
+      summary: Createpayment
+      tags:
+      - PaymentsResources
+      operationId: ApiFinancialsPaymentsPost
+      produces:
+      - application/json
+      parameters:
+      - name: Content-Type
+        in: header
+        required: true
+        type: string
+        description: ''
+      - name: api-key
+        in: header
+        required: true
+        type: string
+        description: ''
+      - name: body
+        in: body
+        required: true
+        description: ''
+        schema:
+          $ref: '#/definitions/Payment'
+      - name: invoice_id
+        in: query
+        required: false
+        type: string
+        description: Filter for invoice_id
+      - name: customer_no
+        in: query
+        required: false
+        type: string
+        description: Filter for customer_no
+      responses:
+        201:
+          description: ''
+          schema:
+            $ref: '#/definitions/ResponseMetadata'
+          examples:
+            application/json:
+              error: true
+              processing_message: Invoice created successfully!
+  /api/financials/customers/{customer_id}/account:
+    get:
+      description: ''
+      summary: Getcustomeraccountinfo
+      tags:
+      - CustomerAccountResources
+      operationId: ApiFinancialsCustomersAccountByCustomerIdGet
+      produces:
+      - application/json
+      parameters:
+      - name: customer_id
+        in: path
+        required: true
+        type: string
+        description: customer_id of customer to manage account for
+      - name: Content-Type
+        in: header
+        required: true
+        type: string
+        description: ''
+      - name: api-key
+        in: header
+        required: true
+        type: string
+        description: ''
+      responses:
+        200:
+          description: ''
+          schema:
+            $ref: '#/definitions/CustomerAccount'
+          examples:
+            application/json:
+              customer_no: CGN4711
+              first_name: Sven
+              last_name: Bernhardt
+              balance: -69.989999999999995
+              currency: EUR
+              customer_status: FROZEN
+              _id: 12345678908754324567854345675433
+  /api/financials/health:
+    get:
+      description: Get service health information
+      summary: Getservicehealthstate
+      tags:
+      - ServiceOperationsResources
+      operationId: ApiFinancialsHealthGet
+      produces:
+      - application/json
+      parameters: []
+      responses:
+        200:
+          description: ''
+          schema:
+            $ref: '#/definitions/HealthCheckResponse'
+          examples:
+            application/json:
+              version: 0.10000000000000001
+              status: OK
+              uptime: 1234.0999999999999
+definitions:
+  HealthCheckResponse:
+    title: HealthCheckResponse
+    example:
+      version: 0.10000000000000001
+      status: OK
+      uptime: 1234.0999999999999
+    type: object
+    properties:
+      version:
+        example: 0.10000000000000001
+        type: number
+        format: double
+      status:
+        $ref: '#/definitions/status'
+      uptime:
+        description: The uptime of the service in minutes
+        example: 1234.0999999999999
+        type: number
+        format: double
+    required:
+    - status
+  ResponseMetadata:
+    title: ResponseMetadata
+    example:
+      error: true
+      processing_message: Invoice created successfully!
+    type: object
+    properties:
+      error:
+        example: true
+        type: boolean
+      processing_message:
+        example: Invoice created successfully!
+        type: string
+    required:
+    - error
+    - processing_message
+  Customer:
+    title: Customer
+    type: object
+    properties:
+      customer_no:
+        example: CGN4711
+        type: string
+      first_name:
+        example: Sven
+        type: string
+      last_name:
+        example: Bernhardt
+        type: string
+      phone:
+        example: +49 211 5093733
+        type: string
+      email:
+        example: sven@yourmail.com
+        type: string
+    required:
+    - customer_no
+    - first_name
+    - last_name
+    - email
+  Address:
+    title: Address
+    type: object
+    properties:
+      type:
+        $ref: '#/definitions/type'
+      street_number:
+        example: 15
+        type: string
+      street:
+        example: Ludwig-Jahn-Strasse
+        type: string
+      city:
+        example: Köln
+        type: string
+      postcode:
+        example: 50858
+        type: string
+      country:
+        example: DE
+        type: string
+    required:
+    - type
+    - street_number
+    - city
+    - postcode
+    - country
+  InvoicePosition:
+    title: InvoicePosition
+    type: object
+    properties:
+      position_id:
+        example: 1
+        type: number
+        format: double
+      amount:
+        example: 1
+        type: number
+        format: double
+      description:
+        example: 'Blue-Ray Box: Game of Thrones Season 7'
+        type: string
+      product_number:
+        example: B073ZKVHFV
+        type: string
+      net_price:
+        example: 20.98
+        type: number
+        format: double
+      vat:
+        example: 19
+        type: number
+        format: double
+      gross_price:
+        example: 24.969999999999999
+        type: number
+        format: double
+    required:
+    - position_id
+    - amount
+    - description
+    - product_number
+    - net_price
+    - vat
+    - gross_price
+  Invoice:
+    title: Invoice
+    example:
+      invoice_id: I2134354535
+      order_id: order4711
+      order_date: 2018-02-17T21:00:00.0000000Z
+      shipping_costs: 6.9900000000000002
+      total_price: 31.960000000000001
+      currency: EUR
+      invoice_status: OPEN
+      payment_status: PENDING
+      customer:
+        customer_no: CGN4711
+        first_name: Sven
+        last_name: Bernhardt
+        phone: +49 211 5093733
+        email: sven@yourmail.com
+      addresses:
+      - type: BILLING
+        street_number: 15
+        street: Ludwig-Jahn-Strasse
+        city: Köln
+        postcode: 50858
+        country: DE
+      invoice_positions:
+      - position_id: 1
+        amount: 1
+        description: 'Blue-Ray Box: Game of Thrones Season 7'
+        product_number: B073ZKVHFV
+        net_price: 20.98
+        vat: 19
+        gross_price: 24.969999999999999
+      _id: 12345678908754324567854345675433
+    type: object
+    properties:
+      invoice_id:
+        description: System generated Invoice ID
+        example: I2134354535
+        type: string
+      order_id:
+        example: order4711
+        type: string
+      order_date:
+        example: 2/17/2018 9:00:00 PM
+        type: string
+      shipping_costs:
+        example: 6.9900000000000002
+        type: number
+        format: double
+      total_price:
+        example: 31.960000000000001
+        type: number
+        format: double
+      currency:
+        $ref: '#/definitions/currency'
+      invoice_status:
+        $ref: '#/definitions/invoice_status'
+      payment_status:
+        $ref: '#/definitions/payment_status'
+      customer:
+        $ref: '#/definitions/Customer'
+      addresses:
+        type: array
+        items:
+          $ref: '#/definitions/Address'
+      invoice_positions:
+        type: array
+        items:
+          $ref: '#/definitions/InvoicePosition'
+      _id:
+        description: Technical database ID
+        example: 12345678908754324567854345675433
+        type: string
+    required:
+    - invoice_id
+    - order_id
+    - shipping_costs
+    - total_price
+  Payment:
+    title: Payment
+    example:
+      payment_id: pay666
+      invoice_id: I2134354535
+      order_id: order4711
+      customer_no: CGN4711
+      payment_type: VISA
+      payment_state: PENDING
+      _id: 12345678908754324567854345675433
+    type: object
+    properties:
+      payment_id:
+        example: pay666
+        type: string
+      invoice_id:
+        example: I2134354535
+        type: string
+      order_id:
+        example: order4711
+        type: string
+      customer_no:
+        example: CGN4711
+        type: string
+      payment_type:
+        $ref: '#/definitions/payment_type'
+      payment_state:
+        $ref: '#/definitions/payment_state'
+      _id:
+        description: Technical database ID
+        example: 12345678908754324567854345675433
+        type: string
+    required:
+    - invoice_id
+    - order_id
+    - customer_no
+    - payment_type
+  CustomerAccount:
+    title: CustomerAccount
+    example:
+      customer_no: CGN4711
+      first_name: Sven
+      last_name: Bernhardt
+      balance: -69.989999999999995
+      currency: EUR
+      customer_status: FROZEN
+      _id: 12345678908754324567854345675433
+    type: object
+    properties:
+      customer_no:
+        example: CGN4711
+        type: string
+      first_name:
+        example: Sven
+        type: string
+      last_name:
+        example: Bernhardt
+        type: string
+      balance:
+        example: -69.989999999999995
+        type: number
+        format: double
+      currency:
+        $ref: '#/definitions/currency'
+      customer_status:
+        $ref: '#/definitions/customer_status'
+      _id:
+        description: Technical database ID
+        example: 12345678908754324567854345675433
+        type: string
+    required:
+    - customer_no
+    - first_name
+    - last_name
+    - balance
+    - customer_status
+  currency:
+    title: currency
+    example: EUR
+    type: string
+    enum:
+    - EUR
+    - GBP
+    - USD
+  customer_status:
+    title: customer_status
+    example: FROZEN
+    type: string
+    enum:
+    - FROZEN
+    - NORMAL
+  invoice_status:
+    title: invoice_status
+    example: OPEN
+    type: string
+    enum:
+    - OPEN
+    - PAID
+    - CANCEL
+  payment_state:
+    title: payment_state
+    example: PENDING
+    type: string
+    enum:
+    - PENDING
+    - APPROVED
+  payment_status:
+    title: payment_status
+    example: PENDING
+    type: string
+    enum:
+    - PENDING
+    - RECEIVED
+  payment_type:
+    title: payment_type
+    example: VISA
+    type: string
+    enum:
+    - VISA
+    - Mastercard
+    - AMEX
+    - PayPal
+    - Invoice
+  status:
+    title: status
+    example: OK
+    type: string
+    enum:
+    - OK
+    - FAILED
+  type:
+    title: type
+    example: BILLING
+    type: string
+    enum:
+    - BILLING
+    - DELIVERY
+tags:
+- name: Invoices Resources
+  description: ''
+- name: Payments Resources
+  description: ''
+- name: Customer Account Resources
+  description: ''
+- name: Service Operations Resources
+  description: ''
