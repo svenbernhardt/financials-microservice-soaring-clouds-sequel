@@ -6,6 +6,7 @@ import com.soaringclouds.webshop.financialsmicroservice.service.HealthService;
 import com.soaringclouds.webshop.financialsmicroservice.service.InvoiceService;
 import com.soaringclouds.webshop.financialsmicroservice.service.PaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -23,6 +24,7 @@ public class FinancialsMicroserviceEndpoint {
     @Autowired private CustomerAccountService customerAccountService;
 
     @RequestMapping(value = "/api/financials/invoices/{invoice_id}", method = RequestMethod.DELETE)
+    @ResponseStatus(code = HttpStatus.NO_CONTENT)
     public void apiFinancialsInvoicesByInvoiceIdDelete(@PathVariable(value = "invoice_id") String invoiceId) {
 
 	invoiceService.deleteInvoice(invoiceId);
@@ -51,6 +53,7 @@ public class FinancialsMicroserviceEndpoint {
 
     @RequestMapping(value = "/api/financials/invoices", method = RequestMethod.POST, consumes =
 		    "application/json")
+    @ResponseStatus(code = HttpStatus.CREATED)
     public ResponseMetadata apiFinancialsInvoicesPost(@RequestBody @Valid Invoice body,
 		    @RequestParam(value = "customer_id", required = false) String customerId,
 		    @RequestParam(value = "order_id", required = false) String orderId) {
@@ -72,6 +75,7 @@ public class FinancialsMicroserviceEndpoint {
 
     @RequestMapping(value = "/api/financials/payments", method = RequestMethod.POST, consumes =
 		    "application/json")
+    @ResponseStatus(code = HttpStatus.CREATED)
     public ResponseMetadata apiFinancialsPaymentsPost(@RequestBody @Valid Payment body,
 		    @RequestParam(value = "invoice_id", required = false) String invoiceId,
 		    @RequestParam(value = "customer_id", required = false) String customerNo) {

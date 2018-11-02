@@ -93,6 +93,7 @@ public class CustomerAccountServiceImpl implements CustomerAccountService {
 	pCustomerAccountExample.setLastName(pInvoice.getCustomer().getLastName());
 	pCustomerAccountExample.setCustomerStatus(CustomerStatus.NORMAL);
 	pCustomerAccountExample.setBalance(0d - pInvoice.getTotalPrice());
+	pCustomerAccountExample.setCurrency(pInvoice.getCurrency());
 
 	final CustomerAccount customerAccount = customerAccountRepository.insert(pCustomerAccountExample);
 

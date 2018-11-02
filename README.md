@@ -32,6 +32,30 @@ grunt serve
 
 ## Testing the Microservice
 
+### Dredd API tests
+
+To ensure that the current service implementation is in sync with the API design, Dredd (https://dredd.readthedocs.io/en/latest/index.html) is used for this project.
+
+Before executing the tests you should rebuild the Microservice backend in financials-ms and also
+rebuild the respective Docker image:
+
+```bash
+cd financials-ms
+mvn clean package
+
+docker build . -t <tag_name> (e.g. sbernhardtoc/financials-ms:latest)
+```
+After ensuring that the implementation is up-to-date, the Dredd tests can be executed as follows:
+
+```bash
+dredd
+```
+
+This executes the test and delivers an test report on the console level. It also generates a test report
+in Apiary.
+
+### Postman tests
+
 Testing the Microservice can be done using the included Postman Collection under  postman/soaring-clouds-financials-microservice.postman_collection.json.
 
 Besides the Postman Collection, there are different environment configuration included in the Postman folder:

@@ -24,6 +24,6 @@ nbdist/
 .nb-gradle/
 
 ### Oracle JET ###
-web/
+financials-ui/web/
 themes/
-node_modules/
+financials-ui/node_modules/
