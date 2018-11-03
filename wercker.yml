@@ -1,19 +1,29 @@
 box: maven:latest
-build:
+build-ui:
   steps:
     # Build Spring Boot Sample application
     - script:
         name: Maven install
         code: mvn -f financials-ms/pom.xml install -DskipTests
+
+box: node
+build:
+  steps:
+    - npm-install:
+      options: --no-optional
     - script:
-        name: Create TLS key and cert
-        code: openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout tls.key -out tls.crt -subj "/CN=nginxsvc/O=nginxsvc"
+      name: print-dredd-version
+      code: npm info dredd version
+    #- script:
+    #  name: configure-mongo
+    #  code: export MONGO_URI="mongodb://$MONGO_PORT_27017_TCP_ADDR:$MONGO_PORT_27017_TCP_PORT"
+    - npm-test
 
 push-to-releases:
   box:
     id: openjdk
     tag: 8-jre-alpine
-    cmd: /bin/sh # see: http://devcenter.wercker.com/docs/faq/alpine-faq  
+    cmd: /bin/sh # see: http://devcenter.wercker.com/docs/faq/alpine-faq
   steps:
     # Push to public docker repo Container Registry (CR)
     - script:
@@ -21,101 +31,9 @@ push-to-releases:
         mv $WERCKER SOURCE/financials-ms/target/financials-microservice-1.0.0.0.jar /financials-ms.jar
         touch /financials-ms.jar
     - internal/docker-push:
-        #username: $USERNAME
-        #password: $PASSWORD
-        tag: $WERCKER_GIT_BRANCH-$WERCKER_GIT_COMMIT
-        #cmd: java -jar  /pipeline/source/target/financials-ms-1.0.0.0.jar
-        ports: "7777"
-        volumes: "/tmp"
-        entrypoint: java -Djava.security.egd=file:/dev/./urandom -jar financials-ms.jar
-        #repository: sbernhardtoc/financials-ms
-        #registry: https://registry.hub.docker.com
-
-# for now we will delete and recreate the namespace, however, at some point that may be a little much for just a redeployment of the Pod! 
-deploy-to-oke:
-  box:
-        id: alpine
-        cmd: /bin/sh
-  steps:
-    - bash-template
-    
-    - script:
-        name: "Visualise Kubernetes config"
-        code: cat financials-ms.yml
-    
-    - kubectl:
-        name: delete namespace
-        server: $KUBERNETES_MASTER
-        token: $KUBERNETES_TOKEN
-        insecure-skip-tls-verify: true
-        command: delete namespace $KUBERNETES_NAMESPACE --ignore-not-found=true
-        
-    - script:
-        name: wait to delete namespace
-        code: sleep 30
-        
-    - kubectl:
-        name: create namespace    
-        server: $KUBERNETES_MASTER
-        token: $KUBERNETES_TOKEN
-        insecure-skip-tls-verify: true
-        command: create namespace $KUBERNETES_NAMESPACE
-        
-    - kubectl:
-        name: create OCR secret
-        server: $KUBERNETES_MASTER
-        token: $KUBERNETES_TOKEN
-        insecure-skip-tls-verify: true
-        command: create secret docker-registry wrelease --docker-server=wcr.io --docker-username=$WERCKER_APPLICATION_OWNER_NAME --docker-password=$KUBERNETES_TOKEN --docker-email=${WERCKER_APPLICATION_OWNER_NAME}@mail.com --namespace=$KUBERNETES_NAMESPACE
-
-    - kubectl:
-        name: create TLS secret
-        server: $KUBERNETES_MASTER
-        token: $KUBERNETES_TOKEN
-        insecure-skip-tls-verify: true
-        command: create secret tls tls-secret --key $WERCKER_ROOT/tls.key --cert $WERCKER_ROOT/tls.crt --namespace=$KUBERNETES_NAMESPACE
-        
-    - kubectl:
-        name: create 
-        server: $KUBERNETES_MASTER
-        token: $KUBERNETES_TOKEN
-        insecure-skip-tls-verify: true
-        command: create -f $WERCKER_ROOT/financials-mongo-db.yml --namespace=$KUBERNETES_NAMESPACE
-
-    - kubectl:
-        name: create 
-        server: $KUBERNETES_MASTER
-        token: $KUBERNETES_TOKEN
-        insecure-skip-tls-verify: true
-        command: create -f $WERCKER_ROOT/financials-ms.yml --namespace=$KUBERNETES_NAMESPACE
-
-    - script:
-        name: "Visualise Ingress config"
-        code: cat ingress.yml
-
-    - kubectl:
-        name: create Ingress configuration
-        server: $KUBERNETES_MASTER
-        token: $KUBERNETES_TOKEN
-        insecure-skip-tls-verify: true
-        command: create -f $WERCKER_ROOT/ingress.yml --namespace=$KUBERNETES_NAMESPACE
-
-# redeployment after the code has changed; no changes in kubernetes configuration 
-redeploy-to-oke:
-  box:
-        id: alpine
-        cmd: /bin/sh
-  steps:
-    - bash-template
-    
-    - script:
-        name: "Visualise Kubernetes config"
-        code: cat financials-ms.yml .yml
-    
-        
-    - kubectl:
-        name: create deployment
-        server: $KUBERNETES_MASTER
-        token: $KUBERNETES_TOKEN
-        insecure-skip-tls-verify: true
-        command: apply -f $WERCKER_ROOT/financials-ms.yml --namespace=$KUBERNETES_NAMESPACE
+        username: $DOCKER_USERNAME
+        password: $DOCKER_PASSWORD
+        tag: latest
+        cmd: java -Djava.security.egd=file:/dev/./urandom -jar financials-ms.jar
+        repository: sbernhardtoc/financials-ms-1.0.0.0
+        registry: https://registry.hub.docker.com
