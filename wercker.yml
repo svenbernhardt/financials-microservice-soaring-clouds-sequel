@@ -1,23 +1,25 @@
-box: maven:latest
-build-ui:
-  steps:
-    # Build Spring Boot Sample application
-    - script:
-        name: Maven install
-        code: mvn -f financials-ms/pom.xml install -DskipTests
-
-box: node
 build:
-  steps:
-    - npm-install:
-      options: --no-optional
-    - script:
-      name: print-dredd-version
-      code: npm info dredd version
-    #- script:
-    #  name: configure-mongo
-    #  code: export MONGO_URI="mongodb://$MONGO_PORT_27017_TCP_ADDR:$MONGO_PORT_27017_TCP_PORT"
-    - npm-test
+  box: maven:latest
+  build:
+    steps:
+      # Build Spring Boot Sample application
+      - script:
+          name: Maven install
+          code: mvn -f financials-ms/pom.xml install -DskipTests
+
+test-api:
+  box: node
+  build:
+    steps:
+      - npm-install:
+        options: --no-optional
+      - script:
+        name: print-dredd-version
+        code: npm info dredd version
+      #- script:
+      #  name: configure-mongo
+      #  code: export MONGO_URI="mongodb://$MONGO_PORT_27017_TCP_ADDR:$MONGO_PORT_27017_TCP_PORT"
+      - npm-test
 
 push-to-releases:
   box:
