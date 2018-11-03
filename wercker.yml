@@ -1,15 +1,13 @@
+box: maven:latest
 build:
-  box: maven:latest
-  build:
-    steps:
-      # Build Spring Boot Sample application
-      - script:
-          name: Maven install
-          code: mvn -f financials-ms/pom.xml install -DskipTests
+  steps:
+    # Build Spring Boot Sample application
+    - script:
+        name: Maven install
+        code: mvn -f financials-ms/pom.xml install -DskipTests
 
+box: node
 test-api:
-  box: node
-  build:
     steps:
       - npm-install:
         options: --no-optional
@@ -21,11 +19,11 @@ test-api:
       #  code: export MONGO_URI="mongodb://$MONGO_PORT_27017_TCP_ADDR:$MONGO_PORT_27017_TCP_PORT"
       - npm-test
 
+box:
+  id: openjdk
+  tag: 8-jre-alpine
+  cmd: /bin/sh # see: http://devcenter.wercker.com/docs/faq/alpine-faq
 push-to-releases:
-  box:
-    id: openjdk
-    tag: 8-jre-alpine
-    cmd: /bin/sh # see: http://devcenter.wercker.com/docs/faq/alpine-faq
   steps:
     # Push to public docker repo Container Registry (CR)
     - script:
