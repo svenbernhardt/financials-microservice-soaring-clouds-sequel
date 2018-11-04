@@ -57,5 +57,5 @@ push-to-releases:
         username: $DOCKER_USERNAME
         password: $DOCKER_PASSWORD
         #registry: https://docker.io
-        repository: $USERNAME/financials-ms-1.0.0.0
+        repository: $DOCKER_USERNAME/financials-ms-1.0.0.0
         tag: latest
