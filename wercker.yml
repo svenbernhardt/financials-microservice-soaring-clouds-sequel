@@ -42,19 +42,13 @@ test-api:
 push-to-releases:
   box: openjdk:8-jre-alpine
   steps:
+    - script:
+        code: ls $WERCKER_SOURCE_DIR/financials-ms/target
     # Push to public docker repo Container Registry (CR)
-    #- script:
-    #  code: |
-    #    mv $WERCKER_OUTPUT_DIR/financials-ms/target/financials-microservice-1.0.0.0.jar /financials-ms.jar
-    #    touch /financials-ms.jar
     - script:
-        code: ls $WERCKER_OUTPUT_DIR
-    - script:
-        code: ls $WERCKER_ROOT
-    - script:
-        code: ls $WERCKER_SOURCE_DIR
-    - script:
-        code: ls $WERCKER_CACHE_DIR
+      code: |
+        mv $WERCKER_SOURCE_DIR/financials-ms/target/financials-microservice-1.0.0.0.jar ./financials-ms.jar
+        touch ./financials-ms.jar
     - internal/docker-build:
         dockerfile: financials-ms/Dockerfile
         image-name: financials-ms-image
