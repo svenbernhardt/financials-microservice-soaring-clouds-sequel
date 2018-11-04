@@ -45,7 +45,7 @@ push-to-releases:
     # Push to public docker repo Container Registry (CR)
     - script:
       code: |
-        mv WERCKER_OUTPUT_DIR/financials-microservice-1.0.0.0.jar /financials-ms.jar
+        mv WERCKER_OUTPUT_DIR/financials-ms/target/financials-microservice-1.0.0.0.jar /financials-ms.jar
         touch /financials-ms.jar
     - internal/docker-build:
         dockerfile: financials-ms/Dockerfile
