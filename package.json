@@ -1,0 +1,22 @@
+{
+  "name": "financials-microservice",
+  "version": "1.0.0",
+  "description": "The financials microservice for the soaring the clouds sequel showcase",
+  "main": "index.js",
+  "scripts": {
+    "test": "dredd"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/svenbernhardt/financials-microservice-soaring-clouds-sequel.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/svenbernhardt/financials-microservice-soaring-clouds-sequel/issues"
+  },
+  "homepage": "https://github.com/svenbernhardt/financials-microservice-soaring-clouds-sequel#readme",
+  "dependencies": {
+    "dredd": "5.2.0"
+  }
+}
