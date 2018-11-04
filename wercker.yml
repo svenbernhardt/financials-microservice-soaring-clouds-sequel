@@ -1,5 +1,23 @@
 box: maven:latest
 
+dev:
+  steps:
+  #  - jakubriedl/docker-push:
+  #      image: sbernhardtoc/financials-ms-1.0.0.0
+  #      username: sbernhardtoc
+  #      password: Diplompx01_
+  #      email: sven.bernhardt@opitz-consulting.com
+    - internal/docker-build:
+        dockerfile: financials-ms/Dockerfile
+        image-name: financials-ms-image
+    - internal/docker-push:
+        image-name: financials-ms-image
+        username: $DOCKER_USERNAME
+        password: $DOCKER_PASSWORD
+        registry: https://docker.io
+        repository: $USERNAME/financials-ms-1.0.0.0
+        tag: latest
+
 build:
   steps:
     # Build Spring Boot Sample application
@@ -11,16 +29,15 @@ test-api:
   box: node:8
   steps:
     - npm-install:
-      options: --no-optional
+        options: --no-optional
     - script:
-      name: print-dredd-version
-      code: npm info dredd version
+        name: print-dredd-version
+        code: npm info dredd version
     #- script:
     #  name: configure-mongo
     #  code: export MONGO_URI="mongodb://$MONGO_PORT_27017_TCP_ADDR:$MONGO_PORT_27017_TCP_PORT"
-    - script:
-      name: execute-dredd-tests
-      code: dredd
+    - npm-test
+        #cwd: test/dredd
 
 push-to-releases:
   box: openjdk:8-jre-alpine
@@ -28,12 +45,15 @@ push-to-releases:
     # Push to public docker repo Container Registry (CR)
     - script:
       code: |
-        mv $WERCKER SOURCE/financials-ms/target/financials-microservice-1.0.0.0.jar /financials-ms.jar
+        mv WERCKER_OUTPUT_DIR/financials-microservice-1.0.0.0.jar /financials-ms.jar
         touch /financials-ms.jar
+    - internal/docker-build:
+        dockerfile: financials-ms/Dockerfile
+        image-name: financials-ms-image
     - internal/docker-push:
+        image-name: financials-ms-image
         username: $DOCKER_USERNAME
         password: $DOCKER_PASSWORD
+        registry: https://docker.io
+        repository: $USERNAME/financials-ms-1.0.0.0
         tag: latest
-        cmd: java -Djava.security.egd=file:/dev/./urandom -jar financials-ms.jar
-        repository: sbernhardtoc/financials-ms-1.0.0.0
-        registry: https://registry.hub.docker.com
