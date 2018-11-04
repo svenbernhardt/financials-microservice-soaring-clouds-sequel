@@ -43,10 +43,10 @@ push-to-releases:
   box: openjdk:8-jre-alpine
   steps:
     # Push to public docker repo Container Registry (CR)
-    - script:
-      code: |
-        mv $WERCKER_OUTPUT_DIR/financials-ms/target/financials-microservice-1.0.0.0.jar /financials-ms.jar
-        touch /financials-ms.jar
+    #- script:
+    #  code: |
+    #    mv $WERCKER_OUTPUT_DIR/financials-ms/target/financials-microservice-1.0.0.0.jar /financials-ms.jar
+    #    touch /financials-ms.jar
     - internal/docker-build:
         dockerfile: financials-ms/Dockerfile
         image-name: financials-ms-image
@@ -54,6 +54,6 @@ push-to-releases:
         image-name: financials-ms-image
         username: $DOCKER_USERNAME
         password: $DOCKER_PASSWORD
-        registry: https://docker.io
+        #registry: https://docker.io
         repository: $USERNAME/financials-ms-1.0.0.0
         tag: latest
