@@ -24,10 +24,10 @@ build:
     - script:
         name: Maven install
         code: mvn -f financials-ms/pom.xml install -DskipTests
-    - script:
-        name: copy package to output
-        code: |
-          cp financials-ms/target/financials-microservice-1.0.0.0.jar $WERCKER_OUTPUT_DIR/financials-microservice-1.0.0.0.jar
+    #- script:
+    #    name: copy package to output
+    #    code: |
+    #      cp financials-ms/target/financials-microservice-1.0.0.0.jar $WERCKER_OUTPUT_DIR/financials-microservice-1.0.0.0.jar
 
 test-api:
   box: node:8
@@ -51,7 +51,7 @@ push-to-releases:
     # Push to public docker repo Container Registry (CR)
     - script:
       code: |
-        mv $WERCKER_OUTPUT_DIR/financials-microservice-1.0.0.0.jar /target/financials-microservice-1.0.0.0.jar
+        mv financials-ms/target/financials-microservice-1.0.0.0.jar /target/financials-microservice-1.0.0.0.jar
         touch /target/financials-microservice-1.0.0.0.jar
     - internal/docker-build:
         dockerfile: financials-ms/Dockerfile
