@@ -45,18 +45,18 @@ push-to-releases:
     - script:
         code: ls $WERCKER_SOURCE_DIR/financials-ms/target
     # Push to public docker repo Container Registry (CR)
-    #- script:
-    #  code: |
-    #    mv $WERCKER_SOURCE_DIR/financials-ms/target/financials-microservice-1.0.0.0.jar ./financials-ms.jar
-    #    touch ./financials-ms.jar
-    #- internal/docker-build:
-    #    dockerfile: financials-ms/Dockerfile
-    #    image-name: financials-ms-image
+    - script:
+      code: |
+        mv $WERCKER_SOURCE_DIR/financials-ms/target/financials-microservice-1.0.0.0.jar /target/financials-microservice-1.0.0.0.jar
+        touch /target/financials-microservice-1.0.0.0.jar
+    - internal/docker-build:
+        dockerfile: financials-ms/Dockerfile
+        image-name: financials-ms-image
     - internal/docker-push:
         #image-name: financials-ms-image
         username: $DOCKER_USERNAME
         password: $DOCKER_PASSWORD
         #registry: https://docker.io
         repository: $DOCKER_USERNAME/financials-ms-1.0.0.0
-        cmd: java -Djava.security.egd=file:/dev/./urandom -jar $WERCKER_SOURCE_DIR/financials-ms/target/financials-ms.jar
+        #cmd: java -Djava.security.egd=file:/dev/./urandom -jar /financials-ms.jar
         tag: latest
