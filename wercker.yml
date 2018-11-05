@@ -27,7 +27,7 @@ build:
     - script:
         name: copy package to output
         code: |
-          cp ./target/financials-microservice-1.0.0.0.jar $WERCKER_OUTPUT_DIR/financials-microservice-1.0.0.0.jar
+          cp financials-ms/target/financials-microservice-1.0.0.0.jar $WERCKER_OUTPUT_DIR/financials-microservice-1.0.0.0.jar
 
 test-api:
   box: node:8
