@@ -53,7 +53,7 @@ push-to-releases:
     #    dockerfile: financials-ms/Dockerfile
     #    image-name: financials-ms-image
     - internal/docker-push:
-        image-name: financials-ms-image
+        #image-name: financials-ms-image
         username: $DOCKER_USERNAME
         password: $DOCKER_PASSWORD
         #registry: https://docker.io
