@@ -40,16 +40,8 @@ test-api:
         #cwd: test/dredd
 
 push-to-releases:
-  box: docker
+  box: openjdk:8-jre-alpine
   steps:
-    - nhuray/wercker-docker:
-        image: financials-ms-image
-        path: ./financials-ms
-        tags: ${WERCKER_GIT_COMMIT:0:7},latest
-        #registry: tutum.co
-        email: sven.bernhardt@opitz-consulting.com
-        password: $DOCKER_PASSWORD
-        username: $DOCKER_USERNAME
     #- script:
     #    code: ls $WERCKER_SOURCE_DIR/financials-ms/target
     # Push to public docker repo Container Registry (CR)
@@ -60,11 +52,11 @@ push-to-releases:
     #- internal/docker-build:
     #    dockerfile: financials-ms/Dockerfile
     #    image-name: financials-ms-image
-    #- internal/docker-push:
-    #    image-name: financials-ms-image
-    #    username: $DOCKER_USERNAME
-    #    password: $DOCKER_PASSWORD
+    - internal/docker-push:
+        image-name: financials-ms-image
+        username: $DOCKER_USERNAME
+        password: $DOCKER_PASSWORD
         #registry: https://docker.io
-    #    repository: $DOCKER_USERNAME/financials-ms-1.0.0.0
-        #cmd: java -Djava.security.egd=file:/dev/./urandom -jar /financials-ms.jar
-    #    tag: latest
+        repository: $DOCKER_USERNAME/financials-ms-1.0.0.0
+        cmd: java -Djava.security.egd=file:/dev/./urandom -jar $WERCKER_SOURCE_DIR/financials-ms/target/financials-microservice-1.0.0.0.jar
+        tag: latest
