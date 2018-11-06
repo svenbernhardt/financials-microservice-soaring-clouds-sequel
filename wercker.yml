@@ -40,7 +40,7 @@ test-api:
         #cwd: test/dredd
 
 push-to-releases:
-  box: openjdk:8-jre-alpine
+#  box: openjdk:8-jre-alpine
   steps:
     #- script:
     #    code: ls $WERCKER_SOURCE_DIR/financials-ms/target
@@ -49,9 +49,9 @@ push-to-releases:
     #  code: |
     #    mv financials-ms/target/financials-microservice-1.0.0.0.jar /target/financials-microservice-1.0.0.0.jar
     #    touch /target/financials-microservice-1.0.0.0.jar
-    #- internal/docker-build:
-    #    dockerfile: financials-ms/Dockerfile
-    #    image-name: financials-ms-image
+    - internal/docker-build:
+        dockerfile: financials-ms/Dockerfile
+        image-name: financials-ms-image
     - internal/docker-push:
         #image-name: financials-ms-image
         username: $DOCKER_USERNAME
