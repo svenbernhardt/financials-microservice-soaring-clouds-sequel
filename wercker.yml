@@ -7,16 +7,12 @@ dev:
   #      username: sbernhardtoc
   #      password: Diplompx01_
   #      email: sven.bernhardt@opitz-consulting.com
+    - script:
+        name: Maven install
+        code: mvn -f financials-ms/pom.xml install -DskipTests
     - internal/docker-build:
         dockerfile: financials-ms/Dockerfile
         image-name: financials-ms-image
-    - internal/docker-push:
-        image-name: financials-ms-image
-        username: $DOCKER_USERNAME
-        password: $DOCKER_PASSWORD
-        registry: https://docker.io
-        repository: $USERNAME/financials-ms-1.0.0.0
-        tag: latest
 
 build:
   steps:
@@ -24,9 +20,6 @@ build:
     - script:
         name: Maven install
         code: mvn -f financials-ms/pom.xml install -DskipTests
-    - internal/docker-build:
-        dockerfile: financials-ms/Dockerfile
-        image-name: financials-ms-image
     #- script:
     #    name: copy package to output
     #    code: |
@@ -47,10 +40,18 @@ test-api:
         #cwd: test/dredd
 
 push-to-releases:
-  box: openjdk:8-jre-alpine
+  box: docker
   steps:
-    - script:
-        code: ls $WERCKER_SOURCE_DIR/financials-ms/target
+    - nhuray/wercker-docker:
+        image: financials-ms-image
+        path: ./financials-ms
+        tags: ${WERCKER_GIT_COMMIT:0:7},latest
+        #registry: tutum.co
+        email: sven.bernhardt@opitz-consulting.com
+        password: $DOCKER_PASSWORD
+        username: $DOCKER_USERNAME
+    #- script:
+    #    code: ls $WERCKER_SOURCE_DIR/financials-ms/target
     # Push to public docker repo Container Registry (CR)
     #- script:
     #  code: |
@@ -59,11 +60,11 @@ push-to-releases:
     #- internal/docker-build:
     #    dockerfile: financials-ms/Dockerfile
     #    image-name: financials-ms-image
-    - internal/docker-push:
-        image-name: financials-ms-image
-        username: $DOCKER_USERNAME
-        password: $DOCKER_PASSWORD
+    #- internal/docker-push:
+    #    image-name: financials-ms-image
+    #    username: $DOCKER_USERNAME
+    #    password: $DOCKER_PASSWORD
         #registry: https://docker.io
-        repository: $DOCKER_USERNAME/financials-ms-1.0.0.0
+    #    repository: $DOCKER_USERNAME/financials-ms-1.0.0.0
         #cmd: java -Djava.security.egd=file:/dev/./urandom -jar /financials-ms.jar
-        tag: latest
+    #    tag: latest
