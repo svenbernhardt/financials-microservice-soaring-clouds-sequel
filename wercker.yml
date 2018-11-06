@@ -53,10 +53,10 @@ push-to-releases:
         dockerfile: financials-ms/Dockerfile
         image-name: financials-ms-image
     - internal/docker-push:
-        #image-name: financials-ms-image
+        image-name: financials-ms-image
         username: $DOCKER_USERNAME
         password: $DOCKER_PASSWORD
         #registry: https://docker.io
         repository: $DOCKER_USERNAME/financials-ms-1.0.0.0
-        cmd: java -Djava.security.egd=file:/dev/./urandom -jar $WERCKER_SOURCE_DIR/financials-ms/target/financials-microservice-1.0.0.0.jar
+        #cmd: java -Djava.security.egd=file:/dev/./urandom -jar $WERCKER_SOURCE_DIR/financials-ms/target/financials-microservice-1.0.0.0.jar
         tag: latest
