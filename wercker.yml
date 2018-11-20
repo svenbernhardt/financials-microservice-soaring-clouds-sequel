@@ -1,29 +1,10 @@
 box: maven:latest
 
-dev:
-  steps:
-  #  - jakubriedl/docker-push:
-  #      image: sbernhardtoc/financials-ms-1.0.0.0
-  #      username: sbernhardtoc
-  #      password: Diplompx01_
-  #      email: sven.bernhardt@opitz-consulting.com
-    - script:
-        name: Maven install
-        code: mvn -f financials-ms/pom.xml install -DskipTests
-    - internal/docker-build:
-        dockerfile: financials-ms/Dockerfile
-        image-name: financials-ms-image
-
 build:
   steps:
-    # Build Spring Boot Sample application
     - script:
         name: Maven install
         code: mvn -f financials-ms/pom.xml install -DskipTests
-    #- script:
-    #    name: copy package to output
-    #    code: |
-    #      cp financials-ms/target/financials-microservice-1.0.0.0.jar $WERCKER_OUTPUT_DIR/financials-microservice-1.0.0.0.jar
 
 test-api:
   box: node:8
@@ -33,22 +14,10 @@ test-api:
     - script:
         name: print-dredd-version
         code: npm info dredd version
-    #- script:
-    #  name: configure-mongo
-    #  code: export MONGO_URI="mongodb://$MONGO_PORT_27017_TCP_ADDR:$MONGO_PORT_27017_TCP_PORT"
     - npm-test
-        #cwd: test/dredd
 
 push-to-releases:
-#  box: openjdk:8-jre-alpine
   steps:
-    #- script:
-    #    code: ls $WERCKER_SOURCE_DIR/financials-ms/target
-    # Push to public docker repo Container Registry (CR)
-    #- script:
-    #  code: |
-    #    mv financials-ms/target/financials-microservice-1.0.0.0.jar /target/financials-microservice-1.0.0.0.jar
-    #    touch /target/financials-microservice-1.0.0.0.jar
     - internal/docker-build:
         dockerfile: financials-ms/Dockerfile
         image-name: financials-ms-image
@@ -56,7 +25,36 @@ push-to-releases:
         image-name: financials-ms-image
         username: $DOCKER_USERNAME
         password: $DOCKER_PASSWORD
-        #registry: https://docker.io
         repository: $DOCKER_USERNAME/financials-ms-1.0.0.0
-        #cmd: java -Djava.security.egd=file:/dev/./urandom -jar $WERCKER_SOURCE_DIR/financials-ms/target/financials-microservice-1.0.0.0.jar
         tag: latest
+
+deploy-to-oke:
+  box:
+        id: alpine
+        cmd: /bin/sh
+  steps:
+    - bash-template
+    - script:
+        name: "Visualise Kubernetes config"
+        code: cat kubernetes-deployment.yml
+    - kubectl:
+        name: delete namespace
+        server: $KUBERNETES_MASTER
+        token: $KUBERNETES_TOKEN
+        insecure-skip-tls-verify: true
+        command: delete namespace $KUBERNETES_NAMESPACE --ignore-not-found=true
+    - script:
+        name: wait to delete namespace
+        code: sleep 30
+    - kubectl:
+        name: create namespace
+        server: $KUBERNETES_MASTER
+        token: $KUBERNETES_TOKEN
+        insecure-skip-tls-verify: true
+        command: create namespace $KUBERNETES_NAMESPACE
+    - kubectl:
+        name: create
+        server: $KUBERNETES_MASTER
+        token: $KUBERNETES_TOKEN
+        insecure-skip-tls-verify: true
+        command: create -f $WERCKER_ROOT/financials-mongo-db.yml --namespace=$KUBERNETES_NAMESPACE
