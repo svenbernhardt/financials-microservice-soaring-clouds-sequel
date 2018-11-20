@@ -1,0 +1,59 @@
+# Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    run: financials-mongodb
+  name: financials-mongodb
+spec:
+  selector:
+    matchLabels:
+      app: financials-mongodb
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: financials-mongodb
+    spec:
+      containers:
+      - image: mongo
+        name: financials-mongodb
+        ports:
+        - containerPort: 27017
+          hostPort: 27017
+      - image: sbernhardtoc/financials-ms-1.0.0.0
+        imagePullPolicy: Always
+        name: financials-ms
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongodb
+  labels:
+    app: financials-mongodb
+spec:
+  selector:
+    app: financials-mongodb
+  clusterIP: None
+  ports:
+  - name: mongodb
+    port: 27017
+    targetPort: 27017
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: financials-ms
+  labels:
+    run: financials-ms
+spec:
+  selector:
+    run: financials-ms
+  ports:
+  - port: 7790
+    targetPort: 8080
+  type: LoadBalancer
