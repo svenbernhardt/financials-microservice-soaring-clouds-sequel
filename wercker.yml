@@ -34,15 +34,6 @@ deploy-to-oke:
         cmd: /bin/sh
   steps:
     - bash-template
-    - script:
-        name: print SOURCE
-        code: ls -al $WERCKER_ROOT
-    - script:
-        name: print WERCKER_STEP_ROOT
-        code: ls -al $WERCKER_STEP_ROOT
-    - script:
-        name: print CURRENT_FOLDER
-        code: ls -al
     - kubectl:
         name: delete namespace
         server: $KUBERNETES_MASTER
