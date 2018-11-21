@@ -56,4 +56,4 @@ spec:
   ports:
   - port: 7790
     targetPort: 8080
-  type: LoadBalancer
+  type: ClusterIP
