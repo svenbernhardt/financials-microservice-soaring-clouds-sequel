@@ -6,15 +6,15 @@ build:
         name: Maven install
         code: mvn -f financials-ms/pom.xml install -DskipTests
 
-test-api:
-  box: node:8
-  steps:
-    - npm-install:
-        options: --no-optional
-    - script:
-        name: print-dredd-version
-        code: npm info dredd version
-    - npm-test
+#test-api:
+#  box: node:8
+#  steps:
+#    - npm-install:
+#        options: --no-optional
+#    - script:
+#        name: print-dredd-version
+#        code: npm info dredd version
+#    - npm-test
 
 push-to-releases:
   steps:
