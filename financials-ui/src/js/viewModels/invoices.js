@@ -18,8 +18,8 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojvalidation', 'ojs/ojknockout'
         const username = "Mr. John Doe";
         const apiKey = "67d0706a-9d52-4ed0-9812-3c01928d1074"; 
         //const serviceUrl = "http://oc-129-156-113-240.compute.oraclecloud.com:8011/financials-api/v1"
-        //const serviceUrl = "http://129.156.113.125:7791/api/financials"
-        const serviceUrl = "http://localhost:7777/api/financials"
+        const serviceUrl = "http://132.145.236.64:80/api/financials"
+        //const serviceUrl = "http://localhost:7777/api/financials"
         var self = this;
 
         self.getHeaders = function() {

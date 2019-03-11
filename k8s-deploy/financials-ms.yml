@@ -3,17 +3,17 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    run: financials-mongodb
-  name: financials-mongodb
+    app: financials-ms
+  name: financials-ms-dc
 spec:
   selector:
     matchLabels:
-      app: financials-mongodb
+      app: financials-ms
   replicas: 1
   template:
     metadata:
       labels:
-        app: financials-mongodb
+        app: financials-ms
     spec:
       containers:
       - image: mongo
@@ -21,7 +21,7 @@ spec:
         ports:
         - containerPort: 27017
           hostPort: 27017
-      - image: sbernhardtoc/financials-ms-1.0.0.0
+      - image: sbernhardtoc/financials-ms:latest
         imagePullPolicy: Always
         name: financials-ms
         ports:
@@ -32,28 +32,41 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: mongodb
-  labels:
-    app: financials-mongodb
-spec:
-  selector:
-    app: financials-mongodb
-  clusterIP: None
-  ports:
-  - name: mongodb
-    port: 27017
-    targetPort: 27017
----
-apiVersion: v1
-kind: Service
-metadata:
   name: financials-ms
   labels:
-    run: financials-ms
+    app: financials-ms
 spec:
   selector:
-    run: financials-ms
+    app: financials-ms
   ports:
   - port: 7790
     targetPort: 8080
   type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongodb
+  labels:
+    app: mongodb
+spec:
+  selector:
+    app: financials-ms
+  ports:
+  - port: 27017
+    targetPort: 27017
+  type: ClusterIP
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: financials-ms-ingress
+spec:
+  rules:
+  - host:
+    http:
+      paths:
+      - path: /api/financials/*
+        backend:
+          serviceName: financials-ms
+          servicePort: 7790

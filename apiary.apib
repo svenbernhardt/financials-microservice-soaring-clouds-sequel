@@ -8,7 +8,7 @@ This is the documentation of the Financials Microservice for the Soaring the Clo
 # Group Invoices Resources
 Invoices related resources. Test
 
-## Search and Create Invoices [/api/financials/invoices{?customer_id,order_id}]
+## Search and Create Invoices [/invoices{?customer_id,order_id}]
 
 + Parameters
 
@@ -48,12 +48,12 @@ Create a new invoice
 
     + Attributes (Response Metadata)
 
-## Manage invoices [/api/financials/invoices/{invoice_id}]
+## Manage invoices [/invoices/{invoice_id}]
 
 + Parameters
-    
+
     + invoice_id: `I2134354535` (string, required)
-    
+
         invoice_id of invoice to manage
 
 ### Get Invoice [GET]
@@ -98,7 +98,7 @@ Deletes a specific invoice (NOTE: For internal use only! Use carefully!)
 # Group Payments Resources
 Payment related Resources
 
-## Search and create payments [/api/financials/payments{?invoice_id,customer_no}]
+## Search and create payments [/payments{?invoice_id,customer_no}]
 
 + Parameters
 
@@ -141,12 +141,12 @@ Create a new payment
 # Group Customer Account Resources
 Customer account related Resources
 
-## Search customer account information [/api/financials/customers/{customer_id}/account]
+## Search customer account information [/customers/{customer_id}/account]
 
 + Parameters
-    
+
     + customer_id: `CGN4711` (string, required)
-    
+
         customer_id of customer to manage account for
 
 ### Get customer account info [GET]

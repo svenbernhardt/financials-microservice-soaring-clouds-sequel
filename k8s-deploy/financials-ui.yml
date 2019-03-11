@@ -1,0 +1,53 @@
+# Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: financials-ui
+  name: financials-ui-dc
+spec:
+  selector:
+    matchLabels:
+      app: financials-ui
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: financials-ui
+    spec:
+      containers:
+      - image: sbernhardtoc/financials-ms-ui:latest
+        imagePullPolicy: Always
+        name: financials-ui
+        ports:
+        - containerPort: 80
+          protocol: TCP
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: financials-ui
+  labels:
+    app: financials-ui
+spec:
+  selector:
+    app: financials-ui
+  ports:
+  - port: 7791
+    targetPort: 80
+  type: ClusterIP
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: financials-ui-ingress
+spec:
+  rules:
+  - host:
+    http:
+      paths:
+      - path: /financials
+        backend:
+          serviceName: financials-ui
+          servicePort: 7791

@@ -23,12 +23,39 @@ To serve the UI locally just run from within financials-ui folder:
 grunt serve
 ```
 
-
 ## Run the Microservice
+
+### Execute the Microservice locally using docker-compose
+For running the Financials Microservice locally using docker-compose, there's a respective config file with simply can be executed as described below:
 
  * docker-compose up --build -d
  * Base URL for the JET UI is http://localhost:8088
  * Base URL for the service is http://localhost:7777/api/financials
+
+### Running the Microservice in K8s
+This section describes how to run the Financials Microservice in a K8S environment.
+
+#### Setting up an Ingress Controller
+*Note: If you're already using an Ingress Controller within your Cluster, you can ignore this section.*
+
+Setting up Kong as Ingress Controller is straight-forward and can be done using a respective template. More information about Kong Ingress Controller could be found in Github: https://github.com/Kong/kubernetes-ingress-controller
+
+```bash
+curl https://raw.githubusercontent.com/Kong/kubernetes-ingress-controller/master/deploy/single/all-in-one-postgres.yaml \
+  | kubectl create -f -
+```
+
+After the command has been executed Kong Ingress Controller is set up in a separate Namespace "kong" and can then be used. You can get an overview of the established services using the following command.
+
+```bash
+kubectl get service -n kong
+```
+#### Deploy the Financials Microservice to K8S
+The resources needed for K8S deployments are located in the folder k8s-deploy. From here execute the following commands:
+
+  * kubectl create namespace financials
+  * kubectl create -f financials-ms.yml -n financials
+  * kubectl create -f financials-ui.yml -n financials
 
 ## Testing the Microservice
 

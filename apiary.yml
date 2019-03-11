@@ -5,7 +5,7 @@ info:
   description: This is the documentation of the Financials Microservice for the Soaring the Cloud Sequel Showcase.
   contact: {}
 host: private-0b1f3-financialsmicroservice.apiary-mock.com
-basePath: /
+basePath: /financials/api/v1
 schemes:
 - http
 consumes:
@@ -13,7 +13,7 @@ consumes:
 produces:
 - application/json
 paths:
-  /api/financials/invoices:
+  /invoices:
     get:
       description: Search invoices using criterias like the Customer ID or Order ID
       summary: Searchinvoices
@@ -126,7 +126,7 @@ paths:
             application/json:
               error: true
               processing_message: Invoice created successfully!
-  /api/financials/invoices/{invoice_id}:
+  /invoices/{invoice_id}:
     get:
       description: get a specific invoice by it's Invoice ID
       summary: GetInvoice
@@ -254,7 +254,7 @@ paths:
       responses:
         204:
           description: ''
-  /api/financials/payments:
+  /payments:
     get:
       description: Get the relevant payment information for an invoice
       summary: Getpaymentsinformation
@@ -344,7 +344,7 @@ paths:
             application/json:
               error: true
               processing_message: Invoice created successfully!
-  /api/financials/customers/{customer_id}/account:
+  /customers/{customer_id}/account:
     get:
       description: ''
       summary: Getcustomeraccountinfo
@@ -383,7 +383,7 @@ paths:
               currency: EUR
               customer_status: FROZEN
               _id: 12345678908754324567854345675433
-  /api/financials/health:
+  /health:
     get:
       description: Get service health information
       summary: Getservicehealthstate

@@ -1,12 +1,12 @@
 version: '2'
 services:
-  #financials-ui:
-  #  image: sbernhardtoc/financials-ms-ui-1.0.0.0
-  #  build: ./financials-ui
-  #  ports:
-  #    - "8088:80"
+  financials-ui:
+    image: sbernhardtoc/financials-ms-ui:latest
+    build: ./financials-ui
+    ports:
+      - "8088:80"
   financials-ms:
-    image: sbernhardtoc/financials-ms
+    image: sbernhardtoc/financials-ms:latest
     build: ./financials-ms
     depends_on:
       - mongodb
