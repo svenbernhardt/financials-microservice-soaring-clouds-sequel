@@ -1,0 +1,24 @@
+{
+"type" : "record",
+"namespace" : "com.soaringclouds.avro.paymentstatus.v1",
+"name" : "PaymentStatus",
+         "description" : "the representation of a PaymentStatus",
+         "fields" : [
+{
+"name" : "paymentId",
+"type" : "string"
+},
+{
+"name" : "orderId",
+"type" : "string"
+},
+{
+"name" : "status",
+"type" : {
+         "type" : "enum",
+         "name" : "PaymentStatusEnum",
+         "symbols" : ["PAYMENT_RECEIVED", "PAYMENT_REJECTED", "PAYMENT_INCOMPLETE"]
+         }
+}
+]
+}

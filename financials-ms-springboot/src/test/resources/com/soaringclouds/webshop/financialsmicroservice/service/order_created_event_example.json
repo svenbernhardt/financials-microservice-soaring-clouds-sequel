@@ -1,0 +1,67 @@
+{
+  "orderId": "unittest",
+  "shoppingCartId": "CUST0001",
+  "status": "SUCCESS",
+  "createdAt": "2018-03-04T07:22:35.718Z",
+  "updatedAt": "2018-03-04T09:00:58.984Z",
+  "totalPrice": 68.39,
+  "currency": "GBP",
+  "payment": {
+    "cardType": "VISA_CREDIT",
+    "cardNumber": "**** **** **** 1111",
+    "startYear": 2018,
+    "startMonth": 1,
+    "expiryYear": 2020,
+    "expiryMonth": 6
+  },
+  "customer": {
+    "customerId": "CUST0001",
+    "firstName": "Luis",
+    "lastName": "Weir",
+    "phone": "+44 (0) 757 5333 777",
+    "email": "myemail@email.com"
+  },
+  "addresses": [
+    {
+      "name": "BILLING",
+      "line1": "22",
+      "line2": "King street",
+      "city": "Leamington Spa",
+      "county": "Warkwickshire",
+      "postcode": "CV31",
+      "country": "GB"
+    }
+  ],
+  "shipping": {
+    "firstName": "Lucas",
+    "lastName": "Jellema",
+    "shippingMethod": "ECONOMY",
+    "price": 10.00,
+    "ETA": "2018-06-05T07:11:00.000Z"
+  },
+  "specialDetails": {
+    "personalMessage": "From Luis with Love!",
+    "giftWrapping": true,
+    "deliveryNotes": "Please try to deliver in the morning"
+  },
+  "items": [
+    {
+      "productId": "abbfc4f9-83d5-49ac-9fa5-2909c5dc86e6",
+      "productCode": "AX330T",
+      "productName": "Light Brown Men Shoe 1",
+      "description": "Light Brown Men Shoe 1",
+      "quantity": 2,
+      "price": 68.39,
+      "size": 43,
+      "weight": 0.0,
+      "dimension": {
+        "unit": "cm",
+        "length": 10.2,
+        "height": 10.4,
+        "width": 5.4
+      },
+      "color": "White",
+      "sku": "S15T-Flo-RS"
+    }
+  ]
+}

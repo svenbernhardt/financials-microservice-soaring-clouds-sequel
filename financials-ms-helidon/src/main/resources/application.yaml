@@ -1,0 +1,25 @@
+server:
+  port: 8080
+#tracing:
+#  service: "financial-microservice"
+#  protocol: "http"
+#  host: "zipkin"
+#  port: 9411
+#  api-version: 2
+#  path: "/api/v2/spans"
+app:
+  db:
+    host: "mongodb"
+    port: 27017
+    name: "financials-db"
+  kafka:
+    #bootstrap-servers: "130.61.35.61:9092"
+    bootstrap-servers: "10.10.0.137:9092,10.10.0.139:9092,10.10.0.140:9092"
+    schema-registry-url: "http://130.61.35.61:8081/"
+    kafka.acks: "all"
+    retries: 0
+    topics:
+      paymentstatus: "soaring-paymentstatus"
+      customerstatus: "soaring-customerstatus"
+      order: "soaring-ordercreated"
+      shippingnews: "soaring-shippingnews"

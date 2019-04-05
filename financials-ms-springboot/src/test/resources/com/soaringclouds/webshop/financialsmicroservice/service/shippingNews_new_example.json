@@ -1,0 +1,34 @@
+{
+  "eventType": "ShippingEvent",
+  "payload": {
+    "orderIdentifier": "ZZXX123",
+    "nameAddressee": "Jeanet Visser",
+    "destination": {
+      "country": "nl",
+      "city": "Stavoren",
+      "coordinates": {
+        "lat": "52.8907078",
+        "lon": "5.30302089365465"
+      }
+    },
+    "shippingMethod": "economy",
+    "giftWrapping": false,
+    "personalMessage": "Enjoy this stuff.",
+    "items": [{
+      "productIdentifier": "5a9aae995f150300017ff1b2",
+      "itemCount": 225
+    }],
+    "shippingId": "aa381ff5-23d2-7ed7-51a4-a142be3681ea",
+    "shippingStatus": "new",
+    "auditTrail": [{
+      "timestamp": "2018-3-7T17:17:45",
+      "status": "new",
+      "comment": "creation of new shipping"
+    }],
+    "shippingCosts": 69,
+    "submissionDate": "2018-3-7T17:17:45"
+  },
+  "module": "logistics.microservice",
+  "transactionIdentifier": "aa381ff5-23d2-7ed7-51a4-a142be3681ea",
+  "timestamp": "2018-3-7T17:17:45"
+}

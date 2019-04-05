@@ -1,0 +1,80 @@
+{
+  "eventType": "ShippingEvent",
+  "payload": {
+    "orderIdentifier": "ZZXX123",
+    "nameAddressee": "Jeanet Visser",
+    "destination": {
+      "country": "nl",
+      "city": "Stavoren",
+      "coordinates": {
+        "lat": "52.8907078",
+        "lon": "5.30302089365465"
+      }
+    },
+    "shippingMethod": "economy",
+    "giftWrapping": false,
+    "personalMessage": "Enjoy this stuff.",
+    "items": [
+      {
+        "productIdentifier": "5a9aae995f150300017ff1b2",
+        "itemCount": 225
+      }
+    ],
+    "shippingId": "d555af45-1fe5-9011-79f4-8046f7dc2297",
+    "shippingStatus": "delivered",
+    "auditTrail": [
+      {
+        "comment": "creation of new shipping",
+        "timestamp": "2018-3-7T16:32:28",
+        "status": "new"
+      },
+      {
+        "comment": "order items picked for shipping",
+        "timestamp": "2018-3-7T16:34:9",
+        "status": "picked"
+      },
+      {
+        "comment": "parcel(s) handed over to parcel delivery service",
+        "timestamp": "2018-3-7T16:36:20",
+        "status": "handedOverToParcelDelivery"
+      },
+      {
+        "comment": "update from parcel delivery service",
+        "timestamp": "2018-3-7T16:36:20",
+        "status": "enRoute"
+      },
+      {
+        "timestamp": "2018-3-7T16:42:34",
+        "status": "delivered",
+        "comment": "update from parcel delivery service"
+      }
+    ],
+    "shippingCosts": 69,
+    "submissionDate": "2018-3-7T16:32:28",
+    "parcels": [
+      {
+        "parcelDeliveryService": "XYZ",
+        "trackAndTraceIdentifier": "TX-XYZd555af45-1fe5-9011-79f4-8046f7dc22971",
+        "parcelLogItems": [
+          {
+            "location": "Frankfurt, de",
+            "parcelStatus": "inDepot"
+          },
+          {
+            "location": "",
+            "parcelStatus": "enRoute",
+            "parcelLogTimestamp": "2018-3-7T16:36:20"
+          },
+          {
+            "location": "customer",
+            "parcelLogTimestamp": "2018-3-7T16:42:34",
+            "parcelStatus": "delivered"
+          }
+        ]
+      }
+    ]
+  },
+  "module": "logistics.microservice",
+  "transactionIdentifier": "d555af45-1fe5-9011-79f4-8046f7dc2297",
+  "timestamp": "2018-3-7T16:42:34"
+}

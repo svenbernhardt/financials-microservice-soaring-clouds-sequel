@@ -1,0 +1,50 @@
+financials-ms_1  | 2019.03.23 14:16:01 CONFIG org.glassfish.jersey.server.ApplicationHandler Thread[main,5,main]: Initiating Jersey application, version Jersey: 2.26 2017-09-05 11:50:34...
+financials-ms_1  | 2019.03.23 14:16:01 FINEST org.glassfish.jersey.internal.ServiceFinder Thread[main,5,main]: Loading next object: org.glassfish.jersey.weld.se.WeldInjectionManagerStore
+financials-ms_1  | 2019.03.23 14:16:01 FINEST org.glassfish.jersey.internal.ServiceFinder Thread[main,5,main]: Loading next object: org.glassfish.jersey.ext.cdi1x.internal.CdiComponentProvider
+financials-ms_1  | 2019.03.23 14:16:01 CONFIG org.glassfish.jersey.ext.cdi1x.internal.CdiComponentProvider Thread[main,5,main]: Jersey CDI component provider initialized.
+financials-ms_1  | 2019.03.23 14:16:01 FINE org.glassfish.jersey.ext.cdi1x.internal.CdiComponentProvider Thread[main,5,main]: Class, class com.soaringclouds.webshop.financialsmicroservice.FinancialsMicroserviceApp, is being checked with Jersey CDI component provider.
+financials-ms_1  | 2019.03.23 14:16:01 FINEST org.glassfish.jersey.server.model.IntrospectionModeller Thread[main,5,main]: A new abstract resource created by IntrospectionModeler: Builder{names=[com.soaringclouds.webshop.financialsmicroservice.FinancialsMicroserviceApp], path='null', methodBuilders=[], childResourceBuilders=[], childResources=[], resourceMethods=[], subResourceLocator=null, handlerClasses=[], handlerInstances=[], parentResource=<no parent>, extended=false}
+financials-ms_1  | 2019.03.23 14:16:01 CONFIG org.glassfish.jersey.ext.cdi1x.internal.CdiComponentProvider Thread[main,5,main]: Class, class com.soaringclouds.webshop.financialsmicroservice.FinancialsMicroserviceApp, has been bound by Jersey CDI component provider.
+financials-ms_1  | 2019.03.23 14:16:01 FINE org.glassfish.jersey.internal.util.collection.DataStructures Thread[main,5,main]: USING LTQ class:class java.util.concurrent.LinkedTransferQueue
+financials-ms_1  | 2019.03.23 14:16:01 FINEST org.glassfish.jersey.internal.ServiceFinder Thread[main,5,main]: Loading next class: org.glassfish.jersey.server.filter.internal.ServerFiltersAutoDiscoverable
+financials-ms_1  | 2019.03.23 14:16:01 FINEST org.glassfish.jersey.internal.ServiceFinder Thread[main,5,main]: Loading next class: org.glassfish.jersey.jackson.internal.JacksonAutoDiscoverable
+financials-ms_1  | 2019.03.23 14:16:01 FINEST org.glassfish.jersey.internal.ServiceFinder Thread[main,5,main]: Loading next class: org.glassfish.jersey.logging.LoggingFeatureAutoDiscoverable
+financials-ms_1  | 2019.03.23 14:16:01 FINEST org.glassfish.jersey.internal.ServiceFinder Thread[main,5,main]: Loading next class: org.glassfish.jersey.server.wadl.internal.WadlAutoDiscoverable
+financials-ms_1  | 2019.03.23 14:16:01 FINEST org.glassfish.jersey.internal.ServiceFinder Thread[main,5,main]: Loading next class: org.glassfish.jersey.server.internal.monitoring.MonitoringAutodiscoverable
+financials-ms_1  | 2019.03.23 14:16:01 FINEST org.glassfish.jersey.internal.ServiceFinder Thread[main,5,main]: Loading next class: org.glassfish.jersey.jsonp.internal.JsonProcessingAutoDiscoverable
+financials-ms_1  | 2019.03.23 14:16:01 FINER org.glassfish.jersey.server.model.Parameter Thread[main,5,main]: Unable to get the com.sun.proxy.$Proxy32 annotation value property
+financials-ms_1  | java.lang.NoSuchMethodException: javax.inject.Inject.value()
+financials-ms_1  | 	at java.lang.Class.getMethod(Class.java:1786)
+financials-ms_1  | 	at org.glassfish.jersey.server.model.Parameter.getValue(Parameter.java:477)
+financials-ms_1  | 	at org.glassfish.jersey.server.model.Parameter.create(Parameter.java:328)
+financials-ms_1  | 	at org.glassfish.jersey.server.model.IntrospectionModeller.checkResourceClassFields(IntrospectionModeller.java:227)
+financials-ms_1  | 	at org.glassfish.jersey.server.model.IntrospectionModeller.doCreateResourceBuilder(IntrospectionModeller.java:141)
+financials-ms_1  | 	at org.glassfish.jersey.server.model.IntrospectionModeller.access$000(IntrospectionModeller.java:82)
+financials-ms_1  | 	at org.glassfish.jersey.server.model.IntrospectionModeller$1.call(IntrospectionModeller.java:114)
+financials-ms_1  | 	at org.glassfish.jersey.server.model.IntrospectionModeller$1.call(IntrospectionModeller.java:111)
+financials-ms_1  | 	at org.glassfish.jersey.internal.Errors.process(Errors.java:316)
+financials-ms_1  | 	at org.glassfish.jersey.internal.Errors.process(Errors.java:298)
+financials-ms_1  | 	at org.glassfish.jersey.internal.Errors.processWithException(Errors.java:256)
+financials-ms_1  | 	at org.glassfish.jersey.server.model.IntrospectionModeller.createResourceBuilder(IntrospectionModeller.java:111)
+financials-ms_1  | 	at org.glassfish.jersey.server.model.Resource.from(Resource.java:800)
+financials-ms_1  | 	at org.glassfish.jersey.server.ResourceBagConfigurator.init(ResourceBagConfigurator.java:79)
+financials-ms_1  | 	at org.glassfish.jersey.server.ApplicationHandler.initialize(ApplicationHandler.java:354)
+financials-ms_1  | 	at org.glassfish.jersey.server.ApplicationHandler.lambda$initialize$1(ApplicationHandler.java:316)
+financials-ms_1  | 	at org.glassfish.jersey.internal.Errors.process(Errors.java:316)
+financials-ms_1  | 	at org.glassfish.jersey.internal.Errors.process(Errors.java:298)
+financials-ms_1  | 	at org.glassfish.jersey.internal.Errors.processWithException(Errors.java:256)
+financials-ms_1  | 	at org.glassfish.jersey.server.ApplicationHandler.initialize(ApplicationHandler.java:315)
+financials-ms_1  | 	at org.glassfish.jersey.server.ApplicationHandler.<init>(ApplicationHandler.java:282)
+financials-ms_1  | 	at org.glassfish.jersey.server.ApplicationHandler.<init>(ApplicationHandler.java:269)
+financials-ms_1  | 	at io.helidon.webserver.jersey.JerseySupport.<init>(JerseySupport.java:115)
+financials-ms_1  | 	at io.helidon.webserver.jersey.JerseySupport.<init>(JerseySupport.java:72)
+financials-ms_1  | 	at io.helidon.webserver.jersey.JerseySupport$Builder.build(JerseySupport.java:378)
+financials-ms_1  | 	at io.helidon.microprofile.server.ServerImpl.lambda$new$6(ServerImpl.java:170)
+financials-ms_1  | 	at java.lang.Iterable.forEach(Iterable.java:75)
+financials-ms_1  | 	at io.helidon.microprofile.server.ServerImpl.<init>(ServerImpl.java:166)
+financials-ms_1  | 	at io.helidon.microprofile.server.Server$Builder.build(Server.java:230)
+financials-ms_1  | 	at io.helidon.microprofile.server.Server.create(Server.java:89)
+financials-ms_1  | 	at com.soaringclouds.webshop.financialsmicroservice.Main.startServer(Main.java:73)
+financials-ms_1  | 	at com.soaringclouds.webshop.financialsmicroservice.Main.main(Main.java:50)
+financials-ms_1  |
+financials-ms_1  | 2019.03.23 14:16:01 FINEST org.glassfish.jersey.server.model.IntrospectionModeller Thread[main,5,main]: A new abstract resource created by IntrospectionModeler: Builder{names=[com.soaringclouds.webshop.financialsmicroservice.endpoint.Invoices], path='invoices', methodBuilders=[org.glassfish.jersey.server.model.ResourceMethod$Builder@4cbf4f53, org.glassfish.jersey.server.model.ResourceMethod$Builder@597f48df], childResourceBuilders=[Builder{names=[[unnamed]], path='{invoice_id}', methodBuilders=[org.glassfish.jersey.server.model.ResourceMethod$Builder@4d48bd85], childResourceBuilders=[], childResources=[], resourceMethods=[], subResourceLocator=null, handlerClasses=[], handlerInstances=[], parentResource=Builder{names=[com.soaringclouds.webshop.financialsmicroservice.endpoint.Invoices], path='invoices'}, extended=false}, Builder{names=[[unnamed]], path='{invoice_id}', methodBuilders=[org.glassfish.jersey.server.model.ResourceMethod$Builder@58a120b0], childResourceBuilders=[], childResources=[], resourceMethods=[], subResourceLocator=null, handlerClasses=[], handlerInstances=[], parentResource=Builder{names=[com.soaringclouds.webshop.financialsmicroservice.endpoint.Invoices], path='invoices'}, extended=false}, Builder{names=[[unnamed]], path='{invoice_id}', methodBuilders=[org.glassfish.jersey.server.model.ResourceMethod$Builder@2ff95fc6], childResourceBuilders=[], childResources=[], resourceMethods=[], subResourceLocator=null, handlerClasses=[], handlerInstances=[], parentResource=Builder{names=[com.soaringclouds.webshop.financialsmicroservice.endpoint.Invoices], path='invoices'}, extended=false}], childResources=[], resourceMethods=[], subResourceLocator=null, handlerClasses=[], handlerInstances=[], parentResource=<no parent>, extended=false}

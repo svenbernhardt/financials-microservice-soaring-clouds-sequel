@@ -1,0 +1,67 @@
+package com.soaringclouds.webshop.financialsmicroservice.util;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.io.CharStreams;
+import com.soaringclouds.avro.order.v1.Order;
+import com.soaringclouds.webshop.financialsmicroservice.gen.model.Invoice;
+import com.soaringclouds.webshop.financialsmicroservice.gen.model.Payment;
+
+import java.io.InputStreamReader;
+
+public class TestUtilities {
+
+    public static Invoice createInvoice() {
+
+        Invoice invoice = null;
+        String invoiceJsonString = null;
+        try {
+            invoiceJsonString = CharStreams.toString(new InputStreamReader(
+                    Thread.currentThread().getContextClassLoader().getResourceAsStream(
+                            "com/soaringclouds/webshop/financialsmicroservice/repository"
+                                    + "/invoice_example.json")));
+
+            invoice = new ObjectMapper().readValue(invoiceJsonString, Invoice.class);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        return invoice;
+    }
+
+    public static Payment createPayment() {
+
+        Payment payment = null;
+        String paymentJsonString = null;
+        try {
+            paymentJsonString = CharStreams.toString(new InputStreamReader(
+                    Thread.currentThread().getContextClassLoader().getResourceAsStream(
+                            "com/soaringclouds/webshop/financialsmicroservice/service"
+                                    + "/payment_example.json")));
+
+            payment = new ObjectMapper().readValue(paymentJsonString, Payment.class);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        return payment;
+    }
+
+    public static Order createOrder() {
+
+        Order order = null;
+        String orderJsonString = null;
+        try {
+            orderJsonString = CharStreams.toString(new InputStreamReader(
+                    Thread.currentThread().getContextClassLoader().getResourceAsStream(
+                            "com/soaringclouds/webshop/financialsmicroservice/service"
+                                    + "/order_created_event_example.json")));
+
+            order = new ObjectMapper().readValue(orderJsonString, Order.class);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        return order;
+    }
+
+}

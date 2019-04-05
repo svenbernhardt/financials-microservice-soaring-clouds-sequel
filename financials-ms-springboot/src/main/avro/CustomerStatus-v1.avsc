@@ -1,0 +1,20 @@
+{
+"type" : "record",
+"namespace" : "com.soaringclouds.avro.customerstatus.v1",
+"name" : "CustomerStatus",
+         "description" : "the representation of a CustomerStatusChange",
+         "fields" : [
+{
+"name" : "customerNo",
+"type" : "string"
+},
+{
+"name" : "status",
+"type" : {
+         "type": "enum",
+         "name": "CustomerStatusEnum",
+         "symbols" : ["FROZEN","UNFROZEN"]
+         }
+}
+]
+}
