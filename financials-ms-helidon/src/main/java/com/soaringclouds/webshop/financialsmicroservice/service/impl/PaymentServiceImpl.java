@@ -2,12 +2,14 @@ package com.soaringclouds.webshop.financialsmicroservice.service.impl;
 
 import java.util.List;
 
+import javax.enterprise.context.Dependent;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 
 import com.google.common.base.Strings;
 import com.soaringclouds.webshop.financialsmicroservice.builder.PaymentBuilder;
 import com.soaringclouds.webshop.financialsmicroservice.entity.PaymentEntity;
+import com.soaringclouds.webshop.financialsmicroservice.event.KafkaMessageProducer;
 import com.soaringclouds.webshop.financialsmicroservice.gen.model.CustomerAccount;
 import com.soaringclouds.webshop.financialsmicroservice.gen.model.Payment;
 import com.soaringclouds.webshop.financialsmicroservice.gen.model.ResponseMetadata;
@@ -22,7 +24,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Created by svb on 04.03.18.
  */
-@RequestScoped
+@Dependent
 public class PaymentServiceImpl implements PaymentService {
 
     private static final Logger LOGGER =
@@ -37,7 +39,8 @@ public class PaymentServiceImpl implements PaymentService {
     @Inject
     private CustomerAccountService customerAccountService;
 
-    // private PaymentStatusEventProducer paymentStatusEventProducer;
+    @Inject
+    private KafkaMessageProducer kafkaMessageProducer;
 
     @Override
     public ResponseMetadata savePaymentAndUpdateInvoice(Payment pPayment) {
@@ -60,7 +63,7 @@ public class PaymentServiceImpl implements PaymentService {
 
             LOGGER.debug(String.format("Updated Customer account: [%s]", customerAccount));
 
-            // paymentStatusEventProducer.producePaymentStatusReceived(pPayment);
+            kafkaMessageProducer.producePaymentStatusReceived(pPayment);
             LOGGER.debug(String.format("Payment event produced...."));
 
             responseMetadata.setProcessingMessage(

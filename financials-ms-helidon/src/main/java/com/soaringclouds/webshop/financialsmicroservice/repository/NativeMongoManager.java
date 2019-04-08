@@ -1,10 +1,11 @@
-package com.soaringclouds.webshop.financialsmicroservice;
+package com.soaringclouds.webshop.financialsmicroservice.repository;
 
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.soaringclouds.webshop.financialsmicroservice.config.MongoConfig;
+import com.soaringclouds.webshop.financialsmicroservice.config.ObjectMapperProvider;
 import com.soaringclouds.webshop.financialsmicroservice.gen.model.CustomerAccount;
 import com.soaringclouds.webshop.financialsmicroservice.gen.model.Invoice;
 import com.soaringclouds.webshop.financialsmicroservice.gen.model.Payment;

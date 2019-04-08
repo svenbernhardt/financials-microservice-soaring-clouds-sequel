@@ -51,11 +51,15 @@ After the command has been executed Kong Ingress Controller is set up in a separ
 kubectl get service -n kong
 ```
 #### Deploy the Financials Microservice to K8S
-The resources needed for K8S deployments are located in the folder k8s-deploy. From here execute the following commands:
+The resources needed for K8S deployments are located in the respective project folders. From here execute the following commands:
 
   * kubectl create namespace financials
-  * kubectl create -f financials-ms.yml -n financials
-  * kubectl create -f financials-ui.yml -n financials
+  * kubectl create -f financials-ms-helidon/target/app.yaml -n financials
+  * kubectl create -f financials-ui/k8s/financials-ui.yml -n financials
+
+*Note:* The app.yml for deploying the financials-ms-helidon backend service is created by the Maven build and placed to the target folder.
+
+To remove the financials-ms-helidon deployment, use the Shell script located in scripts (remove-financials-ms.sh).
 
 ## Testing the Microservice
 

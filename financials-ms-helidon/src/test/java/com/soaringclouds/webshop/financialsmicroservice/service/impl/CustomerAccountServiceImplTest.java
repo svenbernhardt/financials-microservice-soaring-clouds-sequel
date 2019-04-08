@@ -2,6 +2,7 @@ package com.soaringclouds.webshop.financialsmicroservice.service.impl;
 
 import com.soaringclouds.webshop.financialsmicroservice.builder.CustomerAccountBuilder;
 import com.soaringclouds.webshop.financialsmicroservice.entity.CustomerAccountEntity;
+import com.soaringclouds.webshop.financialsmicroservice.event.KafkaMessageProducer;
 import com.soaringclouds.webshop.financialsmicroservice.gen.model.CustomerAccount;
 import com.soaringclouds.webshop.financialsmicroservice.gen.model.CustomerStatus;
 import com.soaringclouds.webshop.financialsmicroservice.gen.model.Invoice;
@@ -19,6 +20,7 @@ import static com.soaringclouds.webshop.financialsmicroservice.util.TestUtilitie
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsNull.notNullValue;
+import static org.mockito.Mockito.mock;
 
 public class CustomerAccountServiceImplTest extends BaseMongoTest {
 
@@ -27,6 +29,8 @@ public class CustomerAccountServiceImplTest extends BaseMongoTest {
     private CustomerAccountService customerAccountService;
 
     private CustomerAccountRepository customerAccountRepository;
+
+    private KafkaMessageProducer kafkaMessageProducer;
 
     private Invoice invoice;
 
@@ -39,6 +43,8 @@ public class CustomerAccountServiceImplTest extends BaseMongoTest {
         customerAccountService = new CustomerAccountServiceImpl();
         ((CustomerAccountServiceImpl) customerAccountService).setCustomerAccountRepository(customerAccountRepository);
 
+        kafkaMessageProducer = mock(KafkaMessageProducer.class);
+        ((CustomerAccountServiceImpl) customerAccountService).setKafkaMessageProducer(kafkaMessageProducer);
         invoice = createInvoice();
     }
 
@@ -99,7 +105,7 @@ public class CustomerAccountServiceImplTest extends BaseMongoTest {
     @Test
     public void whenCustomerAccountBalanceIsLowerThanThresholdThenReturnTrue() {
 
-        final CustomerAccount customerAccount = createCustomerAccount(30.96);
+        final CustomerAccount customerAccount = createCustomerAccount(-30.96);
 
         assertThat(((CustomerAccountServiceImpl) customerAccountService).isCustomerBalanceUnderThreshold(customerAccount), equalTo(true));
     }
@@ -107,7 +113,7 @@ public class CustomerAccountServiceImplTest extends BaseMongoTest {
     @Test
     public void whenCustomerAccountBalanceIsHigherThanThresholdThenReturnFalse() {
 
-        final CustomerAccount customerAccount = createCustomerAccount(1300.96);
+        final CustomerAccount customerAccount = createCustomerAccount(-1300.96);
 
         assertThat(((CustomerAccountServiceImpl) customerAccountService).isCustomerBalanceUnderThreshold(customerAccount), equalTo(false));
     }
@@ -115,7 +121,7 @@ public class CustomerAccountServiceImplTest extends BaseMongoTest {
     @Test
     public void whenCustomerAccountBalanceIsEqualToThresholdThresholdThenReturnFalse() {
 
-        final CustomerAccount customerAccount = createCustomerAccount(1000);
+        final CustomerAccount customerAccount = createCustomerAccount(-1000);
 
         assertThat(((CustomerAccountServiceImpl) customerAccountService).isCustomerBalanceUnderThreshold(customerAccount), equalTo(false));
     }

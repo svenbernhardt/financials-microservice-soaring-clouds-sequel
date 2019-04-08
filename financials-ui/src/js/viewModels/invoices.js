@@ -13,13 +13,13 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojvalidation', 'ojs/ojknockout'
      * The view model for the main content view template
      */
     var invoicesContentViewModel = function () {
-        
+
         const customerId = "CGN4711";
         const username = "Mr. John Doe";
-        const apiKey = "67d0706a-9d52-4ed0-9812-3c01928d1074"; 
+        const apiKey = "67d0706a-9d52-4ed0-9812-3c01928d1074";
         //const serviceUrl = "http://oc-129-156-113-240.compute.oraclecloud.com:8011/financials-api/v1"
-        const serviceUrl = "http://132.145.236.64:80/api/financials"
-        //const serviceUrl = "http://localhost:7777/api/financials"
+        //const serviceUrl = "http://132.145.236.64:80/api/financials"
+        const serviceUrl = "http://financials-ms:7777/api/financials"
         var self = this;
 
         self.getHeaders = function() {
@@ -56,12 +56,12 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojvalidation', 'ojs/ojknockout'
                 }
         );
 
-        self.customerAccount = new oj.Model();        
-        
+        self.customerAccount = new oj.Model();
+
         dateConverter = function(dateTimeValue) {
-            var options = {pattern: 'yyyy-MM-dd'}; 
+            var options = {pattern: 'yyyy-MM-dd'};
             var converterFactory = oj.Validation.converterFactory("datetime");
-            converter = converterFactory.createConverter(options);  
+            converter = converterFactory.createConverter(options);
 
             return converter.format(dateTimeValue)
         }

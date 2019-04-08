@@ -1,7 +1,7 @@
 package com.soaringclouds.webshop.financialsmicroservice.repository.impl;
 
 import com.google.common.collect.Lists;
-import com.soaringclouds.webshop.financialsmicroservice.NativeMongoManager;
+import com.soaringclouds.webshop.financialsmicroservice.repository.NativeMongoManager;
 import com.soaringclouds.webshop.financialsmicroservice.entity.CustomerAccountEntity;
 import com.soaringclouds.webshop.financialsmicroservice.entity.InvoiceEntity;
 import com.soaringclouds.webshop.financialsmicroservice.entity.PaymentEntity;
@@ -9,10 +9,10 @@ import com.soaringclouds.webshop.financialsmicroservice.gen.model.Payment;
 import com.soaringclouds.webshop.financialsmicroservice.repository.PaymentRepository;
 import com.soaringclouds.webshop.financialsmicroservice.repository.util.DbQueryBuilder;
 
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.Dependent;
 import java.util.List;
 
-@RequestScoped
+@Dependent
 public class PaymentRepositoryImpl extends BaseRepository<PaymentEntity, Payment> implements PaymentRepository {
 
     @Override

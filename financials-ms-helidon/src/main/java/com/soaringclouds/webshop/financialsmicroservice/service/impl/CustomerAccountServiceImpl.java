@@ -1,6 +1,7 @@
 package com.soaringclouds.webshop.financialsmicroservice.service.impl;
 
 import com.soaringclouds.webshop.financialsmicroservice.entity.CustomerAccountEntity;
+import com.soaringclouds.webshop.financialsmicroservice.event.KafkaMessageProducer;
 import com.soaringclouds.webshop.financialsmicroservice.gen.model.CustomerAccount;
 import com.soaringclouds.webshop.financialsmicroservice.gen.model.CustomerStatus;
 import com.soaringclouds.webshop.financialsmicroservice.gen.model.Invoice;
@@ -10,6 +11,7 @@ import com.soaringclouds.webshop.financialsmicroservice.service.CustomerAccountS
 import com.soaringclouds.webshop.financialsmicroservice.service.InvoiceService;
 import com.soaringclouds.webshop.financialsmicroservice.service.PaymentService;
 
+import javax.enterprise.context.Dependent;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import java.math.BigDecimal;
@@ -19,24 +21,19 @@ import java.util.logging.Logger;
 /**
  * Created by svb on 08.03.18.
  */
-@RequestScoped
+@Dependent
 public class CustomerAccountServiceImpl implements CustomerAccountService {
 
     private static final Logger LOGGER =
             Logger.getLogger(CustomerAccountServiceImpl.class.getSimpleName());
 
-    // @Autowired private CustomerStatusEventProducer customerStatusEventProducer;
+    @Inject
+    private KafkaMessageProducer kafkaMessageProducer;
 
     @Inject
     private CustomerAccountRepository customerAccountRepository;
 
-    @Inject
-    private InvoiceService invoiceService;
-
-    @Inject
-    private PaymentService paymentService;
-
-    private BigDecimal customerStatusFrozenThreshold = new BigDecimal(1000d);
+    private BigDecimal customerStatusFrozenThreshold = new BigDecimal(-1000d);
 
     @Override
     public CustomerAccount createOrUpdateCustomerAccount(Invoice pInvoice) {
@@ -102,12 +99,7 @@ public class CustomerAccountServiceImpl implements CustomerAccountService {
     @Override
     public void deleteCustomerAccount(String pCustomerId) {
 
-        paymentService.deletePayments(pCustomerId);
-
-        invoiceService.deleteInvoices(pCustomerId);
-
         final CustomerAccount customerAccount = getCustomerAccount(pCustomerId);
-
         customerAccountRepository.delete(new CustomerAccountEntity(customerAccount));
     }
 
@@ -137,20 +129,20 @@ public class CustomerAccountServiceImpl implements CustomerAccountService {
             if (!isCustomerBalanceUnderThreshold(pCustomerAccount)) {
 
                 toggleCustomerStatus(pCustomerAccount, CustomerStatus.FROZEN);
-                //customerStatusEventProducer.produceCustomerStatusFrozen(customerNo);
+                kafkaMessageProducer.produceCustomerStatusFrozen(pCustomerAccount.getCustomerNo());
             }
         } else {
 
             if (isCustomerBalanceUnderThreshold(pCustomerAccount)) {
                 toggleCustomerStatus(pCustomerAccount, CustomerStatus.NORMAL);
-                //customerStatusEventProducer.produceCustomerStatusUnFrozen(customerNo);
+                kafkaMessageProducer.produceCustomerStatusUnFrozen(pCustomerAccount.getCustomerNo());
             }
         }
     }
 
     boolean isCustomerBalanceUnderThreshold(CustomerAccount pCustomerAccount) {
         return pCustomerAccount.getBalance().setScale(2, RoundingMode.HALF_UP)
-                .compareTo(customerStatusFrozenThreshold.setScale(2, RoundingMode.HALF_UP)) == -1;
+                .compareTo(customerStatusFrozenThreshold.setScale(2, RoundingMode.HALF_UP)) == 1;
     }
 
     CustomerAccount toggleCustomerStatus(CustomerAccount pCustomerAccount,
@@ -176,5 +168,9 @@ public class CustomerAccountServiceImpl implements CustomerAccountService {
 
     protected void setCustomerAccountRepository(CustomerAccountRepository pCustomerAccountRepository) {
         customerAccountRepository = pCustomerAccountRepository;
+    }
+
+    protected void setKafkaMessageProducer(KafkaMessageProducer kafkaMessageProducer) {
+        this.kafkaMessageProducer = kafkaMessageProducer;
     }
 }

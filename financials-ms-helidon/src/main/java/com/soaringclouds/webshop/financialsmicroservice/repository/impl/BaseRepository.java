@@ -1,18 +1,13 @@
 package com.soaringclouds.webshop.financialsmicroservice.repository.impl;
 
 import com.google.common.collect.Lists;
-import com.mongodb.client.FindIterable;
-import com.soaringclouds.webshop.financialsmicroservice.NativeMongoManager;
+import com.soaringclouds.webshop.financialsmicroservice.repository.NativeMongoManager;
 import com.soaringclouds.webshop.financialsmicroservice.entity.BaseMongoEntity;
-import com.soaringclouds.webshop.financialsmicroservice.gen.model.Invoice;
 import com.soaringclouds.webshop.financialsmicroservice.repository.GenericRepository;
 import com.soaringclouds.webshop.financialsmicroservice.repository.util.DbQueryBuilder;
 import org.mongojack.JacksonMongoCollection;
 
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import java.lang.annotation.Native;
 import java.util.List;
 
 /**

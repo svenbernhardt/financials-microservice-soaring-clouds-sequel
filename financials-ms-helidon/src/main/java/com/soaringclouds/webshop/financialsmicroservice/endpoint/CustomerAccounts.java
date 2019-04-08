@@ -7,12 +7,14 @@ import javax.ws.rs.core.MediaType;
 
 import com.soaringclouds.webshop.financialsmicroservice.gen.model.CustomerAccount;
 import com.soaringclouds.webshop.financialsmicroservice.service.CustomerAccountService;
+import com.soaringclouds.webshop.financialsmicroservice.service.InvoiceService;
+import com.soaringclouds.webshop.financialsmicroservice.service.PaymentService;
 import org.eclipse.microprofile.metrics.annotation.Metered;
 
 /**
  * CustomerAccountEndpoint
  */
-@Path("customer-accounts")
+@Path("customers")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @RequestScoped
@@ -21,8 +23,12 @@ public class CustomerAccounts {
 
     private CustomerAccountService customerAccountService;
 
+    private InvoiceService invoiceService;
+
+    private PaymentService paymentService;
+
     @GET
-    @Path("{customer_id}")
+    @Path("{customer_id}/account")
     public CustomerAccount getCustomerAccount(
             @PathParam(value = "customer_id") String customerId) {
 
@@ -30,9 +36,13 @@ public class CustomerAccounts {
     }
 
     @DELETE
-    @Path("{customer_id}")
+    @Path("{customer_id}/account")
     public void deleteCustomerAccount(
             @PathParam(value = "customer_id") String customerId) {
+
+        invoiceService.deleteInvoices(customerId);
+
+        paymentService.deletePayments(customerId);
 
         customerAccountService.deleteCustomerAccount(customerId);
     }
@@ -43,5 +53,15 @@ public class CustomerAccounts {
     @Inject
     public void setCustomerAccountService(CustomerAccountService pCustomerAccountService) {
         customerAccountService = pCustomerAccountService;
+    }
+
+    @Inject
+    public void setInvoiceService(InvoiceService pInvoiceService) {
+        invoiceService = pInvoiceService;
+    }
+
+    @Inject
+    public void setPaymentService(PaymentService pPaymentService) {
+        paymentService = pPaymentService;
     }
 }

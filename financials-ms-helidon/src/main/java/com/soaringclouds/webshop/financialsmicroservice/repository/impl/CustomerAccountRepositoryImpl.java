@@ -1,13 +1,13 @@
 package com.soaringclouds.webshop.financialsmicroservice.repository.impl;
 
-import com.soaringclouds.webshop.financialsmicroservice.NativeMongoManager;
+import com.soaringclouds.webshop.financialsmicroservice.repository.NativeMongoManager;
 import com.soaringclouds.webshop.financialsmicroservice.entity.CustomerAccountEntity;
 import com.soaringclouds.webshop.financialsmicroservice.gen.model.CustomerAccount;
 import com.soaringclouds.webshop.financialsmicroservice.repository.CustomerAccountRepository;
 
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.Dependent;
 
-@RequestScoped
+@Dependent
 public class CustomerAccountRepositoryImpl extends BaseRepository<CustomerAccountEntity, CustomerAccount> implements CustomerAccountRepository {
 
     @Override

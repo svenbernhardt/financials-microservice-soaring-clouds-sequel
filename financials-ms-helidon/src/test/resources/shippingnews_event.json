@@ -1,7 +1,7 @@
 {
   "eventType": "ShippingEvent",
   "payload": {
-    "orderIdentifier": "ZZXX123",
+    "orderIdentifier": "order0801",
     "nameAddressee": "Jeanet Visser",
     "destination": {
       "country": "nl",

@@ -13,8 +13,10 @@ import org.eclipse.microprofile.metrics.annotation.Metered;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.enterprise.context.Dependent;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.inject.Singleton;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
@@ -22,7 +24,7 @@ import java.util.Objects;
 /**
  * Created by svb on 26.02.18.
  */
-@RequestScoped
+@Dependent
 @Metered
 public class InvoiceServiceImpl implements InvoiceService {
 

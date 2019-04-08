@@ -3,7 +3,7 @@ package com.soaringclouds.webshop.financialsmicroservice.repository.impl;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoDatabase;
-import com.soaringclouds.webshop.financialsmicroservice.NativeMongoManager;
+import com.soaringclouds.webshop.financialsmicroservice.repository.NativeMongoManager;
 import de.flapdoodle.embed.mongo.MongodExecutable;
 import de.flapdoodle.embed.mongo.MongodProcess;
 import de.flapdoodle.embed.mongo.MongodStarter;

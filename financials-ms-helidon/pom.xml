@@ -28,7 +28,7 @@
         <helidon.version>1.0.2</helidon.version>
         <!-- Default package. Will be overriden by Maven archetype -->
         <package>io.helidon.examples.quickstart.mp</package>
-        <mainClass>com.soaringclouds.webshop.financialsmicroservice.Main</mainClass>
+        <mainClass>com.soaringclouds.webshop.financialsmicroservice.Bootstrap</mainClass>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>${maven.compiler.source}</maven.compiler.target>
         <libs.classpath.prefix>libs</libs.classpath.prefix>
@@ -184,6 +184,10 @@
             <artifactId>helidon-microprofile-1.2</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.glassfish.jersey.media</groupId>
+            <artifactId>jersey-media-json-jackson</artifactId>
+        </dependency>
+        <dependency>
             <groupId>io.helidon.microprofile.health</groupId>
             <artifactId>helidon-microprofile-health</artifactId>
             <version>${helidon.version}</version>
@@ -271,28 +275,6 @@
             <version>2.2.0</version>
         </dependency>
         <dependency>
-            <groupId>io.smallrye.reactive</groupId>
-            <artifactId>smallrye-reactive-messaging-provider</artifactId>
-            <version>0.0.4</version>
-        </dependency>
-        <dependency>
-            <groupId>io.smallrye.reactive</groupId>
-            <artifactId>smallrye-reactive-messaging-kafka</artifactId>
-            <version>0.0.4</version>
-            <exclusions>
-                <exclusion>
-                    <!-- this avoid having the logging working, to exclude it -->
-                    <groupId>org.slf4j</groupId>
-                    <artifactId>slf4j-log4j12</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>io.smallrye.reactive</groupId>
-            <artifactId>smallrye-reactive-streams-operators</artifactId>
-            <version>0.4.1</version>
-        </dependency>
-        <dependency>
             <groupId>org.apache.camel</groupId>
             <artifactId>camel-cdi</artifactId>
             <version>3.0.0-M2</version>
@@ -332,6 +314,12 @@
             <groupId>de.flapdoodle.embed</groupId>
             <artifactId>de.flapdoodle.embed.mongo</artifactId>
             <version>2.2.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-junit-jupiter</artifactId>
+            <version>2.26.0</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
