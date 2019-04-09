@@ -15,7 +15,6 @@ import java.util.List;
  * InvoiceRepositoryImpl
  */
 @Dependent
-@Metered
 public class InvoiceRepositoryImpl extends BaseRepository<InvoiceEntity, Invoice> implements InvoiceRepository {
 
     @Override

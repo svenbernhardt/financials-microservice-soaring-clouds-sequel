@@ -29,20 +29,6 @@ spec:
     name: http
   type: ClusterIP
 ---
-apiVersion: v1
-kind: Service
-metadata:
-  name: mongodb
-  labels:
-    app: mongodb
-spec:
-  selector:
-    app: ${project.artifactId}
-  ports:
-  - port: 27017
-    targetPort: 27017
-  type: ClusterIP
----
 kind: Deployment
 apiVersion: extensions/v1beta1
 metadata:
@@ -56,11 +42,6 @@ spec:
         version: v1
     spec:
       containers:
-      - image: mongo
-        name: ${project.artifactId}-mongodb
-        ports:
-        - containerPort: 27017
-          hostPort: 27017
       - name: ${project.artifactId}
         image: sbernhardtoc/${project.artifactId}
         imagePullPolicy: Always

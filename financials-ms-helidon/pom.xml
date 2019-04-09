@@ -202,16 +202,21 @@
             <artifactId>helidon-microprofile-tracing</artifactId>
             <version>${helidon.version}</version>
         </dependency>
-        <!--dependency>
+        <dependency>
             <groupId>io.helidon.tracing</groupId>
             <artifactId>helidon-tracing-zipkin</artifactId>
             <version>${helidon.version}</version>
-        </dependency-->
-        <!--dependency>
+        </dependency>
+        <dependency>
             <groupId>io.helidon.tracing</groupId>
             <artifactId>helidon-tracing-jersey-client</artifactId>
             <version>${helidon.version}</version>
-        </dependency-->
+        </dependency>
+        <dependency>
+            <groupId>io.helidon.tracing</groupId>
+            <artifactId>helidon-tracing</artifactId>
+            <version>1.0.2</version>
+        </dependency>
         <dependency>
             <groupId>io.helidon.tracing</groupId>
             <artifactId>helidon-tracing-jersey</artifactId>

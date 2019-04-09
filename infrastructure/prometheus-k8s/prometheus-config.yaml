@@ -13,4 +13,4 @@ scrape_configs:
     scrape_interval: 10s
     scrape_timeout: 10s
     static_configs:
-      - targets: ['financials-ms-helidon:8080']
+      - targets: ['financials-ms-helidon.financials:8090']

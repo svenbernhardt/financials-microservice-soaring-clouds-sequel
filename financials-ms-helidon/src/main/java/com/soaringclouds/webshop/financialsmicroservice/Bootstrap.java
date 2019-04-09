@@ -16,10 +16,13 @@
 
 package com.soaringclouds.webshop.financialsmicroservice;
 
+import io.helidon.config.Config;
 import io.helidon.microprofile.server.Server;
 
 import java.io.IOException;
 import java.util.logging.LogManager;
+
+import static io.helidon.config.ConfigSources.classpath;
 
 /**
  * Bootstrap method simulating trigger of main method of the server.
@@ -50,7 +53,7 @@ public final class Bootstrap {
      */
     static Server startServer() {
 
-        return Server.builder().build().start();
+        return Server.builder().config(Config.create(classpath("application.yaml"))).build().start();
     }
 
     /**

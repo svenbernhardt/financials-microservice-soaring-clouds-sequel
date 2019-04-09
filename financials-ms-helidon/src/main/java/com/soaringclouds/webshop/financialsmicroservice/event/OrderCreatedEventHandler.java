@@ -24,9 +24,4 @@ public class OrderCreatedEventHandler extends BaseAvroEventHandler<Order> {
     protected Class<Order> getEventClass() {
         return Order.class;
     }
-
-    @Override
-    protected Schema getSchema() {
-        return Order.getClassSchema();
-    }
 }

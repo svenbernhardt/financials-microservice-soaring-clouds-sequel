@@ -1,0 +1,13 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: prometheus-graph-ingress
+spec:
+  rules:
+  - host:
+    http:
+      paths:
+      - path: /graph
+        backend:
+          serviceName: prometheus-server
+          servicePort: 80

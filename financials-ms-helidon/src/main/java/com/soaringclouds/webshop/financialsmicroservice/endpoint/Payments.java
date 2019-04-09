@@ -19,7 +19,9 @@ import com.soaringclouds.webshop.financialsmicroservice.gen.model.ResponseMetada
 import com.soaringclouds.webshop.financialsmicroservice.service.PaymentService;
 
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
+import org.eclipse.microprofile.metrics.annotation.Counted;
 import org.eclipse.microprofile.metrics.annotation.Metered;
+import org.eclipse.microprofile.metrics.annotation.Timed;
 
 /**
  * Payments

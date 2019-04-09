@@ -2,6 +2,7 @@ package com.soaringclouds.webshop.financialsmicroservice.event;
 
 import com.soaringclouds.webshop.financialsmicroservice.config.KafkaConfig;
 import io.confluent.kafka.serializers.KafkaAvroDeserializer;
+import org.apache.kafka.common.serialization.StringDeserializer;
 
 import java.util.Optional;
 
@@ -27,7 +28,7 @@ public class KafkaConusmerEndpointBuilder {
 
     public static KafkaConusmerEndpointBuilder createAvroConsumerForTopic(KafkaConfig pKafkaConfig, String pTopicName) {
 
-        return new KafkaConusmerEndpointBuilder(pKafkaConfig).forTopic(pTopicName).withKeyDeserializer(KafkaAvroDeserializer.class)
+        return new KafkaConusmerEndpointBuilder(pKafkaConfig).forTopic(pTopicName).withKeyDeserializer(StringDeserializer.class)
                 .withValueDeserializer(KafkaAvroDeserializer.class);
     }
 

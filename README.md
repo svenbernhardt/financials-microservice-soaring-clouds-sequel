@@ -54,6 +54,7 @@ kubectl get service -n kong
 The resources needed for K8S deployments are located in the respective project folders. From here execute the following commands:
 
   * kubectl create namespace financials
+  * kubectl create -f financials-ms-helidon/src/main/k8s/mongo.yaml -n financials
   * kubectl create -f financials-ms-helidon/target/app.yaml -n financials
   * kubectl create -f financials-ui/k8s/financials-ui.yml -n financials
 

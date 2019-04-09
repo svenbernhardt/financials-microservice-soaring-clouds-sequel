@@ -9,7 +9,9 @@ import com.soaringclouds.webshop.financialsmicroservice.gen.model.CustomerAccoun
 import com.soaringclouds.webshop.financialsmicroservice.service.CustomerAccountService;
 import com.soaringclouds.webshop.financialsmicroservice.service.InvoiceService;
 import com.soaringclouds.webshop.financialsmicroservice.service.PaymentService;
+import org.eclipse.microprofile.metrics.annotation.Counted;
 import org.eclipse.microprofile.metrics.annotation.Metered;
+import org.eclipse.microprofile.metrics.annotation.Timed;
 
 /**
  * CustomerAccountEndpoint

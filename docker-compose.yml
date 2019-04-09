@@ -14,20 +14,41 @@ services:
     networks:
       - financials-net
     depends_on:
-      - mongodb
+      - mongodb.financials
+      #- zipkin
     #  - kafka
     ports:
       - "7777:8080"
     #command: java -jar financials.jar
     links:
-      - mongodb
+      - mongodb.financials
       #- zipkin
-  mongodb:
+  mongodb.financials:
     image: mongo
     networks:
       - financials-net
     ports:
       - 27017:27017
+
+  #storage:
+  #  image: openzipkin/zipkin-cassandra
+  #  container_name: cassandra
+  #  ports:
+  #     - 9042:9042
+  #zipkin:
+  #  image: openzipkin/zipkin
+  #  environment:
+  #    - STORAGE_TYPE=cassandra3
+        # When using the test docker image, or have schema pre-installed, you don't need to re-install it
+  #    - CASSANDRA_ENSURE_SCHEMA=false
+        # When overriding this value, note the minimum supported version is 3.9
+        # If you you cannot run 3.9+, but can run 2.2+, set STORAGE_TYPE=cassandra
+  #    - CASSANDRA_CONTACT_POINTS=cassandra
+  #  ports:
+  #    - 9411:9411
+  #  depends_on:
+  #    - storage
+
 networks:
     financials-net:
   #zookeeper:
@@ -45,48 +66,6 @@ networks:
   #    - KAFKA_CREATE_TOPICS=soaring-shippingnews
   #  depends_on:
   #    - zookeeper
-
-  #zookeeper:
-  #  image: wurstmeister/zookeeper
-  #  ports:
-  #    - "2181:2181"
-
-  #kafka:
-  #  build: infrastructure/kafka-docker
-  #  depends_on:
-  #    - zookeeper
-  #  ports:
-  #    - "9092:9092"
-  #  environment:
-  #    KAFKA_ADVERTISED_HOST_NAME: kafka
-  #    KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-  #    KAFKA_CREATE_TOPICS: "soaring-shippingnews:1:1"
-  #  volumes:
-  #    - /var/run/docker.sock:/var/run/docker.sock
-
-  #storage:
-  #  image: openzipkin/zipkin-cassandra
-  #  container_name: cassandra
-    # Uncomment to expose the storage port for testing
-    # ports:
-    #   - 9042:9042
-
-  # Switch storage type to Cassandra
-  #zipkin:
-  #  image: openzipkin/zipkin
-  #  environment:
-  #    - STORAGE_TYPE=cassandra3
-      # When using the test docker image, or have schema pre-installed, you don't need to re-install it
-  #    - CASSANDRA_ENSURE_SCHEMA=false
-      # When overriding this value, note the minimum supported version is 3.9
-      # If you you cannot run 3.9+, but can run 2.2+, set STORAGE_TYPE=cassandra
-  #    - CASSANDRA_CONTACT_POINTS=cassandra
-  #  ports:
-      # Port used for the Zipkin UI and HTTP Api
-  #    - 9411:9411
-  #  depends_on:
-  #    - storage
-
   # Metrics configuration using Prometheus & Grafana
   #prometheus_srv:
   #  image: sbernhardtoc/prometheus

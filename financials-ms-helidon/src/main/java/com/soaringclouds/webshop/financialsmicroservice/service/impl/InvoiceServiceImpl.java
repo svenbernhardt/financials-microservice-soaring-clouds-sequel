@@ -25,7 +25,6 @@ import java.util.Objects;
  * Created by svb on 26.02.18.
  */
 @Dependent
-@Metered
 public class InvoiceServiceImpl implements InvoiceService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(InvoiceServiceImpl.class);

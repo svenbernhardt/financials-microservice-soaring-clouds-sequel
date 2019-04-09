@@ -15,7 +15,7 @@ public class OrderCreatedEventConsumer extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         from(KafkaConusmerEndpointBuilder.createAvroConsumerForTopic(kafkaConfig,
-                kafkaConfig.getTopicOrderCreated()).build()).to("bean:ordercreatedeventhandler").log("Order message " +
-                "received: ${body}");
+                kafkaConfig.getTopicOrderCreated()).build()).log("Order message " +
+                "received: ${body}").to("bean:ordercreatedeventhandler");
     }
 }

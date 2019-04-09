@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: zipkin-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: zipkin
+  template:
+    metadata:
+      name: zipkin
+      labels:
+        app: zipkin
+    spec:
+      containers:
+      - name: zipkin-cassandra
+        image: openzipkin/zipkin-cassandra
+        ports:
+        - containerPort: 9042
+      - name: zipkin
+        image: openzipkin/zipkin
+        env:
+        - name: STORAGE_TYPE
+          value: "cassandra3"
+        - name: CASSANDRA_ENSURE_SCHEMA
+          value: "false"
+        - name: CASSANDRA_CONTACT_POINTS
+          value: "cassandra"
+        ports:
+        - containerPort: 9411
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: zipkin-service
+spec:
+  selector:
+    app: zipkin
+  ports:
+  - name: zipkinui
+    protocol: TCP
+    port: 9411
+    targetPort: 9411
+  type: ClusterIP
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: zipkin-ingress
+spec:
+  rules:
+  - host:
+    http:
+      paths:
+      - path: /zipkin
+        backend:
+          serviceName: zipkin-service
+          servicePort: 9411
