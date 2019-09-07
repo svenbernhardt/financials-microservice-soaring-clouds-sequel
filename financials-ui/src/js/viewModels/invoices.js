@@ -16,10 +16,11 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojvalidation', 'ojs/ojknockout'
 
         const customerId = "CGN4711";
         const username = "Mr. John Doe";
-        const apiKey = "67d0706a-9d52-4ed0-9812-3c01928d1074";
+        const apiKey = "b0e43338-da7d-46dd-a8cb-2207deb47042";
         //const serviceUrl = "http://oc-129-156-113-240.compute.oraclecloud.com:8011/financials-api/v1"
-        //const serviceUrl = "http://132.145.236.64:80/api/financials"
-        const serviceUrl = "http://financials-ms:7777/api/financials"
+        const serviceUrl = "http://130.61.20.66:8011/v1/financials"
+        //const serviceUrl = '${process.env.FINANCIALS_API_BASE_URL}'
+        //const serviceUrl = "http://financials-ms:7777/api/financials"
         var self = this;
 
         self.getHeaders = function() {

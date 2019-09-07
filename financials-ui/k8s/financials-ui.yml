@@ -16,27 +16,30 @@ spec:
         app: financials-ui
     spec:
       containers:
-      - image: sbernhardtoc/financials-ms-ui:latest
+      - image: fra.ocir.io/frn83dv19gmp/financials-ui:1.0.0
         imagePullPolicy: Always
         name: financials-ui
         ports:
         - containerPort: 80
           protocol: TCP
       restartPolicy: Always
+      imagePullSecrets:
+      - name: regcred
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: financials-ui
+  name: financials-ui-nodeport
   labels:
     app: financials-ui
 spec:
   selector:
     app: financials-ui
   ports:
-  - port: 7791
+  - nodePort: 30091
+    port: 7791
     targetPort: 80
-  type: ClusterIP
+  type: NodePort
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress

@@ -50,6 +50,9 @@ require(['ojs/ojcore', 'knockout', 'appController', 'ojs/ojknockout', 'ojs/ojmod
   function (oj, ko, app) {
     
       $(function () {
+
+      // dot.config();
+
       function init() {
         // Bind your ViewModel for the content of the whole page body.
         ko.applyBindings(app, document.getElementById('globalBody'));
