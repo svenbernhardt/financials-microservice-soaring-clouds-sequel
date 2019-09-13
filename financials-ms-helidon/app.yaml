@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2018 Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2018, 2019 Oracle and/or its affiliates. All rights reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,48 +17,39 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: ${project.artifactId}
+  name: financials-ms-helidon
   labels:
-    app: ${project.artifactId}
+    app: financials-ms-helidon
 spec:
+  type: NodePort
   selector:
-    app: ${project.artifactId}
+    app: financials-ms-helidon
   ports:
-  - port: 8090
+  - nodePort: 30090
+    port: 8090
     targetPort: 8080
-    name: http
-  type: ClusterIP
+    name: http-nodeport
+  type: NodePort
 ---
 kind: Deployment
 apiVersion: extensions/v1beta1
 metadata:
-  name: ${project.artifactId}
+  name: financials-ms-helidon
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        app: ${project.artifactId}
+        app: financials-ms-helidon
         version: v1
     spec:
       containers:
-      - name: ${project.artifactId}
-        image: sbernhardtoc/${project.artifactId}
+      - name: financials-ms-helidon
+        image: fra.ocir.io/frn83dv19gmp/financials-ms-helidon:1.0.0
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
       restartPolicy: Always
+      imagePullSecrets:
+      - name: regcred
 ---
-apiVersion: extensions/v1beta1
-kind: Ingress
-metadata:
-  name: ${project.artifactId}-ingress
-spec:
-  rules:
-  - host:
-    http:
-      paths:
-      - path: /api/financials/*
-        backend:
-          serviceName: ${project.artifactId}
-          servicePort: 8090
