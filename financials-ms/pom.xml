@@ -21,7 +21,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
-        <swagger.codegen.version>2.3.1</swagger.codegen.version>
+        <swagger.codegen.version>2.4.19</swagger.codegen.version>
         <swagger.core.version>1.5.15</swagger.core.version>
         <jackson.jaxrs.version>2.8.9</jackson.jaxrs.version>
         <cxf.version>3.1.11</cxf.version>
